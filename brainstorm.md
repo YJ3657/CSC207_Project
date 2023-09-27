@@ -1,0 +1,5 @@
+- Google Keep(notes) [https://developers.google.com/keep/api/guides]
+- Java Alarms API(alarm/time backup) [https://docs.oracle.com/cd/E19092-01/sol.entmgr41/816-2005/alarms.html]
+- ColourLovers (visualization) [https://www.colourlovers.com/api]
+- Mintlify (auto documentation) [https://mintlify.com/]
+- LibreTranslate (translation) [https://libretranslate.com/]
