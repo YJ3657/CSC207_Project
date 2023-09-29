@@ -19,9 +19,13 @@ generating random tests based on the questions that the user got wrong with the 
 1. MySQLWorkbench
 ![alt text](screenshots/tool1.png)
 
-## example output of running the Java code: ##
-1. SQL API ![alt text](screenshots/result1.png)
-
+## Example outputs of running the Java code: ##
+1. SQL API 
+![alt text](screenshots/result1.png)
+2. JFrame
+![alt text](screenshots/jframe.png)
+3. JLabel
+![alt text](screenshots/jlabel.png)
 ## List of any technical problems blocking progress: ##
--DB connection was not stable at first due to using MySQL versions that had some errors. So, we are looking for ways
-to use consistent versions of each tool. We are also seeking for ways to use remote Database other than local. 
+1. DB connection was not stable at first due to using MySQL versions that had some errors. So, we are looking for ways
+to use consistent versions of each tool. We are also seeking for ways to use remote Database other than local.
