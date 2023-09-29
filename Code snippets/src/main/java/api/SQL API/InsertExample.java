@@ -22,7 +22,7 @@ public class ConnectionExample {
             e.printStackTrace();
         } finally {
 
-            String statement = "INSERT INTO boards (id, pw, problems, logintime, notes) " +
+            String statement = "INSERT INTO users (id, pw, problems, logintime, notes) " +
             "VALUES (?, ?, ?, ?, now(), ?)";
 
             PreparedStatement pstatement = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
