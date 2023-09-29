@@ -17,12 +17,11 @@ generating random tests based on the questions that the user got wrong with the 
 
 ## A screenshot of using a tool to try out the API: ##
 1. MySQLWorkbench
-![alt text](https://github.com/YJ3657/CSC207_Project/screenshots/tool1.png?raw=true)
+![alt text](screenshots/tool1.png)
 
 ## example output of running the Java code: ##
-1. SQL API ![alt text](https://github.com/YJ3657/CSC207_Project/screenshots/result1.png?raw=true)
+1. SQL API ![alt text](screenshots/result1.png)
 
 ## List of any technical problems blocking progress: ##
 -DB connection was not stable at first due to using MySQL versions that had some errors. So, we are looking for ways
-to use consistent versions of each tool. 
--We are also seeking for ways to use remote Database other than local. 
+to use consistent versions of each tool. We are also seeking for ways to use remote Database other than local. 
