@@ -1,11 +1,11 @@
 package main.java.app;
 
-import main.java.interface_adapter.HomeViewModel;
+import main.java.interface_adapter.home.HomeViewModel;
 import main.java.view.HomeView;
 import main.java.view.NotesView;
 import main.java.view.ViewManager;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.NotesViewModel;
+import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.data_access.NotesDataAccessObject;
 
 import javax.swing.*;

@@ -1,6 +1,4 @@
-package main.java.use_case;
-
-import java.util.HashMap;
+package main.java.use_case.notes;
 
 public interface OpenNotesOutputBoundary {
     public void presentNotes(OpenNotesOutputData notes);

@@ -1,9 +1,11 @@
-package main.java.interface_adapter;
+package main.java.interface_adapter.notes;
+
+import main.java.interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class NotesViewModel extends ViewModel{
+public class NotesViewModel extends ViewModel {
     public final String TITLE_LABEL = "Notes View";
 
     public final String BACK_BUTTON_LABEL = "Back";

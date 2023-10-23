@@ -1,4 +1,4 @@
-package main.java.interface_adapter;
+package main.java.interface_adapter.notes;
 
 import java.util.HashMap;
 

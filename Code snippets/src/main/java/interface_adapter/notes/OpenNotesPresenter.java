@@ -1,7 +1,8 @@
-package main.java.interface_adapter;
+package main.java.interface_adapter.notes;
 
-import main.java.use_case.OpenNotesOutputBoundary;
-import main.java.use_case.OpenNotesOutputData;
+import main.java.interface_adapter.ViewManagerModel;
+import main.java.use_case.notes.OpenNotesOutputBoundary;
+import main.java.use_case.notes.OpenNotesOutputData;
 
 public class OpenNotesPresenter implements OpenNotesOutputBoundary {
     private ViewManagerModel viewManagerModel;

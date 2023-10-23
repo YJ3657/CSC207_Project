@@ -1,4 +1,4 @@
-package main.java.interface_adapter;
+package main.java.interface_adapter.home;
 
 import main.java.interface_adapter.ViewModel;
 

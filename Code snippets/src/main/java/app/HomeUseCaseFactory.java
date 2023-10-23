@@ -2,9 +2,13 @@ package main.java.app;
 
 import main.java.data_access.NotesDataAccessInterface;
 import main.java.interface_adapter.*;
-import main.java.use_case.OpenNotesInputBoundary;
-import main.java.use_case.OpenNotesInteractor;
-import main.java.use_case.OpenNotesOutputBoundary;
+import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.notes.NotesViewModel;
+import main.java.interface_adapter.notes.OpenNotesController;
+import main.java.interface_adapter.notes.OpenNotesPresenter;
+import main.java.use_case.notes.OpenNotesInputBoundary;
+import main.java.use_case.notes.OpenNotesInteractor;
+import main.java.use_case.notes.OpenNotesOutputBoundary;
 import main.java.view.HomeView;
 
 public class HomeUseCaseFactory {

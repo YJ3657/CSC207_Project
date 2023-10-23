@@ -1,8 +1,8 @@
 package main.java.view;
 
-import main.java.interface_adapter.HomeViewModel;
-import main.java.interface_adapter.NotesState;
-import main.java.interface_adapter.NotesViewModel;
+import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.notes.NotesState;
+import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
