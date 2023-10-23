@@ -43,7 +43,7 @@ public class Main {
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = new NotesView(notesViewModel);
+        NotesView notesView = new NotesView(notesViewModel, homeViewModel, viewManagerModel);
 
         views.add(notesView, notesView.viewName);
 
