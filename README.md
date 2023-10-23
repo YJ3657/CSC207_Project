@@ -31,3 +31,7 @@ generating random tests based on the questions that the user got wrong with a ti
 ## List of any technical problems blocking progress: ##
 1. DB connection was not stable at first due to using MySQL versions that had some errors. So, we are looking for ways
 to use consistent versions of each tool. We are also seeking for ways to use remote Database other than local.
+
+
+## EXTRA STUFF AFTER SUBMISSION:
+[Blueprint Doc](https://docs.google.com/document/d/1Qe5xSqrnpWM_gSg8DE8uHTsgpN23RaOajl9ljiG9al0/edit)
