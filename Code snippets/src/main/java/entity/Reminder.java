@@ -1,6 +1,6 @@
 package main.java.entity;
 
-public class Reminders{
+public class Reminder {
 
 
 }

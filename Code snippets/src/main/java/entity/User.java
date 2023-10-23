@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import main.java.entity.Course;
 
+//DONE FOR NOW
 public class User{
 
     private String id;

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
+//DONE FOR NOW
 public class Group{
     private String groupId;
     private int week;
@@ -55,7 +57,6 @@ public class Group{
 
     public Boolean removeMember(User user){
         return members.remove(user);
-
     }
 
 

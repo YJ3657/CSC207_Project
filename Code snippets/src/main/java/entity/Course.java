@@ -4,6 +4,9 @@ import main.java.entity.Notes;
 import main.java.entity.Contents;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
+//DONE FOR NOW
 public class Course{
     private String id;
     private ArrayList<Notes> notes; //is this the best collection to store notes?
