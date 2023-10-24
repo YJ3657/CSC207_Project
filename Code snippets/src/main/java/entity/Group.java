@@ -55,8 +55,14 @@ public class Group{
         return false;
     }
 
-    public Boolean removeMember(User user){
-        return members.remove(user);
+    public Boolean removeMember(String username){
+        for (User user: members){
+            if (user.getId().equals(username)){
+                members.remove(user);
+                return true;
+            }
+        }
+        return false;
     }
 
 
