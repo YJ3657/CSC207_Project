@@ -35,3 +35,4 @@ to use consistent versions of each tool. We are also seeking for ways to use rem
 
 ## EXTRA STUFF AFTER SUBMISSION:
 [Blueprint Doc](https://docs.google.com/document/d/1Qe5xSqrnpWM_gSg8DE8uHTsgpN23RaOajl9ljiG9al0/edit)
+[Database Doc](https://docs.google.com/document/d/1AO3z1xhB5Si0dNNukaidDW1yCEeSYMsriGN_U_XlVO8/edit)
