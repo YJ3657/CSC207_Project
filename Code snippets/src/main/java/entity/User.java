@@ -11,14 +11,14 @@ public class User{
     private String password;
 
     // changed to generic list for clean architecture
-    private List<String> groupIds;
-    private List<Course> courses;
+    private List<String> groupId;
+    private List<String> courseId;
 
     public User(String id, String password){
         this.id = id;
         this.password = password;
-        groupIds = new ArrayList<>();
-        courses = new ArrayList<>();
+        groupId = new ArrayList<>();
+        courseId = new ArrayList<>();
     }
 
     //getters and setters
@@ -30,12 +30,12 @@ public class User{
         return password;
     }
 
-    public List<String> getGroupIds() {
-        return groupIds;
+    public List<String> getGroupId() {
+        return groupId;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<String> getCourseId() {
+        return courseId;
     }
 
     public void setId(String id){
@@ -47,11 +47,11 @@ public class User{
     }
 
     // special setters
-    public void addCourse(Course course){
-        courses.add(course);
+    public void addCourse(String newcourseId){
+        courseId.add(newcourseId);
     }
 
-    public void addGroupIds(String groupIds){
+    public void addGroupId(String groupIds){
 
 
     }
