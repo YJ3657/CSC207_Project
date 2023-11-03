@@ -19,7 +19,7 @@ public class OpenNotesPresenter implements OpenNotesOutputBoundary {
         NotesState notesState = notesViewModel.getState();
         notesState.setNotes(data.getNotes());
         notesViewModel.setState(notesState);
-        notesViewModel.firePropertyChanged(); //TODO: Implement NotesView's PropertyChange method that gets called after this
+        notesViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(notesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

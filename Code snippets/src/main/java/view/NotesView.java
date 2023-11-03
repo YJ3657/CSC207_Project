@@ -16,16 +16,17 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     public final String viewName = "Notes";
     private final NotesViewModel notesViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final JLabel notesDisplay;
 
     public NotesView(NotesViewModel notesViewModel, HomeViewModel homeViewModel, ViewManagerModel viewManagerModel) {
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.notesViewModel.addPropertyChangeListener(this);
         this.viewManagerModel.addPropertyChangeListener(this);
+        this.notesDisplay = new JLabel("Notes");
 
         JLabel title = new JLabel("Notes Screen");
-        HashMap <String, String> notes = notesViewModel.getState().getNotes();
-        JLabel notesDisplay = new JLabel(notes.keySet() + notes.values().toString()); //TODO: I will change this later
+
         JButton back = new JButton(notesViewModel.BACK_BUTTON_LABEL);
         back.addActionListener(new ActionListener() {
             @Override
@@ -36,9 +37,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 }
             }
         });
-        this.add(notesDisplay);
         this.add(back);
         this.add(title);
+        this.add(notesDisplay);
     }
 
 
@@ -49,10 +50,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        NotesState state = notesViewModel.getState();
+        setNotesDisplay(state);
     }
 
     private void setNotesDisplay(NotesState state) {
-        //TODO: Implement this method and call it in the propertyChange method
+        HashMap <String, String> notes = state.getNotes();
+        notesDisplay.setText(notes.keySet() + notes.values().toString()); //TODO: I will change this later
+        this.add(notesDisplay);
     }
 }
