@@ -1,6 +1,8 @@
 package main.java.data_access;
 
 
+import main.java.use_case.notes.NotesDataAccessInterface;
+
 import java.util.HashMap;
 
 public class NotesDataAccessObject implements NotesDataAccessInterface {

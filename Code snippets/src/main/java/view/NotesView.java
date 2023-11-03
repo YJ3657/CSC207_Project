@@ -19,7 +19,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
-    public NotesView(NotesViewModel notesViewModel, HomeViewModel homeViewModel, ViewManagerModel viewManagerModel) {
+    public NotesView(NotesViewModel notesViewModel,
+                     HomeViewModel homeViewModel,
+                     ViewManagerModel viewManagerModel) {
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.notesViewModel.addPropertyChangeListener(this);
@@ -38,7 +40,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(addCourse)) {
 //                            Icon defaultIcon = UIManager.getIcon("OptionPane.informationIcon");
-                            String s = (String)JOptionPane.showInputDialog(
+                            String courseID = (String)JOptionPane.showInputDialog(
                                     NotesView.this,
                                     "Course ID: \n",
                                     "Dialog",
@@ -46,6 +48,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                                     null, // TODO: Change this Icon
                                     null,
                                     "");
+//                            courseID
 //
 ////If a string was returned, say so.
 //                            if ((s != null) && (s.length() > 0)) {

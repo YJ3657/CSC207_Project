@@ -1,6 +1,6 @@
 package main.java.app;
 
-import main.java.data_access.NotesDataAccessInterface;
+import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.interface_adapter.*;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;

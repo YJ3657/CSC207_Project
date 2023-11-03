@@ -1,7 +1,5 @@
 package main.java.use_case.notes;
 
-import main.java.data_access.NotesDataAccessInterface;
-
 import java.util.HashMap;
 
 public class OpenNotesInteractor implements OpenNotesInputBoundary {
