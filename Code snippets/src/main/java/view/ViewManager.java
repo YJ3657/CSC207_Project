@@ -1,5 +1,6 @@
 package main.java.view;
 
+import main.java.app.Constants;
 import main.java.interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class ViewManager implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("view")) {
+        if (evt.getPropertyName().equals(Constants.VIEW_PROPNAME)) {
             String viewModelName = (String) evt.getNewValue();
             cardLayout.show(views, viewModelName);
         }

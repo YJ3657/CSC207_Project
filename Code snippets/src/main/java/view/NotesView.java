@@ -1,6 +1,8 @@
 package main.java.view;
 
+import main.java.app.Constants;
 import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.notes.AddCourseController;
 import main.java.interface_adapter.notes.NotesState;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.ViewManagerModel;
@@ -19,14 +21,19 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
+    private final JPanel coursesDisplay;
+    private final AddCourseController addCourseController;
+
     public NotesView(NotesViewModel notesViewModel,
-                     HomeViewModel homeViewModel,
-                     ViewManagerModel viewManagerModel) {
+                     ViewManagerModel viewManagerModel,
+                     AddCourseController addCourseController) {
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.notesViewModel.addPropertyChangeListener(this);
-        this.viewManagerModel.addPropertyChangeListener(this);
+//        this.viewManagerModel.addPropertyChangeListener(this);
+        this.addCourseController = addCourseController;
         this.notesDisplay = new JLabel("Notes");
+        this.coursesDisplay = new JPanel();
 
         JLabel title = new JLabel("Notes Screen");
 
@@ -48,6 +55,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                                     null, // TODO: Change this Icon
                                     null,
                                     "");
+                            addCourseController.execute(courseID); // TODO: add the controller to the attributes
 //                            courseID
 //
 ////If a string was returned, say so.
@@ -68,7 +76,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(back)) {
-                    viewManagerModel.setActiveView(homeViewModel.getViewName());
+                    viewManagerModel.setActiveView(Constants.HOME_VIEWNAME);
                     viewManagerModel.firePropertyChanged();
                 }
             }
@@ -76,6 +84,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         this.add(addCourse);
         this.add(back);
         this.add(title);
+        this.add(coursesDisplay);
         this.add(notesDisplay);
     }
 
@@ -87,13 +96,39 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        NotesState state = notesViewModel.getState();
-        setNotesDisplay(state);
+        NotesState state = (NotesState) evt.getNewValue();
+        if (evt.getPropertyName().equals(Constants.STATE_PROPNAME)) {
+            setNotesDisplay(state);
+        } else if (evt.getPropertyName().equals(Constants.COURSES_PROPNAME)) {
+            setCoursesDisplay(state);
+        }
+
+
+    }
+
+    private void setCoursesDisplay(NotesState state) {
+        this.coursesDisplay.removeAll();
+
+//        this.coursesDisplay.setLayout(new BoxLayout(coursesDisplay, BoxLayout.Y_AXIS));
+//        Rectangle rec = this.getBounds();
+//        rec.setSize(rec.width / 5, rec.height);
+//        this.coursesDisplay.setBounds(rec);
+        for (String course : state.getCourses()) {
+            addButton(coursesDisplay, course);
+        }
+        this.coursesDisplay.revalidate();
+        this.coursesDisplay.repaint();
+
+    }
+
+    private void addButton(JPanel coursesDisplay, String course) {
+        JButton CourseButton = new JButton(course);
+        coursesDisplay.add(CourseButton);
     }
 
     private void setNotesDisplay(NotesState state) {
         HashMap <String, String> notes = state.getNotes();
-        notesDisplay.setText(notes.keySet() + notes.values().toString()); //TODO: I will change this later
+        notesDisplay.setText(notes.keySet() + notes.values().toString()); //TODO: Fix the UI, Jerry
         this.add(notesDisplay);
     }
 }

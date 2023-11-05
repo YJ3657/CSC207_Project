@@ -1,5 +1,6 @@
 package main.java.interface_adapter.notes;
 
+import main.java.app.Constants;
 import main.java.interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -12,7 +13,7 @@ public class NotesViewModel extends ViewModel {
     private NotesState state = new NotesState();
 
     public NotesViewModel() {
-        super("Notes");
+        super(Constants.NOTES_VIEWNAME);
     }
 
     public void setState(NotesState state) {
@@ -24,9 +25,14 @@ public class NotesViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange(Constants.STATE_PROPNAME, null, this.state);
+    }
+
+    public void firePropertyChanged(String propertyName) {
+        support.firePropertyChange(propertyName, null, this.state);
     }
 
     @Override

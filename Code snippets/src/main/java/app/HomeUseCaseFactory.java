@@ -20,9 +20,9 @@ public class HomeUseCaseFactory {
         return new HomeView(homeViewModel, openNotesController);
     }
     private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
-        OpenNotesOutputBoundary openNotesOutputBoundary = new OpenNotesPresenter(viewManagerModel, notesViewModel);
+        OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
 
-        OpenNotesInputBoundary clearInteractor = new OpenNotesInteractor(notesDataAccessObject, openNotesOutputBoundary);
+        OpenNotesInputBoundary clearInteractor = new OpenNotesInteractor(notesDataAccessObject, openNotesPresenter);
         return new OpenNotesController(clearInteractor);
     }
 }

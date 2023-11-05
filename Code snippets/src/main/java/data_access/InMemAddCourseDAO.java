@@ -17,4 +17,14 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
     public void saveCourses(ArrayList<String> courses) {
         this.courses.addAll(courses);
     }
+
+    @Override
+    public void saveCourse(String course) {
+        this.courses.add(course);
+    }
+
+    @Override
+    public boolean existsByID(String courseID) {
+        return courses.contains(courseID);
+    }
 }
