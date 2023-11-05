@@ -52,16 +52,18 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(addCourse)) {
-//                            Icon defaultIcon = UIManager.getIcon("OptionPane.informationIcon");
+//                            Icon defaultIcon = UIManager.getIcon("OptionPane.questionIcon");
                             String courseID = (String)JOptionPane.showInputDialog(
                                     NotesView.this,
                                     "Course ID: \n",
                                     "Dialog",
                                     JOptionPane.INFORMATION_MESSAGE,
-                                    null, // TODO: Change this Icon
+                                    null, // TODO: For Jerry: change this Icon
                                     null,
                                     "");
-                            addCourseController.execute(courseID);
+                            if (courseID != null) {
+                                addCourseController.execute(courseID);
+                            }
                         }
                     }
                 }

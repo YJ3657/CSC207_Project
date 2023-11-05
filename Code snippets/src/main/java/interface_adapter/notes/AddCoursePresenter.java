@@ -21,13 +21,13 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
         NotesState notesState = notesViewModel.getState();
         notesState.addCourse(data.getCourseID());
         notesViewModel.setState(notesState);
-        notesViewModel.firePropertyChanged(Constants.COURSES_PROPNAME); // TODO: Implement the NotesView's PropertyChange method
+        notesViewModel.firePropertyChanged(Constants.COURSES_PROPNAME);
     }
 
     @Override
     public void prepareFailView(String error) {
         NotesState notesState = notesViewModel.getState();
         notesState.setCourseError(error);
-        notesViewModel.firePropertyChanged(Constants.ADD_COURSE_ERROR); // TODO: Implement the NotesView's PropertyChange method
+        notesViewModel.firePropertyChanged(Constants.ADD_COURSE_ERROR);
     }
 }
