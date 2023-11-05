@@ -21,25 +21,31 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
-    private final JPanel coursesDisplay;
+    private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
 
     public NotesView(NotesViewModel notesViewModel,
                      ViewManagerModel viewManagerModel,
                      AddCourseController addCourseController) {
+        super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.notesViewModel.addPropertyChangeListener(this);
 //        this.viewManagerModel.addPropertyChangeListener(this);
         this.addCourseController = addCourseController;
         this.notesDisplay = new JLabel("Notes");
-        this.coursesDisplay = new JPanel();
+        this.coursesDisplay = new JTabbedPane();
+        coursesDisplay.setTabPlacement(JTabbedPane.TOP);
 
-        JLabel title = new JLabel("Notes Screen");
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+
+        JLabel title = new JLabel(Constants.NOTES_VIEWNAME);
 
         JButton back = new JButton(notesViewModel.BACK_BUTTON_LABEL);
 
         JButton addCourse = new JButton("Add Course");
+
+//        this.add(notesDisplay);
 
         addCourse.addActionListener(
                 new ActionListener() {
@@ -55,17 +61,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                                     null, // TODO: Change this Icon
                                     null,
                                     "");
-                            addCourseController.execute(courseID); // TODO: add the controller to the attributes
-//                            courseID
-//
-////If a string was returned, say so.
-//                            if ((s != null) && (s.length() > 0)) {
-//                                setLabel("Green eggs and... " + s + "!");
-//                                return;
-//                            }
-//
-////If you're here, the return value was null/empty.
-//                            setLabel("Come on, finish the sentence!");
+                            addCourseController.execute(courseID);
                         }
                     }
                 }
@@ -81,11 +77,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 }
             }
         });
-        this.add(addCourse);
-        this.add(back);
-        this.add(title);
+        buttonPanel.add(title);
+        buttonPanel.add(addCourse);
+        buttonPanel.add(back);
+        this.add(buttonPanel, BorderLayout.NORTH);
+        this.add(coursesDisplay, BorderLayout.CENTER);
         this.add(coursesDisplay);
-        this.add(notesDisplay);
     }
 
 
@@ -101,34 +98,42 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             setNotesDisplay(state);
         } else if (evt.getPropertyName().equals(Constants.COURSES_PROPNAME)) {
             setCoursesDisplay(state);
+        } else if (evt.getPropertyName().equals(Constants.ADD_COURSE_ERROR)) {
+            JOptionPane.showMessageDialog(this, Constants.ADD_COURSE_ERROR);
         }
-
-
     }
 
     private void setCoursesDisplay(NotesState state) {
         this.coursesDisplay.removeAll();
-
-//        this.coursesDisplay.setLayout(new BoxLayout(coursesDisplay, BoxLayout.Y_AXIS));
-//        Rectangle rec = this.getBounds();
-//        rec.setSize(rec.width / 5, rec.height);
-//        this.coursesDisplay.setBounds(rec);
         for (String course : state.getCourses()) {
-            addButton(coursesDisplay, course);
+            coursesDisplay.addTab(course, getTab());
         }
         this.coursesDisplay.revalidate();
         this.coursesDisplay.repaint();
 
     }
 
-    private void addButton(JPanel coursesDisplay, String course) {
-        JButton CourseButton = new JButton(course);
-        coursesDisplay.add(CourseButton);
+    private JPanel getTab() {
+        JPanel tabPanel = new JPanel(new BorderLayout());
+        JEditorPane notePad = new JTextPane();
+        JScrollPane textArea = new JScrollPane(notePad);
+//        tabPanel.add(notePad);
+
+        JScrollPane noteTopics = new JScrollPane();
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, noteTopics, textArea);
+
+        splitPane.setDividerLocation(Constants.NOTE_TOPICS_SIZE); // This sets the divider at 1/6th of the width of the split pane
+        splitPane.setResizeWeight(Constants.NOTE_TOPICS_SIZE);
+
+        tabPanel.add(splitPane, BorderLayout.CENTER);
+        return tabPanel;
     }
 
     private void setNotesDisplay(NotesState state) {
         HashMap <String, String> notes = state.getNotes();
-        notesDisplay.setText(notes.keySet() + notes.values().toString()); //TODO: Fix the UI, Jerry
-        this.add(notesDisplay);
+        notesDisplay.setText(notes.keySet() + notes.values().toString()); // //TODO: current version is dummy code
+//        this.notesDisplay.revalidate();
+//        this.notesDisplay.repaint();
     }
 }

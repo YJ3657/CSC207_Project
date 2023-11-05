@@ -28,6 +28,6 @@ public class AddCoursePresenter implements AddCourseOutputBoundary {
     public void prepareFailView(String error) {
         NotesState notesState = notesViewModel.getState();
         notesState.setCourseError(error);
-        notesViewModel.firePropertyChanged(); // TODO: Implement the NotesView's PropertyChange method
+        notesViewModel.firePropertyChanged(Constants.ADD_COURSE_ERROR); // TODO: Implement the NotesView's PropertyChange method
     }
 }

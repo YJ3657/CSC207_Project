@@ -1,5 +1,8 @@
 package main.java.use_case.notes;
 
+import main.java.app.Constants;
+
+import java.lang.constant.Constable;
 import java.time.LocalDateTime;
 public class AddCourseInteractor implements AddCourseInputBoundary{
 
@@ -16,7 +19,7 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
     public void execute(AddCourseInputData addCourseInputData) {
         String courseID = addCourseInputData.getCourseID();
         if (addCourseDAO.existsByID(courseID)) {
-            addCoursePresenter.prepareFailView("Course already exists");
+            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
         } else {
             LocalDateTime now = LocalDateTime.now();
             AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
