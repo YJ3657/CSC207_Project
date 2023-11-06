@@ -15,8 +15,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     public final String viewName = "home";
     private final JButton notes;
     private final OpenNotesController openNotesController;
-
-    // TODO Note: this is the new JButton for clearing the users file
     private HomeViewModel homeViewModel;
     private final JButton practice;
 
@@ -25,16 +23,18 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         this.homeViewModel = homeViewModel;
         homeViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+//        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
+//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ImageIcon imageIcon = new ImageIcon("Code snippets/resources/jlabel.png");
+        JLabel logo = new JLabel(imageIcon);
         JPanel buttons = new JPanel();
         notes = new JButton(HomeViewModel.NOTES_LABEL);
         buttons.add(notes);
         practice = new JButton(HomeViewModel.PRACTICE_LABEL);
         buttons.add(practice);
+        this.add(logo);
         this.add(buttons);
-        this.add(title);
+//        this.add(title);
 
 
         notes.addActionListener(this);

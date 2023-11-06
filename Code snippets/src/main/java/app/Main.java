@@ -12,13 +12,28 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
+    public static class App extends JFrame {
+        public App() {
+            setTitle("Meta Learning App");
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int width = (int) (screenSize.width * 0.75);  // 3/4 of screen width
+            int height = (int) (screenSize.height * 0.75); // 3/4 of screen height
+
+            // Set frame size
+            setSize(width, height);
+
+            // Center the frame
+            setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
+        }
+
+    }
     public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Meta Learning App");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        App application = new App();
 
         CardLayout cardLayout = new CardLayout();
 
@@ -43,7 +58,7 @@ public class Main {
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = new NotesView(notesViewModel, homeViewModel, viewManagerModel);
+        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, notesDataAccessObject);
 
         views.add(notesView, notesView.viewName);
 
@@ -51,7 +66,7 @@ public class Main {
         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
+//        application.pack();
         application.setVisible(true);
     }
 }

@@ -1,5 +1,6 @@
 package main.java.interface_adapter.home;
 
+import main.java.app.Constants;
 import main.java.interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -14,12 +15,12 @@ public class HomeViewModel extends ViewModel{
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public HomeViewModel() {
-        super("home");
+        super(Constants.HOME_VIEWNAME);
     }
     // This is what the Home Presenter will call to let the ViewModel know
     // to alert the View
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange(Constants.STATE_PROPNAME, null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
