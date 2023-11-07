@@ -11,6 +11,8 @@ public class HomeViewModel extends ViewModel{
 
     public static final String NOTES_LABEL = "Notes";
     public static final String PRACTICE_LABEL = "Practice";
+
+    public static final String REMINDERS_LABEL = "Reminders";
     private HomeState state = new HomeState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
