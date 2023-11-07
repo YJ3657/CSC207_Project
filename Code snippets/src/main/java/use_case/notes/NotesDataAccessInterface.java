@@ -1,4 +1,4 @@
-package main.java.data_access;
+package main.java.use_case.notes;
 
 import java.util.HashMap;
 

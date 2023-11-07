@@ -2,6 +2,7 @@ package main.java.data_access;
 
 import main.java.entity.UserFactory;
 import main.java.entity.User;
+import main.java.use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -16,8 +17,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-// Below must implement interfaces for SignupUserDataAccessInterface, LoginUserDataAccessInterface
-public class DBUserDataAccessObject {
+// Below must implement interfaces LoginUserDataAccessInterface
+public class DBUserDataAccessObject implements SignupUserDataAccessInterface {
 
     private Connection conn = null;
     private final Map<String, User> accounts = new HashMap<>();
@@ -67,6 +68,7 @@ public class DBUserDataAccessObject {
         }
     }
 
+    @Override
     public void save(User user) {
         accounts.put(user.getId(), user);
         this.save();
@@ -112,6 +114,7 @@ public class DBUserDataAccessObject {
         }
     }
 
+    @Override
     public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
     }
