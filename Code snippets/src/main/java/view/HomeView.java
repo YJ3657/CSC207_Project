@@ -19,6 +19,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     // TODO Note: this is the new JButton for clearing the users file
     private HomeViewModel homeViewModel;
     private final JButton practice;
+    private final JButton reminder;
 
     public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController) {
         this.openNotesController = openNotesController;
@@ -33,6 +34,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         buttons.add(notes);
         practice = new JButton(HomeViewModel.PRACTICE_LABEL);
         buttons.add(practice);
+        reminder = new JButton(HomeViewModel.REMINDERS_LABEL);
+        buttons.add(reminder);
         this.add(buttons);
         this.add(title);
 
