@@ -1,4 +1,7 @@
 package main.java.use_case.login;
 
-public class LoginInputBoundary {
+public interface LoginOutputBoundary {
+    void prepareSuccessView(LoginOutputData user);
+
+    void prepareFailView(String error);
 }

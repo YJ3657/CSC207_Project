@@ -1,4 +1,5 @@
 package main.java.use_case.login;
 
-public class LoginOutputBoundary {
+public interface LoginInputBoundary {
+    void execute(LoginInputData loginInputData);
 }
