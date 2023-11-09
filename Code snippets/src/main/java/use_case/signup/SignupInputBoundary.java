@@ -1,4 +1,5 @@
 package main.java.use_case.signup;
 
-public class SignupInputBoundary {
+public interface SignupInputBoundary {
+    void execute(SignupInputData signupInputData);
 }
