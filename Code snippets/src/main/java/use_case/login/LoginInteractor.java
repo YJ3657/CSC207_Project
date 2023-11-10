@@ -1,15 +1,18 @@
 package main.java.use_case.login;
 
+import main.java.entity.User;
+import main.java.entity.UserFactory;
+
 public class LoginInteractor implements LoginInputBoundary {
-    final LoginDataAccessInterface userDataAccessObject;
+    final LoginUserDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary userPresenter;
     final UserFactory userFactory;
 
-    public LoginInteractor(LoginDataAccessInterface userDataAccessObject,
+    public LoginInteractor(LoginUserDataAccessInterface userDataAccessObject,
                            LoginOutputBoundary userPresenter,
                            UserFactory userFactory) {
-        this.userDataAccessObject = userSignupDataAccessInterface;
-        this.userPresenter = signupOutputBoundary;
+        this.userDataAccessObject = userDataAccessObject;
+        this.userPresenter = userPresenter;
         this.userFactory = userFactory;
     }
 
@@ -18,19 +21,18 @@ public class LoginInteractor implements LoginInputBoundary {
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();
         if (!userDataAccessObject.existsByName(username)) {
-            loginPresenter.prepareFailView(username + ": Account does not exist.");
+            userPresenter.prepareFailView(username + ": Account does not exist.");
         } else {
             String pwd = userDataAccessObject.get(username).getPassword();
             if (!password.equals(pwd)) {
-                loginPresenter.prepareFailView("Incorrect password for " + username + ".");
+                userPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else {
 
                 User user = userDataAccessObject.get(loginInputData.getUsername());
 
-                LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
-                loginPresenter.prepareSuccessView(loginOutputData);
+                LoginOutputData loginOutputData = new LoginOutputData(user.getId(), false);
+                userPresenter.prepareSuccessView(loginOutputData);
             }
         }
     }
-}
 }
