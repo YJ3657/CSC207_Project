@@ -7,15 +7,12 @@ import java.util.HashMap;
 
 
 //DONE FOR NOW
-public class Course{
+public class Course {
     private String id;
-    private ArrayList<Notes> notes; //is this the best collection to store notes?
-    private HashMap<Integer, Contents> contents;
+    private HashMap<Integer, String> contents;
 
     public Course(String id){
         this.id = id;
-        notes = new ArrayList<>();
-        contents = new HashMap<>();
     }
 
     public void setId(String id) {
@@ -26,11 +23,7 @@ public class Course{
         return id;
     }
 
-    public ArrayList<Notes> getNotes() {
-        return notes;
-    }
-
-    public HashMap<Integer, Contents> getContents() {
+    public HashMap<Integer, String> getContents() {
         return contents;
     }
 }

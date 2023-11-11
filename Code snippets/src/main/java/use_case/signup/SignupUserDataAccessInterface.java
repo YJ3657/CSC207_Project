@@ -6,6 +6,6 @@ public interface SignupUserDataAccessInterface {
 
     boolean existsByName(String studentId);
 
-    void save(User user);
+    void saveUser(User user);
 
 }
