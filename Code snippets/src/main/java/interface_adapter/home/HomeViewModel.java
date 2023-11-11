@@ -28,4 +28,14 @@ public class HomeViewModel extends ViewModel{
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
+
+    //MATTHEW ADDED EVERYTHING BELOW
+    public HomeState getState(){
+        return state;
+    }
+
+    public void setState(HomeState state){
+        this.state = state;
+    }
 }
