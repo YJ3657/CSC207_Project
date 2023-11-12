@@ -1,5 +1,7 @@
 package main.java.app;
 
+import main.java.data_access.DBCourseDataAccessObject;
+import main.java.entity.CourseFactory;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.view.HomeView;
 import main.java.view.NotesView;
@@ -52,13 +54,13 @@ public class Main {
         NotesViewModel notesViewModel = new NotesViewModel();
         HomeViewModel homeViewModel = new HomeViewModel();
 
-        NotesDataAccessObject notesDataAccessObject;
-        notesDataAccessObject = new NotesDataAccessObject();
+        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
+        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, notesDataAccessObject);
+        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO);
 
         views.add(notesView, notesView.viewName);
 

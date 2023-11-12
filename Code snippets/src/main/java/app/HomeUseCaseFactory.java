@@ -1,5 +1,6 @@
 package main.java.app;
 
+import main.java.entity.CourseFactory;
 import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.interface_adapter.*;
 import main.java.interface_adapter.home.HomeViewModel;
