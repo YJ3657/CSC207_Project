@@ -41,6 +41,9 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
+
+        //TODO: Are we instantiating new ViewManager below? What's happening?
+
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);

@@ -1,21 +1,12 @@
 package main.java.data_access;
 
-import main.java.entity.UserFactory;
 import main.java.entity.User;
+import main.java.entity.UserFactory;
 import main.java.use_case.signup.SignupUserDataAccessInterface;
 
-import java.io.*;
-import java.sql.PreparedStatement;
-import java.time.LocalDateTime;
+import java.sql.*;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 // Below must implement interfaces LoginUserDataAccessInterface
 public class DBUserDataAccessObject implements SignupUserDataAccessInterface {
@@ -82,6 +73,9 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface {
                     "java",
                     "mysql"
             );
+
+            // TODO: Maybe can implement this part in function that takes parameter for #groups, #courses?
+
             String sqlOrder = "INSERT INTO users (userid, password, groupid1, groupid2, groupid3, groupid4," +
                     " groupid5, groupid6, groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, " +
                     "courseid6, courseid7, courseid8)" +
