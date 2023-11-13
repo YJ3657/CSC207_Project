@@ -1,5 +1,6 @@
 package main.java.data_access;
 
+import main.java.entity.DefaultUserFactory;
 import main.java.entity.UserFactory;
 import main.java.entity.User;
 import main.java.use_case.login.LoginUserDataAccessInterface;
@@ -33,7 +34,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                     "thisismysql*"
             );
 
-            String sqlOrder = "SELECT userid, userpassword, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6," +
+            String sqlOrder = "SELECT userid, password, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6," +
                     " groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, courseid6, courseid7, courseid8 FROM users";
 
             PreparedStatement statement = conn.prepareStatement(sqlOrder);
@@ -42,7 +43,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 
             while(rs.next()) {
                 String userId = rs.getString("userid");
-                String userPw = rs.getString("userpassword");
+                String userPw = rs.getString("password");
                 User user = this.userFactory.create(userId, userPw);
                 for(int i = 1; i <= 8; i++) {
                     user.getGroupId().add(rs.getString("groupid" + i));
@@ -226,4 +227,5 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         // update(user);
         // clear();
 //    }
+
 }

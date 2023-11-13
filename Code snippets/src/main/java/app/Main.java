@@ -75,7 +75,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        viewManagerModel.setActiveView(homeView.viewName);  //set to loginView
+        viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
 
 //        application.pack();
