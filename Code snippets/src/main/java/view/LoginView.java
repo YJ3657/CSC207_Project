@@ -39,7 +39,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         JLabel usernameLabel = new JLabel("Username");
         JTextField usernameTextField = usernameInputField;
-        usernameTextField.setPreferredSize(new Dimension(1, 1));
 
         JLabel passwordLabel = new JLabel("Password");
         JTextField passwordTextField = passwordInputField;
@@ -58,7 +57,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
-
                             loginController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword()

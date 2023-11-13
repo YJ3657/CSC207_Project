@@ -71,8 +71,6 @@ public class Main {
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO);
-
-        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, notesDataAccessObject);
         views.add(notesView, notesView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
