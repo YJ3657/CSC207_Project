@@ -1,5 +1,7 @@
 package main.java.entity;
 
-public interface CourseFactory {
-    Course create(String courseId);
+public class CourseFactory {
+    public Course create(String courseId) {
+        return new Course(courseId);
+    }
 }

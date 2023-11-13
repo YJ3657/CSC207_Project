@@ -7,5 +7,4 @@ public interface AddCourseDataAccessInterface {
     public Course getCourse(String courseId);
     public void saveCourse(Course course);
     public boolean existsByID(String courseId);
-
 }

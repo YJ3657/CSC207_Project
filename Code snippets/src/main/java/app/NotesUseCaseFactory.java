@@ -1,12 +1,11 @@
 package main.java.app;
 
-import main.java.data_access.InMemAddCourseDAO;
+import main.java.entity.CourseFactory;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.notes.AddCourseController;
 import main.java.interface_adapter.notes.AddCoursePresenter;
 import main.java.interface_adapter.notes.NotesViewModel;
-import main.java.use_case.notes.AddCourseDataAccessInterface;
+import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.notes.AddCourseInputBoundary;
 import main.java.use_case.notes.AddCourseInteractor;
 import main.java.use_case.notes.AddCourseOutputBoundary;
@@ -26,8 +25,9 @@ public class NotesUseCaseFactory {
                                                               NotesViewModel notesViewModel,
                                                               AddCourseDataAccessInterface addCourseDAO) {
          AddCourseOutputBoundary addCoursePresenter = new AddCoursePresenter(viewManagerModel, notesViewModel);
-         AddCourseInputBoundary addCourseInteracotr = new AddCourseInteractor(addCourseDAO, addCoursePresenter);
-         return new AddCourseController(addCourseInteracotr);
+         CourseFactory courseFactory = new CourseFactory();
+         AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(addCourseDAO, addCoursePresenter, courseFactory);
+         return new AddCourseController(addCourseInteractor);
 
 
      }
