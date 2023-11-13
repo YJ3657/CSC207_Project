@@ -1,19 +1,20 @@
 package main.java.use_case.login;
 
 import main.java.entity.User;
-import main.java.entity.UserFactory;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary userPresenter;
-    final UserFactory userFactory;
+//    final UserFactory userFactory;
 
+    //ORIGINAL PARAMETERS: (LoginUserDataAccessInterface userDataAccessObject,
+    //                           LoginOutputBoundary userPresenter,
+    //                           UserFactory userFactory)
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessObject,
-                           LoginOutputBoundary userPresenter,
-                           UserFactory userFactory) {
+                           LoginOutputBoundary userPresenter) {
         this.userDataAccessObject = userDataAccessObject;
         this.userPresenter = userPresenter;
-        this.userFactory = userFactory;
+//        this.userFactory = userFactory;
     }
 
     @Override

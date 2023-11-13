@@ -1,12 +1,16 @@
 package main.java.app;
 
+import main.java.data_access.DBUserDataAccessObject;
+import main.java.data_access.NotesDataAccessObject;
+import main.java.entity.DefaultUserFactory;
+import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.login.LoginViewModel;
+import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.view.HomeView;
+import main.java.view.LoginView;
 import main.java.view.NotesView;
 import main.java.view.ViewManager;
-import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.notes.NotesViewModel;
-import main.java.data_access.NotesDataAccessObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,19 +58,23 @@ public class Main {
         // be observed by the Views.
         NotesViewModel notesViewModel = new NotesViewModel();
         HomeViewModel homeViewModel = new HomeViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
         NotesDataAccessObject notesDataAccessObject;
         notesDataAccessObject = new NotesDataAccessObject();
+
+        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, notesDataAccessObject);
-
         views.add(notesView, notesView.viewName);
 
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
+        views.add(loginView, loginView.viewName);
 
-        viewManagerModel.setActiveView(homeView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
 
 //        application.pack();

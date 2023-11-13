@@ -9,7 +9,7 @@ public class ConnectionExample {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://138.51.75.7:3306/thisisjava",
+                    "jdbc:mysql://100.70.207.179:3306/thisisjava",
                     "remoteUser",
                     "thisismysql*"
             );
