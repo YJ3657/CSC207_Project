@@ -1,5 +1,7 @@
 import main.java.data_access.InMemAddCourseDAO;
-import main.java.data_access.NotesDataAccessObject;
+import main.java.entity.Course;
+import main.java.entity.CourseFactory;
+import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.notes.*;
 import org.junit.Test;
 
@@ -9,7 +11,7 @@ public class AddCourseInteractorTest {
     @Test
     public void SuccessTest() {
         AddCourseInputData inputData = new AddCourseInputData("MAT137");
-        AddCourseDataAccessInterface addCourseRepo = new NotesDataAccessObject();
+        AddCourseDataAccessInterface addCourseRepo = new InMemAddCourseDAO();
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
             @Override
             public void prepareSuccessView(AddCourseOutputData courseData) {
@@ -20,11 +22,37 @@ public class AddCourseInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
+                fail("FailView not expected");
+
+            }
+        };
+        AddCourseInputBoundary interactor = new AddCourseInteractor(addCourseRepo,
+                successPresenter,
+                new CourseFactory());
+        interactor.execute(inputData);
+    }
+
+
+    @Test
+    public void FailTest() {
+        AddCourseInputData inputData = new AddCourseInputData("MAT137");
+        AddCourseDataAccessInterface addCourseRepo = new InMemAddCourseDAO();
+        addCourseRepo.saveCourse(new Course("MAT137"));
+        AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
+            @Override
+            public void prepareSuccessView(AddCourseOutputData courseData) {
+                fail("SuccessView not expected");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
                 assertEquals("Course already exists", error);
 
             }
         };
-        AddCourseInputBoundary interactor = new AddCourseInteractor(addCourseRepo, successPresenter);
+        AddCourseInputBoundary interactor = new AddCourseInteractor(addCourseRepo,
+                successPresenter,
+                new CourseFactory());
         interactor.execute(inputData);
     }
 }

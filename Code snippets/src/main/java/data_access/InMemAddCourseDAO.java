@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
 
-    private final ArrayList<String> courses = new ArrayList<>();
+    private final ArrayList<Course> courses = new ArrayList<>();
 
     @Override
     public Course getCourse(String courseId) {
@@ -16,11 +16,15 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
 
     @Override
     public void saveCourse(Course course) {
-        this.courses.add(course.getId());
+        this.courses.add(course);
     }
 
     @Override
     public boolean existsByID(String courseID) {
-        return courses.contains(courseID);
+        ArrayList<String> courseIDs = new ArrayList<>();
+        for (Course course: courses) {
+            courseIDs.add(course.getId());
+        }
+        return courseIDs.contains(courseID);
     }
 }
