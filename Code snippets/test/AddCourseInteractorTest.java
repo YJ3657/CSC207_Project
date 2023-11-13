@@ -1,5 +1,6 @@
 import main.java.data_access.InMemAddCourseDAO;
 import main.java.data_access.NotesDataAccessObject;
+import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.notes.*;
 import org.junit.Test;
 

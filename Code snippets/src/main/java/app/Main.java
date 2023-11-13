@@ -47,7 +47,6 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-
         //TODO: Are we instantiating new ViewManager below? What's happening?
 
         // This keeps track of and manages which view is currently showing.
@@ -76,7 +75,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
+        viewManagerModel.setActiveView(homeView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
 
 //        application.pack();
