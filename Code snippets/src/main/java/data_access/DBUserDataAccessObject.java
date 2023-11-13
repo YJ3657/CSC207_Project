@@ -123,7 +123,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://100.70.192.192:3306/user",
+                    "jdbc:mysql://localhost:3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -152,7 +152,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://100.70.192.192:3306/user",
+                    "jdbc:mysql://localhost:3306/user",
                     "remoteUser",
                     "thisismysql*"
             );

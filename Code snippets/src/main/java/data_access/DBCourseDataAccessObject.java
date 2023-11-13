@@ -7,14 +7,11 @@ import main.java.entity.CourseFactory;
 import main.java.entity.User;
 import main.java.entity.UserFactory;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
-import java.sql.PreparedStatement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     private Connection conn = null;
@@ -26,7 +23,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://100.70.192.192:3306",
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
                     "remoteUser",
                     "thisismysql*");
 
@@ -38,20 +35,16 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
                     continue;
                 }
                 Course course = this.courseFactory.create(databaseName);
-                String sqlOrder = "USE " + databaseName;
+                String sqlOrder = "SELECT chapterno, chaptertitle FROM " + databaseName + ".contents";
                 PreparedStatement statement = conn.prepareStatement(sqlOrder);
-                statement.executeQuery();
-                statement.close();
-                sqlOrder = "SELECT chapterno, chapter FROM " + databaseName;
-                statement = conn.prepareStatement(sqlOrder);
-                ResultSet resultSet = statement.executeQuery();
-                while(resultSet.next()) {
-                    int chapterNo = resultSet.getInt("chapterno");
-                    String chapter = resultSet.getString("chapter");
+                ResultSet rs = statement.executeQuery();
+                while(rs.next()) {
+                    int chapterNo = rs.getInt("chapterno");
+                    String chapter = rs.getString("chaptertitle");
                     course.getContents().put(chapterNo, chapter);
                 }
                 courses.put(databaseName, course);
-                resultSet.close();
+                rs.close();
                 statement.close();
             }
             databases.close();
@@ -69,58 +62,117 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
             }
         }
     }
+    // Saving the new course
 
-    @Override
     public void saveCourse(Course course) {
         courses.put(course.getId(), course);
-        this.save(course);
+        save(course);
     }
 
     public void save(Course course) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/",
+                    "remoteUser",
+                    "thisismysql*"
+            );
+
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + course.getId());
+            String sqlOrder = "USE " + course.getId();
+            PreparedStatement prestatement = conn.prepareStatement(sqlOrder);
+            prestatement.executeQuery();
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS question (qustion varchar(50), answer varchar(50), chapterno INT(3))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS definition (word varchar(50), definition varchar(50), chapterno INT(3))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS student (id varchar(50), day INT(3), time_enrolled varchar(50))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS contents (chapterno INT(3), chaptertitle varchar(50))");
+
+            System.out.println("success");
+            sqlOrder = "INSERT INTO contents (chapterno, chaptertitle)" +
+                    "VALUES (?, ?)";
+
+            int chapterno = 1;
+            for(String content : course.getContents().values()) {
+                prestatement = conn.prepareStatement(sqlOrder);
+                prestatement.setInt(1, chapterno);
+                prestatement.setString(2, content);
+                chapterno += 1;
+                prestatement.executeUpdate();
+                prestatement.close();
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class Not Found");
+        } catch (SQLException e) {
+            System.out.println("Check the database");
+        } finally {
+            if(conn != null) {
+                try {
+                    conn.close();
+                    System.out.println("Connection closed");
+                } catch (SQLException e) {}
+            }
+        }
+    }
+
+    //@Override
+    public boolean existsByID(String courseId) {
+        return courses.containsKey(courseId);
+    }
+
+    //@Override
+    public Course getCourse(String courseId) {
+        return courses.get(courseId);
+    }
+
+//    public static void main(String[] args) {
+//        Connection conn = null;
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
-//            conn = DriverManager.getConnection(
-//                    "jdbc:mysql://100.70.192.192:3306/" + course.getId(),
+//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
 //                    "remoteUser",
-//                    "thisismysql*"
-//            );
-//            String sqlOrder = "INSERT INTO contents ()" +
-//                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//                    "thisismysql*");
 //
-//            for(User user : accounts.values()) {
+//            ResultSet databases = conn.getMetaData().getCatalogs();
+//
+//            while (databases.next()) {
+//                String databaseName = databases.getString(1).toLowerCase();
+//                if(databaseName.equals("user") || databaseName.equals("group") || databaseName.equals("course")) {
+//                    continue;
+//                }
+//                databaseName = databaseName.toUpperCase();
+//                Course course = new Course(databaseName);
+//                String sqlOrder = "SELECT chapterno, chaptertitle FROM " + databaseName + ".contents";
 //                PreparedStatement statement = conn.prepareStatement(sqlOrder);
-//                statement.setString(1, user.getId());
-//                statement.setString(2, user.getPassword());
-//                for(int i = 3; i <= 10; i++) {
-//                    statement.setString(i, user.getGroupId().get(i - 3));
+//                ResultSet rs = statement.executeQuery();
+//                while(rs.next()) {
+//                    int chapterNo = rs.getInt("chapterno");
+//                    String chapter = rs.getString("chaptertitle");
+//                    System.out.println(chapterNo);
 //                }
-//                for(int i = 10; i <= 17; i++) {
-//                    statement.setString(i, user.getCourseId().get(i - 10));
-//                }
-//                statement.executeUpdate();
+//
+//
+//                System.out.println(databaseName + course.getId());
+//                rs.close();
 //                statement.close();
+//                databases.close();
 //            }
+//            databases.close();
 //        } catch (ClassNotFoundException e) {
 //            System.out.println("Class Not Found");
 //        } catch (SQLException e) {
 //            System.out.println("Check the database");
 //        } finally {
-//            if(conn != null) {
+//            if (conn != null) {
 //                try {
 //                    conn.close();
 //                    System.out.println("Connection closed");
-//                } catch (SQLException e) {}
+//                } catch (SQLException e) {
+//                }
 //            }
 //        }
-    }
-
-    @Override
-    public boolean existsByID(String courseId) {
-        return courses.containsKey(courseId);
-    }
-
-    @Override
-    public Course getCourse(String courseId) {
-        return courses.get(courseId);
-    }
+//    }
+    
 }
+
+

@@ -13,6 +13,7 @@ public class Course {
 
     public Course(String id){
         this.id = id;
+        contents = new HashMap<Integer, String>();
     }
 
     public void setId(String id) {
