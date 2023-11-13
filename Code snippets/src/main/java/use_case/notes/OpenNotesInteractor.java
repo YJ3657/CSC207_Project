@@ -1,20 +1,24 @@
 package main.java.use_case.notes;
 
+import main.java.entity.Course;
+import main.java.use_case.courses.AddCourseDataAccessInterface;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class OpenNotesInteractor implements OpenNotesInputBoundary {
-    final NotesDataAccessInterface notesDataAccessObject;
+    final AddCourseDataAccessInterface addCourseDataAccessInterface;
     final OpenNotesOutputBoundary openNotesPresenter;
 
-    public OpenNotesInteractor(NotesDataAccessInterface notesDataAccessInterface, OpenNotesOutputBoundary openNotesPresenter) {
-        this.notesDataAccessObject = notesDataAccessInterface;
+    public OpenNotesInteractor(AddCourseDataAccessInterface addCourseDataAccessInterface, OpenNotesOutputBoundary openNotesPresenter) {
+        this.addCourseDataAccessInterface = addCourseDataAccessInterface;
         this.openNotesPresenter = openNotesPresenter;
     }
 
     @Override
     public void execute() {
-        HashMap<String, String> notes = notesDataAccessObject.getNotes();
-        OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(notes);
+        Map<String, Course> courses = addCourseDataAccessInterface.getCourses();
+        OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(courses);
         openNotesPresenter.presentNotes(openNotesOutputData);
     }
 }

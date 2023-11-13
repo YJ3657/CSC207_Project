@@ -4,6 +4,7 @@ import main.java.entity.Course;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
 
@@ -13,6 +14,8 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
     public Course getCourse(String courseId) {
         return null; // Test case using this inMem DAO does not use this method currently
     }
+
+
 
     @Override
     public void saveCourse(Course course) {
@@ -26,5 +29,10 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
             courseIDs.add(course.getId());
         }
         return courseIDs.contains(courseID);
+    }
+
+    @Override
+    public Map<String, Course> getCourses() {
+        return null;
     }
 }
