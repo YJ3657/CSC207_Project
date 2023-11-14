@@ -1,15 +1,10 @@
 package main.java.data_access;
 
-import java.io.*;
-
 import main.java.entity.Course;
 import main.java.entity.CourseFactory;
-import main.java.entity.User;
-import main.java.entity.UserFactory;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,6 +119,9 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     public Course getCourse(String courseId) {
         return courses.get(courseId);
     }
+
+    @Override
+    public Map<String, Course> getCourses() {return courses;}
 
 //    public static void main(String[] args) {
 //        Connection conn = null;

@@ -1,10 +1,13 @@
 package main.java.interface_adapter.notes;
 
+import main.java.entity.Course;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class NotesState {
-    private HashMap<String, String> notes = new HashMap<>();
+    private Map<String, Course> notes = new HashMap<>();
     private ArrayList<String> courses = new ArrayList<>();
 
     private String courseError = null;
@@ -18,11 +21,11 @@ public class NotesState {
     public NotesState() {
     }
 
-    public void setNotes(HashMap<String, String> notes) {
+    public void setNotes(Map<String, Course> notes) {
         this.notes = notes;
     }
 
-    public HashMap<String, String> getNotes() {
+    public Map<String, Course> getNotes() {
         return notes;
     }
 
