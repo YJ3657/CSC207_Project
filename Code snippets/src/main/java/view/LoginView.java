@@ -32,6 +32,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     final JPasswordField signUppasswordInputField = new JPasswordField(15);
 
+    final JPasswordField signUprepasswordInputField = new JPasswordField(15);
+
     final JButton logIn;
     final JButton cancel;
     final JButton signUp;
@@ -87,16 +89,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         JPanel signupPanel = new JPanel();
-                        signupPanel.add(new JLabel("username"));
+                        signupPanel.add(new JLabel("Username"));
                         signupPanel.add(signUpusernameInputField);
-                        signupPanel.add(new JLabel("password"));
+                        signupPanel.add(new JLabel("Password"));
                         signupPanel.add(signUppasswordInputField);
+                        signupPanel.add(new JLabel("Retype Password"));
+                        signupPanel.add(signUprepasswordInputField);
                         if (e.getSource().equals(signUp)){
                             int result = JOptionPane.showConfirmDialog(null, signupPanel, "Signup",
                                     JOptionPane.OK_CANCEL_OPTION);
                             SignupState currentState = signupViewModel.getState();
                             if (result == JOptionPane.OK_OPTION){
-                                signupController.execute(currentState.getUsername(), currentState.getPassword(), currentState.getPassword());
+                                signupController.execute(currentState.getUsername(), currentState.getPassword(), currentState.getRepeatPassword());
                             }
                         }
                     }
@@ -163,7 +167,23 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
                         currentState.setPassword(signUppasswordInputField.getText() + e.getKeyChar());
-                        currentState.setRepeatPassword(currentState.getPassword());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+        signUprepasswordInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setRepeatPassword(signUprepasswordInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -185,6 +205,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(passwordErrorField);
         this.add(buttons);
     }
+
+
 
     /**
      * React to a button click that results in evt.
