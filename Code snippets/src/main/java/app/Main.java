@@ -5,10 +5,12 @@ import main.java.entity.CourseFactory;
 import main.java.data_access.DBUserDataAccessObject;
 import main.java.data_access.NotesDataAccessObject;
 import main.java.entity.DefaultUserFactory;
+import main.java.entity.UserFactory;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
+import main.java.interface_adapter.signup.SignupViewModel;
 import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
@@ -61,11 +63,13 @@ public class Main {
         NotesViewModel notesViewModel = new NotesViewModel();
         HomeViewModel homeViewModel = new HomeViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
 
         NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
+        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject);
         views.add(homeView, homeView.viewName);
@@ -73,7 +77,10 @@ public class Main {
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO);
         views.add(notesView, notesView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);
+        UserFactory userFactory = new DefaultUserFactory();
+
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel,
+                userDataAccessObject, signupuserdataaccessinterface, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);  //set to loginView

@@ -3,6 +3,9 @@ package main.java.view;
 import main.java.interface_adapter.login.LoginController;
 import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.login.LoginViewModel;
+import main.java.interface_adapter.signup.SignupController;
+import main.java.interface_adapter.signup.SignupState;
+import main.java.interface_adapter.signup.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,22 +20,33 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public final String viewName = "log in";
     private final LoginViewModel loginViewModel;
 
+    private final SignupViewModel signupViewModel;
+
     final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
 
     final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
 
+    final JTextField signUpusernameInputField = new JTextField(15);
+
+    final JPasswordField signUppasswordInputField = new JPasswordField(15);
+
     final JButton logIn;
     final JButton cancel;
     final JButton signUp;
     private final LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller) {
+    private final SignupController signupController;
+
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, SignupController signupController,
+                     SignupViewModel signupViewModel) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
+        this.signupController = signupController;
+        this.signupViewModel = signupViewModel;
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -41,7 +55,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         JTextField usernameTextField = usernameInputField;
 
         JLabel passwordLabel = new JLabel("Password");
-        JTextField passwordTextField = passwordInputField;
+        final JTextField[] passwordTextField = {passwordInputField};
 
         JPanel buttons = new JPanel();
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
@@ -68,17 +82,22 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         cancel.addActionListener(this);
 
-        signUp.addActionListener(  // This creates an anonymous subclass of ActionListener and instantiates it.
+        signUp.addActionListener(
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(signUp)) {
-                            LoginState currentState = loginViewModel.getState();
-
-                                //WANT TO SWITCH TO SIGNUP VIEW
-//                            signUpController.execute(
-//                                    currentState.getUsername(),
-//                                    currentState.getPassword()
-//                            );
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JPanel signupPanel = new JPanel();
+                        signupPanel.add(new JLabel("username"));
+                        signupPanel.add(signUpusernameInputField);
+                        signupPanel.add(new JLabel("password"));
+                        signupPanel.add(signUppasswordInputField);
+                        if (e.getSource().equals(signUp)){
+                            int result = JOptionPane.showConfirmDialog(null, signupPanel, "Signup",
+                                    JOptionPane.OK_CANCEL_OPTION);
+                            SignupState currentState = signupViewModel.getState();
+                            if (result == JOptionPane.OK_OPTION){
+                                signupController.execute(currentState.getUsername(), currentState.getPassword(), currentState.getPassword());
+                            }
                         }
                     }
                 }
@@ -120,12 +139,49 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 });
 
+        signUpusernameInputField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                SignupState currentState = signupViewModel.getState();
+                currentState.setUsername(signUpusernameInputField.getText() + e.getKeyChar());
+                signupViewModel.setState(currentState);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        signUppasswordInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setPassword(signUppasswordInputField.getText() + e.getKeyChar());
+                        currentState.setRepeatPassword(currentState.getPassword());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+
         this.add(title);
         this.add(usernameLabel);
         this.add(usernameTextField);
         this.add(usernameErrorField);
         this.add(passwordLabel);
-        this.add(passwordTextField);
+        this.add(passwordTextField[0]);
         this.add(passwordErrorField);
         this.add(buttons);
     }
