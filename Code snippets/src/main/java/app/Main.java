@@ -51,6 +51,13 @@ public class Main {
 
         //TODO: Are we instantiating new ViewManager below? What's happening?
 
+        /*TODO: Answer below is copied from https://github.com/paulgries/UserLoginCleanArchitecture/blob/main/src/Main.java
+        The observer watching for changes in the userViewModel. It will
+         react to changes in application state by changing which view
+         is showing. This is an anonymous object because we don't need to
+         refer to it later.
+        */
+
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
@@ -64,13 +71,13 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
 
-        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
+//        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, addCourseDAO);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO);

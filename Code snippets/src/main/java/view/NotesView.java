@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.app.Constants;
+import main.java.entity.Course;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.notes.AddCourseController;
 import main.java.interface_adapter.notes.NotesState;
@@ -13,7 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class NotesView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Notes";
@@ -133,9 +137,11 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     private void setNotesDisplay(NotesState state) {
-        HashMap <String, String> notes = state.getNotes();
-        notesDisplay.setText(notes.keySet() + notes.values().toString()); // //TODO: current version is dummy code
-//        this.notesDisplay.revalidate();
-//        this.notesDisplay.repaint();
+        Map<String, Course> notes = state.getNotes();
+        Set<String> courses = notes.keySet();
+        this.coursesDisplay.removeAll();
+        for (String course : courses) {
+            coursesDisplay.addTab(course, getTab());
+        }
     }
 }
