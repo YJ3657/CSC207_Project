@@ -6,6 +6,8 @@ import main.java.interface_adapter.home.HomeViewModel;
 import main.java.use_case.signup.SignupOutputBoundary;
 import main.java.use_case.signup.SignupOutputData;
 
+import javax.swing.*;
+
 public class SignupPresenter implements SignupOutputBoundary {
     private final SignupViewModel signupViewModel;
     private final HomeViewModel homeViewModel;
@@ -36,6 +38,7 @@ public class SignupPresenter implements SignupOutputBoundary {
     public void prepareFailView(String error) {
         SignupState signupState = signupViewModel.getState();
         signupState.setUsernameError(error);
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         signupViewModel.firePropertyChanged();
     }
 }

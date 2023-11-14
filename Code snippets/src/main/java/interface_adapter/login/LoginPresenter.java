@@ -6,6 +6,8 @@ import main.java.interface_adapter.home.HomeViewModel;
 import main.java.use_case.login.LoginOutputBoundary;
 import main.java.use_case.login.LoginOutputData;
 
+import javax.swing.*;
+
 public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final HomeViewModel homeViewModel;
@@ -36,6 +38,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
         loginState.setUsernameError(error);
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         loginViewModel.firePropertyChanged();
     }
 }
