@@ -123,21 +123,6 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         return courses.get(courseId);
     }
 
-//    @Override
-//    public Map<String, Course> getCourses() {
-//        Map<String, Course> studentCourses = new HashMap<>();
-//        for (Map.Entry<String, Course> courseEntry: courses.entrySet()) {
-//            String courseName = courseEntry.getKey();
-//            Course course = courseEntry.getValue();
-//            if (course.getStudents().contains(Constants.CURRENT_USER)) {
-//                studentCourses.put(courseName, course);
-//            }
-//            //TODO: maybe in a future improvement, we can add the course object to Student entity's courses attribute (when loading from db and when adding course), and then just return that student's courses
-//        }
-//        return studentCourses;
-//    }
-
-
 //    public static void main(String[] args) {
 //        Connection conn = null;
 //        try {
