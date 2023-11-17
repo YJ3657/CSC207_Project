@@ -2,7 +2,7 @@ package main.java.entity;
 
 import main.java.Pair;
 import main.java.entity.Notes;
-import main.java.entity.Contents;
+//import main.java.entity.Contents;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

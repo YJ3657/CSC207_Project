@@ -1,39 +1,51 @@
 package main.java.interface_adapter.quiz;
 
 import main.java.entity.Course;
+import main.java.entity.Definition;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class QuizState {
-    private Map<Course, Course> questions; //necessary?
+    private Map<Course, List<Definition>> questions; //necessary?
 
     public QuizState(QuizState copy) {
         this();
         questions = copy.questions;
-        courses = copy.courses;
     }
 
     public QuizState() {
-        questions = new HashMap<String, Course>();
-        courses = new ArrayList<String>();
+        questions = new HashMap<Course, List<Definition>>();
     }
 
-    public void setQuestions(Map<String, Course> questions) {
+    public void setQuestions(Map<Course, List<Definition>> questions) {
         this.questions = questions;
     }
 
-    public Map<String, Course> getQuestions() {
+    public Map<Course, List<Definition>> getQuestions() {
         return questions;
     }
 
-    public void setCourses(ArrayList<String> courses) {
-        this.courses = courses;
+    public List<Definition> getSingleCourseQuestions(Course course){
+        try{
+            return questions.get(course);
+
+        }catch (NoSuchElementException e){
+            System.out.println(e + "\nReturning empty list");
+            return new ArrayList<>();
+        }
     }
 
-    public ArrayList<String> getCourses() {
-        return courses;
+    public void addSingleCourseQuestion(Course course, Definition question){
+        if (!questions.containsKey(course)){
+            questions.put(course, new ArrayList<>());
+        }
+        questions.get(course).add(question);
+    }
+
+    public void addSingleCourseQuestions(Course course, List<Definition> questions){
+        for (Definition ques: questions){
+            this.addSingleCourseQuestion(course, ques);
+        }
     }
 
 }
