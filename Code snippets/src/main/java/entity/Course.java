@@ -1,6 +1,5 @@
 package main.java.entity;
 
-import main.java.Pair;
 import main.java.entity.Notes;
 //import main.java.entity.Contents;
 
@@ -13,7 +12,7 @@ import java.util.List;
 //DONE FOR NOW
 public class Course {
     private String courseId;
-    private HashMap<Integer, List<String>> contents;
+    private HashMap<Integer, String> contents;
 
     private ArrayList<String> enrolledStudentId;
     private HashMap<Integer, List<Question>> questions;
@@ -43,10 +42,10 @@ public class Course {
         return enrolledStudentId;
     }
 
-    public void addContent(Integer chapterNo, String content) { contents.get(chapterNo).add(content);
+    public void addContent(Integer chapterNo, String content) { contents.put(chapterNo, content);
     }
 
-    public HashMap<Integer, List<String>> getContents() {
+    public HashMap<Integer, String> getContents() {
         return contents;
     }
 
