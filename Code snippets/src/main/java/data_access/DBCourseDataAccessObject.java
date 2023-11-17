@@ -1,7 +1,9 @@
 package main.java.data_access;
 
+import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.entity.CourseFactory;
+import main.java.entity.User;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 
 import java.sql.*;
@@ -13,12 +15,14 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;
 
+    public String username;
+
     public DBCourseDataAccessObject(CourseFactory courseFactory) {
         this.courseFactory = courseFactory;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+            this.conn = DriverManager.getConnection("jdbc:mysql://csc207:3306",
                     "remoteUser",
                     "thisismysql*");
 
@@ -68,7 +72,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/",
+                    "jdbc:mysql://csc207:3306/",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -121,13 +125,25 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     }
 
     @Override
-    public Map<String, Course> getCourses() {return courses;}
+    public Map<String, Course> getCourses() {
+        Map<String, Course> studentCourses = new HashMap<>();
+        for (Map.Entry<String, Course> courseEntry: courses.entrySet()) {
+            String courseName = courseEntry.getKey();
+            Course course = courseEntry.getValue();
+            if (course.getStudents().contains(Constants.CURRENT_USER)) {
+                studentCourses.put(courseName, course);
+            }
+            //TODO: maybe in a future improvement, we can add the course object to Student entity's courses attribute (when loading from db and when adding course), and then just return that student's courses
+        }
+        return studentCourses;
+    }
+
 
 //    public static void main(String[] args) {
 //        Connection conn = null;
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
-//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+//            conn = DriverManager.getConnection("jdbc:mysql://csc207:3306",
 //                    "remoteUser",
 //                    "thisismysql*");
 //

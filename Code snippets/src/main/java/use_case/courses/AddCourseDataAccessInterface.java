@@ -2,6 +2,7 @@ package main.java.use_case.courses;
 
 
 import main.java.entity.Course;
+import main.java.entity.User;
 
 import java.util.Map;
 

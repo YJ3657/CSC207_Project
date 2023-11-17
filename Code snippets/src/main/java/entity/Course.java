@@ -11,9 +11,12 @@ public class Course {
     private String id;
     private HashMap<Integer, String> contents;
 
+    private ArrayList<User> students;
+
     public Course(String id){
         this.id = id;
         contents = new HashMap<Integer, String>();
+        students = new ArrayList<>();
     }
 
     public void setId(String id) {
@@ -22,6 +25,14 @@ public class Course {
 
     public String getId() {
         return id;
+    }
+
+    public void addStudent(User user) {
+        students.add(user);
+    }
+
+    public ArrayList<User> getStudents() {
+        return students;
     }
 
     public HashMap<Integer, String> getContents() {
