@@ -92,11 +92,10 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
                     "VALUES (?, ?)";
 
 
-            for(int String content : course.getContents().values()) {
+            for(int chapterNo : course.getContents().keySet()) {
                 prestatement = conn.prepareStatement(sqlOrder);
-                prestatement.setInt(1, chapterno);
-                prestatement.setString(2, content);
-                chapterno += 1;
+                prestatement.setInt(1, chapterNo);
+                prestatement.setString(2, course.getContents().get(chapterNo));
                 prestatement.executeUpdate();
                 prestatement.close();
             }
