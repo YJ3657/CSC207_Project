@@ -56,7 +56,6 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(quizSpace, BorderLayout.CENTER);
 
-        // TODO: Find out if this is necessary
 //        this.add(quizSpace);
     }
 
@@ -66,6 +65,8 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
 
     }
 
+
+    // TODO: Do property changes below
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         NotesState state = (NotesState) evt.getNewValue();
