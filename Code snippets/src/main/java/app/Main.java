@@ -49,15 +49,6 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        //TODO: Are we instantiating new ViewManager below? What's happening?
-
-        /*TODO: Answer below is copied from https://github.com/paulgries/UserLoginCleanArchitecture/blob/main/src/Main.java
-        The observer watching for changes in the userViewModel. It will
-         react to changes in application state by changing which view
-         is showing. This is an anonymous object because we don't need to
-         refer to it later.
-        */
-
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
@@ -89,7 +80,9 @@ public class Main {
                 userDataAccessObject, signupuserdataaccessinterface, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
 
-        viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
+        // TODO: Old code
+//      viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
+        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
 //        application.pack();

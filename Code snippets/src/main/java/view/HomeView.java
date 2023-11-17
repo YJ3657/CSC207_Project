@@ -41,12 +41,15 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
 
         notes.addActionListener(this);
+        practice.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(notes)) {
             openNotesController.execute();
+        } else if (e.getSource().equals(practice)){
+
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class NotesDataAccessObject implements NotesDataAccessInterface {
-
+    
 
     //TODO: Make LinkedHashmap to preserve order notes were added?
     private HashMap<String, String> notes = new HashMap<>();
@@ -17,7 +17,6 @@ public class NotesDataAccessObject implements NotesDataAccessInterface {
     public NotesDataAccessObject() {
     }
 
-    // TODO: Are overrides needed some methods abstract in interfaces?
     @Override
     public HashMap<String, String> getNotes() {
         HashMap<String, String> notes = new HashMap<String, String>();

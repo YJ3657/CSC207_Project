@@ -1,8 +1,5 @@
 package main.java.entity;
 
-import main.java.entity.Notes;
-import main.java.entity.Contents;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
