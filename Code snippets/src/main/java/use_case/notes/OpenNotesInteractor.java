@@ -17,9 +17,10 @@ public class OpenNotesInteractor implements OpenNotesInputBoundary {
 
     @Override
     public void execute() {
-        Map<String, Course> courses = addCourseDAO.getCourses();
-        System.out.println(courses);
-        OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(courses);
-        openNotesPresenter.presentNotes(openNotesOutputData);
+        //TODO: I commented this out just to get rid of errors
+//        Map<String, Course> courses = addCourseDAO.getCourses();
+//        System.out.println(courses);
+//        OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(courses);
+//        openNotesPresenter.presentNotes(openNotesOutputData);
     }
 }

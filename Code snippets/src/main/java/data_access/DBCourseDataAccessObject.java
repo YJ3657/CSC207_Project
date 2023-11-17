@@ -7,7 +7,9 @@ import main.java.entity.User;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -40,7 +42,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
                 while(rs.next()) {
                     int chapterNo = rs.getInt("chapterno");
                     String chapter = rs.getString("chaptertitle");
-                    course.getContents().put(chapterNo, chapter);
+                    course.getContents().put(chapterNo, new ArrayList<>()); //TODO: edited just to get rid of errors. Old: course.getContents().put(chapterNo, chapter);
                 }
                 courses.put(databaseName, course);
                 rs.close();
@@ -92,10 +94,10 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
                     "VALUES (?, ?)";
 
             int chapterno = 1;
-            for(String content : course.getContents().values()) {
+            for(List content : course.getContents().values()) {  //TODO: OLD: for(String content : course.getContents().values())
                 prestatement = conn.prepareStatement(sqlOrder);
                 prestatement.setInt(1, chapterno);
-                prestatement.setString(2, content);
+                prestatement.setString(2,content.toString()); //TODO: OLD: prestatement.setString(2, content);
                 chapterno += 1;
                 prestatement.executeUpdate();
                 prestatement.close();
@@ -124,8 +126,8 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         return courses.get(courseId);
     }
 
-    @Override
-    public
+//    @Override
+//    public
 
 //    @Override
 //    public Map<String, Course> getCourses() {
