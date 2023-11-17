@@ -2,6 +2,7 @@ package main.java.use_case.notes;
 
 import main.java.app.Constants;
 import main.java.entity.Course;
+import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.update_users.UpdateUserDataAccessInterface;
 import java.util.HashMap;

@@ -14,6 +14,11 @@ public class User{
     private List<String> groupId;
     private List<String> courseId;
 
+    public User(){
+        this.id = "";
+        this.password = "";
+    }
+
     public User(String id, String password){
         this.id = id;
         this.password = password;

@@ -82,7 +82,7 @@ public class Main {
 
         // TODO: Old code
 //      viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
-        viewManagerModel.setActiveView(notesView.viewName);
+        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
 //        application.pack();

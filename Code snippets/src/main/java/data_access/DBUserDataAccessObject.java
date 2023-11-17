@@ -222,17 +222,17 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         return new ArrayList<>(accounts.get(userid).getCourseId());
     }
 
-//    public static void main(String[] args) {
-//        User user = new User("matthew","su36571536");
-//        user.getCourseId().add("csc236");
-//        user.getCourseId().add("CSC258");
-//        user.getGroupId().add("group1");
-//        user.getGroupId().add("group2");
-//
-//        Connection conn = null;
-//        saveUser(user);
-        // update(user);
-        // clear();
-//    }
+    public static void main(String[] args) {
+        User user = new User("matthew","su36571536");
+        user.getCourseId().add("csc236");
+        user.getCourseId().add("CSC258");
+        user.getGroupId().add("group1");
+        user.getGroupId().add("group2");
+
+        Connection conn = null;
+        saveUser(user);
+//         update(user);
+//         clear();
+    }
 
 }
