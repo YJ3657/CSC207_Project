@@ -1,6 +1,5 @@
 package main.java.entity;
 
-import main.java.Pair;
 import main.java.entity.Notes;
 import main.java.entity.Contents;
 

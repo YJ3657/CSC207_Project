@@ -91,8 +91,8 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
             sqlOrder = "INSERT INTO contents (chapterno, chaptertitle)" +
                     "VALUES (?, ?)";
 
-            int chapterno = 1;
-            for(String content : course.getContents().values()) {
+
+            for(int String content : course.getContents().values()) {
                 prestatement = conn.prepareStatement(sqlOrder);
                 prestatement.setInt(1, chapterno);
                 prestatement.setString(2, content);
@@ -123,9 +123,6 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     public Course getCourse(String courseId) {
         return courses.get(courseId);
     }
-
-    @Override
-    public
 
 //    @Override
 //    public Map<String, Course> getCourses() {

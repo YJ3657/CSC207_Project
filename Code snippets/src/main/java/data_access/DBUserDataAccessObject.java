@@ -3,6 +3,7 @@ package main.java.data_access;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.UserFactory;
 import main.java.entity.User;
+import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.login.LoginUserDataAccessInterface;
 import main.java.use_case.signup.SignupUserDataAccessInterface;
 import main.java.use_case.clear_users.ClearUserDataAccessInterface;
@@ -18,7 +19,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, ClearUserDataAccessInterface,
-        UpdateUserDataAccessInterface {
+        UpdateUserDataAccessInterface, FindUserCourseDataAccessInterface {
 
     private Connection conn = null;
     private final Map<String, User> accounts = new HashMap<>();
@@ -216,7 +217,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             }
         }
     }
-
+    @Override
     public List<String> getUserCourses(String userid) {
         return new ArrayList<>(accounts.get(userid).getCourseId());
     }
