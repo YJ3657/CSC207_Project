@@ -11,6 +11,8 @@ public class QuizViewModel extends ViewModel{
     public final String TITLE_LABEL = "Quiz View";
 
     public final String BACK_BUTTON_LABEL = "Back";
+
+    public final String SHOW_ANSWERS_BUTTON_LABEL = "Show Answers";
     private QuizState state = new QuizState();
 
     public QuizViewModel() {

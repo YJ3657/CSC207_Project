@@ -1,6 +1,6 @@
 package main.java.entity;
 
-public interface NotesFactory {
+public class NotesFactory {
 
-    public void create()
+    public Notes create(String title){return new Notes(title);}
 }
