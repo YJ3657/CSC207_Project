@@ -2,6 +2,7 @@ package main.java.use_case.courses;
 
 
 import main.java.entity.Course;
+import main.java.entity.User;
 
 import java.util.Map;
 
@@ -10,5 +11,4 @@ public interface AddCourseDataAccessInterface {
     public void saveCourse(Course course);
     public boolean existsByID(String courseId);
 
-    Map<String, Course> getCourses();
 }

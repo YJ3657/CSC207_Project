@@ -7,17 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OpenNotesInteractor implements OpenNotesInputBoundary {
-    final AddCourseDataAccessInterface addCourseDataAccessInterface;
+    final AddCourseDataAccessInterface addCourseDAO;
     final OpenNotesOutputBoundary openNotesPresenter;
 
     public OpenNotesInteractor(AddCourseDataAccessInterface addCourseDataAccessInterface, OpenNotesOutputBoundary openNotesPresenter) {
-        this.addCourseDataAccessInterface = addCourseDataAccessInterface;
+        this.addCourseDAO = addCourseDataAccessInterface;
         this.openNotesPresenter = openNotesPresenter;
     }
 
     @Override
     public void execute() {
-        Map<String, Course> courses = addCourseDataAccessInterface.getCourses();
+        Map<String, Course> courses = addCourseDAO.getCourses();
+        System.out.println(courses);
         OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(courses);
         openNotesPresenter.presentNotes(openNotesOutputData);
     }

@@ -3,17 +3,12 @@ package main.java.entity;
 //as per ta suggestion, done for now
 public class Question {
     private String question;
-
     private String answer;
-    public Question(String question){
-        this.question = question;
-        answer = "";
-    }
 
     public Question(String question, String answer){
-        this(question);
-        this.answer = answer;
 
+        this.question = question;
+        this.answer = answer;
     }
 
     public String getQuestion() {
@@ -31,5 +26,4 @@ public class Question {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
 }
