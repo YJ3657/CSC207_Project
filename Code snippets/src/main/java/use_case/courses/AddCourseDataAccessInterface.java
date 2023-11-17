@@ -11,5 +11,4 @@ public interface AddCourseDataAccessInterface {
     public void saveCourse(Course course);
     public boolean existsByID(String courseId);
 
-    Map<String, Course> getCourses();
 }

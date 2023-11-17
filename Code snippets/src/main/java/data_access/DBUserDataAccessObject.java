@@ -8,7 +8,9 @@ import main.java.use_case.signup.SignupUserDataAccessInterface;
 import main.java.use_case.clear_users.ClearUserDataAccessInterface;
 import main.java.use_case.update_users.UpdateUserDataAccessInterface;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -70,13 +72,13 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         }
     }
 
-    // @Override
+    @Override
     public void saveUser(User user) {
         accounts.put(user.getId(), user);
         this.save();
     }
 
-    // @Override
+    @Override
     public User get(String username) {
         return accounts.get(username);
     }
@@ -128,12 +130,12 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         }
     }
 
-    //@Override
+    @Override
     public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
     }
 
-    // @Override
+    @Override
     public void clear() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -162,7 +164,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         }
     }
 
-    // @Override
+    @Override
     public void update(User user) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -213,6 +215,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 } catch (SQLException e) { }
             }
         }
+    }
+
+    public List<String> getUserCourses(String userid) {
+        return new ArrayList<>(accounts.get(userid).getCourseId());
     }
 
 //    public static void main(String[] args) {

@@ -10,12 +10,12 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// Need to make updateContents, updateDefiniition, updateStudent, updateContents
 public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;
-
-    public String username;
 
     public DBCourseDataAccessObject(CourseFactory courseFactory) {
         this.courseFactory = courseFactory;
@@ -62,7 +62,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         }
     }
     // Saving the new course
-
+    @Override
     public void saveCourse(Course course) {
         courses.put(course.getId(), course);
         save(course);
@@ -114,29 +114,32 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         }
     }
 
-    //@Override
+    @Override
     public boolean existsByID(String courseId) {
         return courses.containsKey(courseId);
     }
 
-    //@Override
+    @Override
     public Course getCourse(String courseId) {
         return courses.get(courseId);
     }
 
     @Override
-    public Map<String, Course> getCourses() {
-        Map<String, Course> studentCourses = new HashMap<>();
-        for (Map.Entry<String, Course> courseEntry: courses.entrySet()) {
-            String courseName = courseEntry.getKey();
-            Course course = courseEntry.getValue();
-            if (course.getStudents().contains(Constants.CURRENT_USER)) {
-                studentCourses.put(courseName, course);
-            }
-            //TODO: maybe in a future improvement, we can add the course object to Student entity's courses attribute (when loading from db and when adding course), and then just return that student's courses
-        }
-        return studentCourses;
-    }
+    public
+
+//    @Override
+//    public Map<String, Course> getCourses() {
+//        Map<String, Course> studentCourses = new HashMap<>();
+//        for (Map.Entry<String, Course> courseEntry: courses.entrySet()) {
+//            String courseName = courseEntry.getKey();
+//            Course course = courseEntry.getValue();
+//            if (course.getStudents().contains(Constants.CURRENT_USER)) {
+//                studentCourses.put(courseName, course);
+//            }
+//            //TODO: maybe in a future improvement, we can add the course object to Student entity's courses attribute (when loading from db and when adding course), and then just return that student's courses
+//        }
+//        return studentCourses;
+//    }
 
 
 //    public static void main(String[] args) {

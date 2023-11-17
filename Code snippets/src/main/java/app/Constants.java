@@ -16,7 +16,7 @@ public final class Constants {
 
     public static final String ADD_COURSE_ERROR = "Course already exists";
 
-    public static User CURRENT_USER;
+    public static String CURRENT_USER;
     private Constants() {}
 
 
