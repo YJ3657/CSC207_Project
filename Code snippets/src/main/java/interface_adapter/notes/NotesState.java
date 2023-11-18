@@ -1,32 +1,51 @@
 package main.java.interface_adapter.notes;
 
 import main.java.entity.Course;
+import main.java.entity.Notes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NotesState {
-    private Map<String, Course> notes = new HashMap<>();
+    private String notesTitle;
+    private String notesContent;
+    private HashMap<String, Notes> allNotes;
+
     private ArrayList<String> courses = new ArrayList<>();
+    private String selectedcourse;
 
     private String courseError = null;
 
+    private String notesError = null;
+
     public NotesState(NotesState copy) {
-        notes = copy.notes;
+        notesTitle = copy.notesTitle;
+        notesContent = copy.notesContent;
         courses = copy.courses;
         courseError = copy.courseError;
+        notesError = copy.notesError;
+        selectedcourse = copy.selectedcourse;
+        allNotes = copy.allNotes;
     }
 
     public NotesState() {
     }
 
-    public void setNotes(Map<String, Course> notes) {
-        this.notes = notes;
+    public void setNotesTitle(String notesTitle) {
+        this.notesTitle = notesTitle;
     }
 
-    public Map<String, Course> getNotes() {
-        return notes;
+    public String getNotesTitle() {
+        return notesTitle;
+    }
+
+    public void setNotesContent(String notesContent) {
+        this.notesContent = notesContent;
+    }
+
+    public String getNotesContent() {
+        return notesContent;
     }
 
     public void setCourses(ArrayList<String> courses) {
@@ -44,4 +63,12 @@ public class NotesState {
     public void setCourseError(String error) {
         this.courseError = error;
     }
+
+    public void setNotesError(String error) {
+        this.notesError = error;
+    }
+
+    public String getSelectedCourse(){return selectedcourse;}
+
+    public void setSelectedcourse(String course){this.selectedcourse = course;}
 }
