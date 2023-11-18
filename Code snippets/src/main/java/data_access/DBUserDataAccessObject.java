@@ -1,10 +1,12 @@
 package main.java.data_access;
 
 import main.java.entity.DefaultUserFactory;
+import main.java.entity.Notes;
 import main.java.entity.UserFactory;
 import main.java.entity.User;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.login.LoginUserDataAccessInterface;
+import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.use_case.signup.SignupUserDataAccessInterface;
 import main.java.use_case.clear_users.ClearUserDataAccessInterface;
 import main.java.use_case.update_users.UpdateUserDataAccessInterface;
@@ -19,7 +21,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, ClearUserDataAccessInterface,
-        UpdateUserDataAccessInterface, FindUserCourseDataAccessInterface {
+        UpdateUserDataAccessInterface, FindUserCourseDataAccessInterface, NotesDataAccessInterface {
 
     private Connection conn = null;
     private final Map<String, User> accounts = new HashMap<>();
@@ -217,8 +219,25 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         }
     }
     @Override
-    public List<String> getUserCourses(String userid) {
-        return new ArrayList<>(accounts.get(userid).getCourseId());
+    public Map<String, List<Notes>> getUserCourses(String userid) {
+        return accounts.get(userid).getNotes();
+    }
+
+    @Override
+    public void addNotes(Notes notes, String courseId, String userId){
+        accounts.get(userId).setNotes(notes, courseId);
+        this.save();
+    }
+
+    @Override
+    public boolean existsByName(String courseId, String title, String userId){
+        int result = 0;
+        for (Notes i : accounts.get(userId).getNotes().get(courseId)){
+            if(i.getTitle().equals(title)){
+                result += 1;
+            }
+        }
+        return result == 0;
     }
 
 }

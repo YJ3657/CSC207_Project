@@ -9,8 +9,8 @@ public class CreateNotesController {
         this.createNotesInteractor = createNotesInteractor;
     }
 
-    public void execute(String title, String content, String courseId) {
-        CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId);
+    public void execute(String title, String content, String courseId, String userId) {
+        CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId, userId);
 
         createNotesInteractor.execute(createNotesInputData);
     }

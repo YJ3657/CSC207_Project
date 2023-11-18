@@ -15,6 +15,8 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
         return null; // Test case using this inMem DAO does not use this method currently
     }
 
+
+
     @Override
     public void saveCourse(Course course) {
         this.courses.add(course);
@@ -29,4 +31,7 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
         return courseIDs.contains(courseID);
     }
 
+    public Map<String, Course> getCourses() {
+        return null;
+    }
 }
