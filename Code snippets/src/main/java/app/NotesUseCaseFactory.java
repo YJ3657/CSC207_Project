@@ -1,14 +1,11 @@
 package main.java.app;
 
 import main.java.entity.CourseFactory;
+import main.java.entity.NotesFactory;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.notes.AddCourseController;
-import main.java.interface_adapter.notes.AddCoursePresenter;
-import main.java.interface_adapter.notes.NotesViewModel;
+import main.java.interface_adapter.notes.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
-import main.java.use_case.notes.AddCourseInputBoundary;
-import main.java.use_case.notes.AddCourseInteractor;
-import main.java.use_case.notes.AddCourseOutputBoundary;
+import main.java.use_case.notes.*;
 import main.java.view.NotesView;
 
 public class NotesUseCaseFactory {
@@ -16,9 +13,12 @@ public class NotesUseCaseFactory {
 
     public static NotesView create(ViewManagerModel viewManagerModel,
                                    NotesViewModel notesViewModel,
-                                   AddCourseDataAccessInterface addCourseDAO) {
+                                   AddCourseDataAccessInterface addCourseDAO,
+                                   NotesDataAccessInterface notesDataAccessInterface) {
         AddCourseController addCourseController = createAddCourseUseCase(viewManagerModel, notesViewModel, addCourseDAO);
-        return new NotesView(notesViewModel, viewManagerModel, addCourseController);
+        CreateNotesController createNotesController = createCreateNotesUseCase(viewManagerModel, notesViewModel,
+                notesDataAccessInterface);
+        return new NotesView(notesViewModel, viewManagerModel, addCourseController, createNotesController);
     }
 
      public static AddCourseController createAddCourseUseCase(ViewManagerModel viewManagerModel,
@@ -31,4 +31,15 @@ public class NotesUseCaseFactory {
 
 
      }
+    public static CreateNotesController createCreateNotesUseCase(ViewManagerModel viewManagerModel,
+                                                                 NotesViewModel notesViewModel,
+                                                                 NotesDataAccessInterface notesDataAccessInterface) {
+        CreateNotesOutputBoundary createNotesPresenter = new CreateNotesPresenter(viewManagerModel, notesViewModel);
+        NotesFactory notesFactory = new NotesFactory();
+        CreateNotesInputBoundary createNotesInteractor = new CreateNotesInteractor(notesDataAccessInterface,
+                createNotesPresenter, notesFactory);
+        return new CreateNotesController(createNotesInteractor);
+
+
+    }
 }
