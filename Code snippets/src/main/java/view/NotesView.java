@@ -124,7 +124,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                         // execute createNotes use case
                         NotesState currentstate = notesViewModel.getState();
                         createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
-                                currentstate.getSelectedCourse());
+                                currentstate.getSelectedCourse(), currentstate.getUserId());
                     }
                 }
 

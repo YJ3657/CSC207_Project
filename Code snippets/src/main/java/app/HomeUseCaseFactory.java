@@ -2,6 +2,7 @@ package main.java.app;
 
 import main.java.entity.CourseFactory;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
+import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.interface_adapter.*;
 import main.java.interface_adapter.home.HomeViewModel;
@@ -17,11 +18,11 @@ public class HomeUseCaseFactory {
 
     private HomeUseCaseFactory() {}
 
-    public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, AddCourseDataAccessInterface addCOurseDAO) {
+    public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, FindUserCourseDataAccessInterface addCOurseDAO) {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, addCOurseDAO);
         return new HomeView(homeViewModel, openNotesController);
     }
-    private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, AddCourseDataAccessInterface addCourseDAO) {
+    private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, FindUserCourseDataAccessInterface addCourseDAO) {
         OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
 
         OpenNotesInputBoundary clearInteractor = new OpenNotesInteractor(addCourseDAO, openNotesPresenter);

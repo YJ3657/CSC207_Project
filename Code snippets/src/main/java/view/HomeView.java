@@ -1,5 +1,6 @@
 package main.java.view;
 
+import main.java.interface_adapter.home.HomeState;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.notes.OpenNotesController;
 
@@ -46,7 +47,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(notes)) {
-            openNotesController.execute();
+            HomeState currentstate = homeViewModel.getState();
+            openNotesController.execute(currentstate.getUsername());
         }
     }
 

@@ -15,9 +15,10 @@ public class OpenNotesPresenter implements OpenNotesOutputBoundary {
     }
 
     @Override
-    public void presentNotes(OpenNotesOutputData data) {
+    public void presentNotes(OpenNotesOutputData data, String userId) {
         NotesState notesState = notesViewModel.getState();
-        notesState.setNotes(data.getNotes());
+        notesState.setAllNotes(data.getNotes());
+        notesState.setUserId(userId);
         notesViewModel.setState(notesState);
         notesViewModel.firePropertyChanged();
 

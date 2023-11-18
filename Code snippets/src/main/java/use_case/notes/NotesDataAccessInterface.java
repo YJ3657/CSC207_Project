@@ -5,9 +5,8 @@ import main.java.entity.Notes;
 import java.util.HashMap;
 
 public interface NotesDataAccessInterface {
-    public HashMap<String, String> getNotes();
 
-    public void addNotes(Notes notes, String courseId);
+    public void addNotes(Notes notes, String courseId, String userId);
 
-    public boolean existsByName(String courseId, String title);
+    public boolean existsByName(String courseId, String title, String userId);
 }

@@ -48,7 +48,7 @@ public class User{
         this.password = password;
     }
 
-    public List<Notes> getNotes(String courseId){return notes.get(courseId);}
+    public HashMap<String, List<Notes>> getNotes(){return notes;}
 
     public void setNotes(Notes notes, String courseId){this.notes.get(courseId).add(notes);}
 
