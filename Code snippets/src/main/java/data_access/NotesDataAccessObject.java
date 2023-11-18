@@ -15,7 +15,7 @@ public class NotesDataAccessObject implements NotesDataAccessInterface {
 
 
     //TODO: Make LinkedHashmap to preserve order notes were added?
-    private HashMap<String, String> notes = new HashMap<>();
+    private final HashMap<String, String> notes = new HashMap<>();
     private final ArrayList<String> courses = new ArrayList<>();
     private final NotesFactory notesFactory;
     private final User user;
@@ -29,7 +29,7 @@ public class NotesDataAccessObject implements NotesDataAccessInterface {
     // TODO: Are overrides needed some methods abstract in interfaces?
     @Override
     public HashMap<String, String> getNotes() {
-        HashMap<String, String> notes = new HashMap<String, String>();
+        HashMap<String, String> notes = new HashMap<>();
         notes.put("Title", "Notes taken");
         return notes;
     }
@@ -43,7 +43,7 @@ public class NotesDataAccessObject implements NotesDataAccessInterface {
     public boolean existsByName(String courseId, String title){
         int result = 0;
         for (Notes i : user.getNotes(courseId)){
-            if(i.getTitle() == title){
+            if(i.getTitle().equals(title)){
                 result += 1;
             }
         }
