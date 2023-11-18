@@ -1,5 +1,6 @@
 package main.java.use_case.login;
 
+import main.java.app.Constants;
 import main.java.entity.User;
 
 public class LoginInteractor implements LoginInputBoundary {
@@ -29,8 +30,8 @@ public class LoginInteractor implements LoginInputBoundary {
                 userPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else {
 
-                User user = userDataAccessObject.get(loginInputData.getUsername());
-
+                User user = userDataAccessObject.get(username);
+                Constants.CURRENT_USER = user;
                 LoginOutputData loginOutputData = new LoginOutputData(user.getId(), false);
                 userPresenter.prepareSuccessView(loginOutputData);
             }

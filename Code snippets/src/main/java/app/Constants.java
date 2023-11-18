@@ -1,5 +1,7 @@
 package main.java.app;
 
+import main.java.entity.User;
+
 public final class Constants {
     public static final String HOME_VIEWNAME = "home";
     public static final String NOTES_VIEWNAME = "Notes";
@@ -13,6 +15,8 @@ public final class Constants {
     public static final double NOTE_TOPICS_SIZE = 1.0 / 6; // occupies 1/6 of the ScrollPane
 
     public static final String ADD_COURSE_ERROR = "Course already exists";
+
+    public static String CURRENT_USER;
     private Constants() {}
 
 

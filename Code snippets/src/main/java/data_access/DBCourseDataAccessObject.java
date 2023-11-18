@@ -1,13 +1,17 @@
 package main.java.data_access;
 
+import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.entity.CourseFactory;
+import main.java.entity.User;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// Need to make updateContents, updateDefiniition, updateStudent, updateContents
 public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
@@ -18,7 +22,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+            this.conn = DriverManager.getConnection("jdbc:mysql://csc207:3306",
                     "remoteUser",
                     "thisismysql*");
 
@@ -58,7 +62,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         }
     }
     // Saving the new course
-
+    @Override
     public void saveCourse(Course course) {
         courses.put(course.getId(), course);
         save(course);
@@ -68,7 +72,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/",
+                    "jdbc:mysql://csc207:3306/",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -87,12 +91,11 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
             sqlOrder = "INSERT INTO contents (chapterno, chaptertitle)" +
                     "VALUES (?, ?)";
 
-            int chapterno = 1;
-            for(String content : course.getContents().values()) {
+
+            for(int chapterNo : course.getContents().keySet()) {
                 prestatement = conn.prepareStatement(sqlOrder);
-                prestatement.setInt(1, chapterno);
-                prestatement.setString(2, content);
-                chapterno += 1;
+                prestatement.setInt(1, chapterNo);
+                prestatement.setString(2, course.getContents().get(chapterNo));
                 prestatement.executeUpdate();
                 prestatement.close();
             }
@@ -110,24 +113,21 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         }
     }
 
-    //@Override
+    @Override
     public boolean existsByID(String courseId) {
         return courses.containsKey(courseId);
     }
 
-    //@Override
+    @Override
     public Course getCourse(String courseId) {
         return courses.get(courseId);
     }
-
-    @Override
-    public Map<String, Course> getCourses() {return courses;}
 
 //    public static void main(String[] args) {
 //        Connection conn = null;
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
-//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+//            conn = DriverManager.getConnection("jdbc:mysql://csc207:3306",
 //                    "remoteUser",
 //                    "thisismysql*");
 //

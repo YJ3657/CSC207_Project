@@ -1,5 +1,6 @@
 package main.java.use_case.signup;
 
+import main.java.app.Constants;
 import main.java.entity.User;
 import main.java.entity.UserFactory;
 
@@ -18,14 +19,17 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
-        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+        String username = signupInputData.getUsername();
+        String password = signupInputData.getPassword();
+        if (userDataAccessObject.existsByName(username)) {
             userPresenter.prepareFailView("User already exists.");
-        } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
+        } else if (!password.equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
         } else {
 
-            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
+            User user = userFactory.create(username, password);
             userDataAccessObject.saveUser(user);
+            Constants.CURRENT_USER = user;
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getId(), false);
             userPresenter.prepareSuccessView(signupOutputData);
