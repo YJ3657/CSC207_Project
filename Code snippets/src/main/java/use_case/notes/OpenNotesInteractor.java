@@ -9,19 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 public class OpenNotesInteractor implements OpenNotesInputBoundary {
-    final FindUserCourseDataAccessInterface addCourseDAO;
+    final FindUserCourseDataAccessInterface userCourseDAO;
 
     final OpenNotesOutputBoundary openNotesPresenter;
 
-    public OpenNotesInteractor(AddCourseDataAccessInterface addCourseDataAccessInterface, OpenNotesOutputBoundary openNotesPresenter) {
-        this.addCourseDAO = addCourseDataAccessInterface;
+    public OpenNotesInteractor(FindUserCourseDataAccessInterface userCourseDAO, OpenNotesOutputBoundary openNotesPresenter) {
+        this.userCourseDAO = userCourseDAO;
         this.openNotesPresenter = openNotesPresenter;
     }
 
     @Override
     public void execute() {
-        List<String> courses = addCourseDAO.getUserCourses(Constants.CURRENT_USER);
-        System.out.println(courses);
+        List<String> courses = userCourseDAO.getUserCourses(Constants.CURRENT_USER);
         OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(courses);
         openNotesPresenter.presentNotes(openNotesOutputData);
     }

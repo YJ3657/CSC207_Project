@@ -72,15 +72,15 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
+        DBUserDataAccessObject addUserCourseDAO = new DBUserDataAccessObject(new DefaultUserFactory());
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
-
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, addCourseDAO);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, addUserCourseDAO);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO);
+        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addUserCourseDAO, addCourseDAO);
         views.add(notesView, notesView.viewName);
 
         UserFactory userFactory = new DefaultUserFactory();

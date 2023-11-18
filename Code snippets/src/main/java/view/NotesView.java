@@ -137,9 +137,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     private void setNotesDisplay(NotesState state) {
-        Map<String, Course> notes = state.getNotes();
-        Set<String> courses = notes.keySet();
-        this.coursesDisplay.removeAll();
+        ArrayList<String> courses = state.getCourses();
+        // this.coursesDisplay.removeAll();
         for (String course : courses) {
             coursesDisplay.addTab(course, getTab());
         }

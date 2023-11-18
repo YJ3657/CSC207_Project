@@ -6,6 +6,7 @@ import main.java.interface_adapter.notes.AddCourseController;
 import main.java.interface_adapter.notes.AddCoursePresenter;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
+import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.AddCourseInputBoundary;
 import main.java.use_case.notes.AddCourseInteractor;
 import main.java.use_case.notes.AddCourseOutputBoundary;
@@ -16,17 +17,19 @@ public class NotesUseCaseFactory {
 
     public static NotesView create(ViewManagerModel viewManagerModel,
                                    NotesViewModel notesViewModel,
+                                   FindUserCourseDataAccessInterface addUserCourseDAO,
                                    AddCourseDataAccessInterface addCourseDAO) {
-        AddCourseController addCourseController = createAddCourseUseCase(viewManagerModel, notesViewModel, addCourseDAO);
+        AddCourseController addCourseController = createAddCourseUseCase(viewManagerModel, notesViewModel, addUserCourseDAO, addCourseDAO);
         return new NotesView(notesViewModel, viewManagerModel, addCourseController);
     }
 
      public static AddCourseController createAddCourseUseCase(ViewManagerModel viewManagerModel,
                                                               NotesViewModel notesViewModel,
+                                                              FindUserCourseDataAccessInterface addUserCourseDAO,
                                                               AddCourseDataAccessInterface addCourseDAO) {
          AddCourseOutputBoundary addCoursePresenter = new AddCoursePresenter(viewManagerModel, notesViewModel);
          CourseFactory courseFactory = new CourseFactory();
-         AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(addCourseDAO, addCoursePresenter, courseFactory);
+         AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(addUserCourseDAO, addCourseDAO, addCoursePresenter, courseFactory);
          return new AddCourseController(addCourseInteractor);
 
 

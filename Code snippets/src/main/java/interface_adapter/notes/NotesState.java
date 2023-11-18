@@ -4,10 +4,11 @@ import main.java.entity.Course;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NotesState {
-    private Map<String, Course> notes = new HashMap<>();
+    private List<String> notes = new ArrayList<>();
     private ArrayList<String> courses = new ArrayList<>();
 
     private String courseError = null;
@@ -21,11 +22,11 @@ public class NotesState {
     public NotesState() {
     }
 
-    public void setNotes(Map<String, Course> notes) {
+    public void setNotes(List<String> notes) {
         this.notes = notes;
     }
 
-    public Map<String, Course> getNotes() {
+    public List<String> getNotes() {
         return notes;
     }
 

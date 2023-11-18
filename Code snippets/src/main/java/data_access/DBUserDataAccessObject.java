@@ -92,9 +92,8 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                     "remoteUser",
                     "thisismysql*"
             );
-
             for(User user : accounts.values()) {
-                String sqlOrder = "INSERT INTO users (userid, password, groupid1, groupid2, groupid3, groupid4," +
+                String sqlOrder = "INSERT IGNORE INTO users (userid, password, groupid1, groupid2, groupid3, groupid4," +
                         " groupid5, groupid6, groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, " +
                         "courseid6, courseid7, courseid8) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -221,18 +220,5 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     public List<String> getUserCourses(String userid) {
         return new ArrayList<>(accounts.get(userid).getCourseId());
     }
-
-//    public static void main(String[] args) {
-//        User user = new User("matthew","su36571536");
-//        user.getCourseId().add("csc236");
-//        user.getCourseId().add("CSC258");
-//        user.getGroupId().add("group1");
-//        user.getGroupId().add("group2");
-//
-//        Connection conn = null;
-//        saveUser(user);
-        // update(user);
-        // clear();
-//    }
 
 }
