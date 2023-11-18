@@ -8,13 +8,13 @@ import java.util.Collection;
 public class Notes{
 
     private String title;
-    private Collection<String> lines; //what is the best data object to store note contents?
+    private String content; //what is the best data object to store note contents?
     private Reminder reminder;
 
 
-    public Notes(String title){
+    public Notes(String title, String content){
         this.title = title;
-        lines = new ArrayList<String>();
+        this.content = content;
         reminder = new Reminder(title, 1); //new Reminder()
     }
     public void setTitle(String title) {
@@ -25,8 +25,8 @@ public class Notes{
         return title;
     }
 
-    public Collection<String> getAllNotes(){
-        return this.lines;
+    public String getAllNotes(){
+        return this.content;
     }
 
 
