@@ -26,7 +26,7 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
     @Override
     public void execute(AddCourseInputData addCourseInputData) {
         String courseID = addCourseInputData.getCourseID();
-        if (addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).contains(courseID)) {
+        if (addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).containsKey(courseID)) {
             addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
         } else {
             LocalDateTime now = LocalDateTime.now();
