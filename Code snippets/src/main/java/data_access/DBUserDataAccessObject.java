@@ -294,6 +294,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 bw.write("");
                 bw.newLine();
             }
+            bw.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -357,6 +358,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 bw.write(accounts.get(key).getId() + "," + accounts.get(key).getPassword());
                 bw.newLine();
             }
+            bw.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

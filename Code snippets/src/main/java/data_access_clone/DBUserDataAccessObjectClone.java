@@ -47,6 +47,7 @@
 //                bw.write("");
 //                bw.newLine();
 //            }
+//            bw.close();
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -103,6 +104,7 @@
 //                bw.write(accounts.get(key).getId() + "," + accounts.get(key).getPassword());
 //                bw.newLine();
 //            }
+//            bw.close();
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
