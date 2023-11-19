@@ -24,7 +24,6 @@ public class SignupPresenter implements SignupOutputBoundary {
     @Override
     public void prepareSuccessView(SignupOutputData response) {
         // On success, switch to the home view.
-
         HomeState homeState = homeViewModel.getState();
         homeState.setUsername(response.getUsername());
         this.homeViewModel.setState(homeState);

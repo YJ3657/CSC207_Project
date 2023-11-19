@@ -75,7 +75,7 @@ public class Main {
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
-        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
+//        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject);
         views.add(homeView, homeView.viewName);
@@ -86,7 +86,7 @@ public class Main {
         UserFactory userFactory = new DefaultUserFactory();
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel,
-                userDataAccessObject, signupuserdataaccessinterface, signupViewModel, userFactory);
+                userDataAccessObject, userDataAccessObject, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
