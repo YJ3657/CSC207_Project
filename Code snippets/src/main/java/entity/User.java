@@ -22,13 +22,14 @@ public class User{
     public User(){
         this.id = "";
         this.password = "";
+        groupId = new ArrayList<>();
+        courseId = new ArrayList<>();
     }
 
     public User(String id, String password){
+        this();
         this.id = id;
         this.password = password;
-        groupId = new ArrayList<>();
-        courseId = new ArrayList<>();
     }
 
     //getters and setters

@@ -39,7 +39,7 @@ public class Notes{
         return reminder;
     }
 
-    public void setReminder(Reminder reminder) {
-        this.reminder = reminder;
-    }
+//    public void setReminder(Reminder reminder) {
+//        this.reminder = reminder;
+//    }
 }

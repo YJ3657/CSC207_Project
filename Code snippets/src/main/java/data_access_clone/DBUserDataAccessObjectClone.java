@@ -1,5 +1,6 @@
 //package main.java.data_access;
 //
+//import main.java.app.Constants;
 //import main.java.entity.*;
 //import main.java.use_case.clear_users.ClearUserDataAccessInterface;
 //import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
@@ -54,30 +55,18 @@
 //    }
 //
 //    @Override
-//    public Map<String, List<Notes>> getUserCourses(String userid) {
-//        return accounts.get(userid).getNotes();
+//    public List<String> getUserCourses(String userid) {
+//        return accounts.get(userid).getGroupId();
+//    }
+//
+//    @Override
+//    public Map<String, List<Notes>> getUserNotes(String userId) {
+//        return null;
 //    }
 //
 //    @Override
 //    public User get(String username) {
 //        return accounts.get(username);
-//    }
-//
-//    @Override
-//    public void addNotes(Notes notes, String courseId, String userId) {
-//        accounts.get(userId).setNotes(notes, courseId);
-//        this.save();
-//    }
-//
-//    @Override
-//    public boolean existsByName(String courseId, String title, String userId) {
-//        int result = 0;
-//        for (Notes i : accounts.get(userId).getNotes().get(courseId)){
-//            if(i.getTitle().equals(title)){
-//                result += 1;
-//            }
-//        }
-//        return result == 0;
 //    }
 //
 //    @Override
@@ -109,4 +98,12 @@
 //            throw new RuntimeException(e);
 //        }
 //    }
+//
+//    @Override
+//    public void addNotes(Notes notes, String courseId) {
+//        accounts.get(Constants.CURRENT_USER).setNotes(notes, courseId);
+//        this.save();
+//    }
+//
+//
 //}

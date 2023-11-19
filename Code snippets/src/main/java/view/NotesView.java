@@ -220,14 +220,14 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         JPanel tabPanel = new JPanel(new BorderLayout());
         JEditorPane notePad = new JTextPane();
         JScrollPane textArea = new JScrollPane(notePad);
-        NotesState currentstate = notesViewModel.getState();
+        NotesState currentState = notesViewModel.getState();
 //        tabPanel.add(notePad);
 
 
         ArrayList<String> topics = new ArrayList<>();
         Map<String, String> content = new HashMap<>();
-        if (!(currentstate.getAllNotes().isEmpty()) && !(currentstate.getAllNotes().get(course) == null)) {
-            for (Notes note : currentstate.getAllNotes().get(course)) {
+        if ((currentState.getAllNotes() != null) && !(currentState.getAllNotes().isEmpty()) && !(currentState.getAllNotes().get(course) == null)) {
+            for (Notes note : currentState.getAllNotes().get(course)) {
                 topics.add(note.getTitle());
                 content.put(note.getTitle(), note.getContent());
             }
