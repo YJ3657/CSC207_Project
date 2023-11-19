@@ -2,6 +2,7 @@ package main.java.view;
 
 import main.java.app.Constants;
 import main.java.entity.Course;
+import main.java.entity.Notes;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.notes.AddCourseController;
@@ -13,6 +14,8 @@ import main.java.interface_adapter.ViewManagerModel;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -121,10 +124,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                     if (result == JOptionPane.OK_OPTION){
                         JOptionPane.showConfirmDialog(null, content, "Content",
                                 JOptionPane.OK_CANCEL_OPTION);
-                        // execute createNotes use case
                         NotesState currentstate = notesViewModel.getState();
+                        if (currentstate.getNotesContent().isEmpty()){
+                            currentstate.setNotesContent(" ");
+                        }
                         createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
-                                currentstate.getSelectedCourse(), currentstate.getUserId());
+                                currentstate.getSelectedCourse());
+                        setNotesDisplay(currentstate);
                     }
                 }
 
@@ -206,20 +212,49 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private void setCoursesDisplay(NotesState state) {
         this.coursesDisplay.removeAll();
         for (String course : state.getCourses()) {
-            coursesDisplay.addTab(course, getTab());
+            coursesDisplay.addTab(course, getTab(course));
         }
         this.coursesDisplay.revalidate();
         this.coursesDisplay.repaint();
 
     }
 
-    private JPanel getTab() {
+    private JPanel getTab(String course) {
         JPanel tabPanel = new JPanel(new BorderLayout());
         JEditorPane notePad = new JTextPane();
         JScrollPane textArea = new JScrollPane(notePad);
+        NotesState currentstate = notesViewModel.getState();
 //        tabPanel.add(notePad);
 
-        JScrollPane noteTopics = new JScrollPane();
+
+        ArrayList<String> topics = new ArrayList<>();
+        Map<String, String> content = new HashMap<>();
+        if (!(currentstate.getAllNotes().isEmpty()) && !(currentstate.getAllNotes().get(course) == null)) {
+            for (Notes note : currentstate.getAllNotes().get(course)) {
+                topics.add(note.getTitle());
+                content.put(note.getTitle(), note.getContent());
+            }
+        }
+        String[] t = topics.toArray(new String[]{});
+        JList<String> topicsList = new JList<>(t);
+
+        // Set selection mode to allow single selection
+        topicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        topicsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Handle selection change here
+                if (!e.getValueIsAdjusting()) {
+                    // Get the selected topic
+                    String selectedTopic = topicsList.getSelectedValue();
+                    updateNotePad(content.get(selectedTopic),notePad);
+                }
+            }
+        });
+
+
+        JScrollPane noteTopics = new JScrollPane(topicsList);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, noteTopics, textArea);
 
@@ -230,13 +265,20 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         return tabPanel;
     }
 
+
     private void setNotesDisplay(NotesState state) {
         ArrayList<String> courses = state.getCourses();
         this.coursesDisplay.removeAll();
         for (String course : courses) {
-            coursesDisplay.addTab(course, getTab());
+            coursesDisplay.addTab(course, getTab(course));
         }
     }
+
+    private void updateNotePad(String selectedTopic, JEditorPane notePad) {
+        notePad.setText(selectedTopic);
+    }
 }
+
+
 
 

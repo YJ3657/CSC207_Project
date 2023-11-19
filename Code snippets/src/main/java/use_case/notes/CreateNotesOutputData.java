@@ -5,11 +5,8 @@ import main.java.entity.Notes;
 public class CreateNotesOutputData {
     private final Notes notes;
 
-    private boolean useCaseFailed;
-
-    public CreateNotesOutputData(Notes notes, boolean useCaseFailed) {
+    public CreateNotesOutputData(Notes notes) {
         this.notes = notes;
-        this.useCaseFailed = useCaseFailed;
     }
 
     public Notes getNotes() {
