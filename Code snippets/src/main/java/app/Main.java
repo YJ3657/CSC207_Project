@@ -80,7 +80,7 @@ public class Main {
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO, userDataAccessObject);
+        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, userDataAccessObject, addCourseDAO, userDataAccessObject);
         views.add(notesView, notesView.viewName);
 
         UserFactory userFactory = new DefaultUserFactory();
