@@ -3,6 +3,8 @@ package main.java.app;
 import main.java.entity.User;
 
 public final class Constants {
+
+    // For app:
     public static final String HOME_VIEWNAME = "home";
     public static final String NOTES_VIEWNAME = "Notes";
     public static final String QUIZ_VIEWNAME = "Quiz";
@@ -17,7 +19,14 @@ public final class Constants {
 
     public static final String ADD_COURSE_ERROR = "Course already exists";
 
+    public static final String QUIZ_ERROR = "Quiz Cannot be setup. Please input course materials in notes.";
+
     public static String CURRENT_USER;
+
+    // For testing:
+    public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
+
+    public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
     private Constants() {}
 
 
