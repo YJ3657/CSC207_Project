@@ -125,6 +125,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                         JOptionPane.showConfirmDialog(null, content, "Content",
                                 JOptionPane.OK_CANCEL_OPTION);
                         NotesState currentstate = notesViewModel.getState();
+                        if (currentstate.getNotesContent().isEmpty()){
+                            currentstate.setNotesContent(" ");
+                        }
                         createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
                                 currentstate.getSelectedCourse());
                         setNotesDisplay(currentstate);
