@@ -4,7 +4,7 @@ import main.java.entity.User;
 public class testUserDB {
 
     public static void main(String[] args) {
-        User user = new User("newUser32","abc123");
+        User user = new User("newUser1","abc123");
         user.getCourseId().add("CSC299");
         user.getCourseId().add("CSC258");
         user.getGroupId().add("group1");

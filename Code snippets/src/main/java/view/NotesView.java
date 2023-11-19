@@ -3,15 +3,18 @@ package main.java.view;
 import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.notes.AddCourseController;
+import main.java.interface_adapter.notes.CreateNotesController;
 import main.java.interface_adapter.notes.NotesState;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -25,15 +28,21 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
+    private final JTextField notesTitle = new JTextField(15);
+
+    private final JTextField notesContent = new JTextField(15);
+
     private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
+    private final CreateNotesController createNotesController;
 
     public NotesView(NotesViewModel notesViewModel,
                      ViewManagerModel viewManagerModel,
-                     AddCourseController addCourseController) {
+                     AddCourseController addCourseController, CreateNotesController createNotesController) {
         super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.createNotesController = createNotesController;
         this.notesViewModel.addPropertyChangeListener(this);
 //        this.viewManagerModel.addPropertyChangeListener(this);
         this.addCourseController = addCourseController;
@@ -48,6 +57,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         JButton back = new JButton(notesViewModel.BACK_BUTTON_LABEL);
 
         JButton addCourse = new JButton("Add Course");
+
+        JButton addNotes = new JButton("+");
 
 //        this.add(notesDisplay);
 
@@ -65,13 +76,61 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                                     null, // TODO: For Jerry: change this Icon
                                     null,
                                     "");
+                            NotesState currentstate = notesViewModel.getState();
+                            currentstate.setSelectedcourse(courseID);
+                            notesViewModel.setState(currentstate);
                             if (courseID != null) {
                                 addCourseController.execute(courseID);
                             }
                         }
                     }
                 }
+
         );
+
+        coursesDisplay.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                // Get the index of the selected tab
+                int selectedIndex = coursesDisplay.getSelectedIndex();
+
+                // Perform actions based on the selected tab
+                // For example, you can retrieve the title of the selected tab
+                if (selectedIndex >= 0) {
+                    String selectedTabTitle = coursesDisplay.getTitleAt(selectedIndex);
+
+                    // Add your logic here based on the selected tab
+                    NotesState currentstate = notesViewModel.getState();
+                    currentstate.setSelectedcourse(selectedTabTitle);
+                    notesViewModel.setState(currentstate);
+                }
+            }
+        });
+
+        addNotes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel title = new JPanel();
+                title.add(new JLabel("Topic"));
+                title.add(notesTitle);
+                JPanel content = new JPanel();
+                content.add(notesContent);
+                if (e.getSource().equals(addNotes)){
+                    int result = JOptionPane.showConfirmDialog(null, title, "Topic",
+                            JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION){
+                        JOptionPane.showConfirmDialog(null, content, "Content",
+                                JOptionPane.OK_CANCEL_OPTION);
+                        // execute createNotes use case
+                        NotesState currentstate = notesViewModel.getState();
+                        createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
+                                currentstate.getSelectedCourse(), currentstate.getUserId());
+                    }
+                }
+
+            }
+        });
+
 
 
         back.addActionListener(new ActionListener() {
@@ -83,13 +142,48 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 }
             }
         });
+        notesTitle.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                NotesState currentState = notesViewModel.getState();
+                currentState.setNotesTitle(notesTitle.getText() + e.getKeyChar());
+                notesViewModel.setState(currentState);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        notesContent.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                NotesState currentState = notesViewModel.getState();
+                currentState.setNotesContent(notesContent.getText() + e.getKeyChar());
+                notesViewModel.setState(currentState);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         buttonPanel.add(title);
         buttonPanel.add(addCourse);
+        buttonPanel.add(addNotes);
         buttonPanel.add(back);
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(coursesDisplay, BorderLayout.CENTER);
         this.add(coursesDisplay);
     }
+
 
 
     @Override
@@ -137,11 +231,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     private void setNotesDisplay(NotesState state) {
-        Map<String, Course> notes = state.getNotes();
-        Set<String> courses = notes.keySet();
+        ArrayList<String> courses = state.getCourses();
         this.coursesDisplay.removeAll();
         for (String course : courses) {
             coursesDisplay.addTab(course, getTab());
         }
     }
 }
+
+

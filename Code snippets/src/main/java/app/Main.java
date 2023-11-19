@@ -2,8 +2,7 @@ package main.java.app;
 
 import main.java.data_access.DBCourseDataAccessObject;
 import main.java.entity.CourseFactory;
-//import main.java.data_access.DBUserDataAccessObject;
-//import main.java.data_access.NotesDataAccessObject;
+import main.java.data_access.DBUserDataAccessObject;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.UserFactory;
 import main.java.interface_adapter.ViewManagerModel;
@@ -11,6 +10,7 @@ import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
+import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
@@ -49,6 +49,15 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
+        //TODO: Are we instantiating new ViewManager below? What's happening?
+
+        /*TODO: Answer below is copied from https://github.com/paulgries/UserLoginCleanArchitecture/blob/main/src/Main.java
+        The observer watching for changes in the userViewModel. It will
+         react to changes in application state by changing which view
+         is showing. This is an anonymous object because we don't need to
+         refer to it later.
+        */
+
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
@@ -68,10 +77,10 @@ public class Main {
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, addCourseDAO);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, addCourseDAO);
+        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, userDataAccessObject, addCourseDAO, userDataAccessObject);
         views.add(notesView, notesView.viewName);
 
         UserFactory userFactory = new DefaultUserFactory();
@@ -80,9 +89,7 @@ public class Main {
                 userDataAccessObject, signupuserdataaccessinterface, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
 
-        // TODO: Old code
-//      viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
-        viewManagerModel.setActiveView(homeView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
 
 //        application.pack();
