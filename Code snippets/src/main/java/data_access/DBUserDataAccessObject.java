@@ -139,6 +139,38 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         return accounts.containsKey(identifier);
     }
 
+    public boolean noteExists(String courseId, String notesTitle){
+        if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty()) &&
+                    !(accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).isEmpty())) {
+            List<String> titles = new ArrayList<>();
+            for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
+                titles.add(i.getTitle());
+            }
+            return titles.contains(notesTitle);
+        } else {
+            return false;
+        }
+    }
+
+    public void updateContent(String courseId, String notesTitle, String notesContent){
+        for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
+            if (i.getTitle().equals(notesTitle)){
+                i.setContent(notesContent);
+            }
+        }
+    }
+    public Notes getNotes(String courseId, String notesTitle){
+        // This variable should always be reassigned
+        int result = 0;
+
+        for (int i = 0; i <= accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).size(); i++) {
+            if (accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).get(i).getTitle().equals(notesTitle)){
+                result = i;
+            }
+        }
+        return accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).get(result);
+    }
+
     @Override
     public void clear() {
         try {

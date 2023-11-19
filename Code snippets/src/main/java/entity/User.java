@@ -16,14 +16,14 @@ public class User{
     // changed to generic list for clean architecture
     private final List<String> groupId;
     private final List<String> courseId;
-    private final Map<String, List<Notes>> notes = new HashMap<>(){
-    };
+    private final Map<String, List<Notes>> notes;
 
     public User(String id, String password){
         this.id = id;
         this.password = password;
         groupId = new ArrayList<>();
         courseId = new ArrayList<>();
+        notes = new HashMap<>();
     }
 
     //getters and setters

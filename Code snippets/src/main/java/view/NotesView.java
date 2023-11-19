@@ -94,16 +94,14 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         coursesDisplay.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                // Get the index of the selected tab
                 int selectedIndex = coursesDisplay.getSelectedIndex();
 
-                // Perform actions based on the selected tab
-                // For example, you can retrieve the title of the selected tab
                 if (selectedIndex >= 0) {
                     String selectedTabTitle = coursesDisplay.getTitleAt(selectedIndex);
 
-                    // Add your logic here based on the selected tab
                     NotesState currentstate = notesViewModel.getState();
+                    createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
+                            currentstate.getSelectedCourse(), true);
                     currentstate.setSelectedcourse(selectedTabTitle);
                     notesViewModel.setState(currentstate);
                 }
@@ -247,6 +245,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 // Handle selection change here
                 if (!e.getValueIsAdjusting()) {
                     // Get the selected topic
+                    createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
+                            currentstate.getSelectedCourse(), true);
                     String selectedTopic = topicsList.getSelectedValue();
                     updateNotePad(content.get(selectedTopic),notePad);
                 }
