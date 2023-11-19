@@ -8,8 +8,8 @@ import java.util.Collection;
 public class Notes{
 
     private String title;
-    private String content; //what is the best data object to store note contents?
-    private Reminder reminder;
+    private final String content; //what is the best data object to store note contents?
+    private final Reminder reminder;
 
 
     public Notes(String title, String content){
@@ -23,6 +23,10 @@ public class Notes{
 
     public String getTitle() {
         return title;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public String getAllNotes(){

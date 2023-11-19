@@ -1,5 +1,6 @@
 package main.java.data_access;
 
+import main.java.app.Constants;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.Notes;
 import main.java.entity.UserFactory;
@@ -29,6 +30,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 
     public DBUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
+        accounts.put("sample", userFactory.create("sample", "pass"));
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -219,25 +221,18 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         }
     }
     @Override
-    public Map<String, List<Notes>> getUserCourses(String userid) {
-        return accounts.get(userid).getNotes();
+    public List<String> getUserCourses(String userid) {
+        return accounts.get(userid).getCourseId();
+    }
+
+    public Map<String, List<Notes>> getUserNotes(String userId){
+        return accounts.get(userId).getNotes();
     }
 
     @Override
-    public void addNotes(Notes notes, String courseId, String userId){
-        accounts.get(userId).setNotes(notes, courseId);
+    public void addNotes(Notes notes, String courseId){
+        accounts.get(Constants.CURRENT_USER).setNotes(notes, courseId);
         this.save();
-    }
-
-    @Override
-    public boolean existsByName(String courseId, String title, String userId){
-        int result = 0;
-        for (Notes i : accounts.get(userId).getNotes().get(courseId)){
-            if(i.getTitle().equals(title)){
-                result += 1;
-            }
-        }
-        return result == 0;
     }
 
 }

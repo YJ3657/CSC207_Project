@@ -48,7 +48,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(notes)) {
             HomeState currentstate = homeViewModel.getState();
-            openNotesController.execute(currentstate.getUsername());
+            openNotesController.execute();
         }
     }
 

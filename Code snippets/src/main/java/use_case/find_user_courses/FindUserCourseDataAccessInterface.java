@@ -6,5 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface FindUserCourseDataAccessInterface {
-    public Map<String, List<Notes>> getUserCourses(String userid);
+    public List<String> getUserCourses(String userid);
+    Map<String, List<Notes>> getUserNotes(String userId);
 }

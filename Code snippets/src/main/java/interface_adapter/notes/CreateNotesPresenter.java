@@ -29,12 +29,4 @@ public class CreateNotesPresenter implements CreateNotesOutputBoundary{
         this.viewManagerModel.setActiveView(notesViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
-
-    @Override
-    public void prepareFailView(String error) {
-        NotesState notesState = notesViewModel.getState();
-        notesState.setNotesError(error);
-        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
-        notesViewModel.firePropertyChanged();
-    }
 }
