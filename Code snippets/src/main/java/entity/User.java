@@ -3,6 +3,8 @@ package main.java.entity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+
 import main.java.entity.Course;
 
 //DONE FOR NOW
@@ -12,9 +14,10 @@ public class User{
     private String password;
 
     // changed to generic list for clean architecture
-    private List<String> groupId;
-    private List<String> courseId;
-    private HashMap<String, List<Notes>> notes;
+    private final List<String> groupId;
+    private final List<String> courseId;
+    private final Map<String, List<Notes>> notes = new HashMap<>(){
+    };
 
     public User(){
         this.id = "";
@@ -53,9 +56,17 @@ public class User{
         this.password = password;
     }
 
-    public HashMap<String, List<Notes>> getNotes(){return notes;}
+    public Map<String, List<Notes>> getNotes(){return notes;}
 
-    public void setNotes(Notes notes, String courseId){this.notes.get(courseId).add(notes);}
+    public void setNotes(Notes note, String courseId){
+        if (notes.isEmpty() || notes.get(courseId) == null){
+            List<Notes> nlist = new ArrayList<>();
+            nlist.add(note);
+            notes.put(courseId, nlist);
+        }else{
+            notes.get(courseId).add(note);
+        }
+    }
 
     // special setters
     public void addCourse(String newcourseId){

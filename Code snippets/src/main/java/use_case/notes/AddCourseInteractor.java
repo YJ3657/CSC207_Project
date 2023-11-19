@@ -26,16 +26,27 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
     @Override
     public void execute(AddCourseInputData addCourseInputData) {
         String courseID = addCourseInputData.getCourseID();
-        if ((addUserCourseDAO.getUserCourses(Constants.CURRENT_USER) == null || !(addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).containsKey(courseID)))) {
+        if (addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).contains(courseID)) {
+            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
+        } else {
             LocalDateTime now = LocalDateTime.now();
             AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
             Course course = courseFactory.create(courseID);
             course.addStudent(Constants.CURRENT_USER);
             addCourseDAO.saveCourse(course);
             addCoursePresenter.prepareSuccessView(addCourseOutputData);
-
-        } else {
-            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
         }
+
+//        if ((addUserCourseDAO.getUserCourses(Constants.CURRENT_USER) == null || !(addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).containsKey(courseID)))) {
+//            LocalDateTime now = LocalDateTime.now();
+//            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
+//            Course course = courseFactory.create(courseID);
+//            course.addStudent(Constants.CURRENT_USER);
+//            addCourseDAO.saveCourse(course);
+//            addCoursePresenter.prepareSuccessView(addCourseOutputData);
+//
+//        } else {
+//            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
+//        }
     }
 }

@@ -8,8 +8,8 @@ public class OpenNotesController {
         this.openNotesInteractor = openNotesInteractor;
     }
 
-    public void execute(String userId) {
-        openNotesInteractor.execute(userId);
+    public void execute() {
+        openNotesInteractor.execute();
     }
 
 }

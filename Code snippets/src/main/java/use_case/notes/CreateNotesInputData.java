@@ -4,13 +4,11 @@ public class CreateNotesInputData {
     final private String title;
     final private String content;
     final private String courseId;
-    final private String userId;
 
-    public CreateNotesInputData(String title, String content, String courseId, String userId) {
+    public CreateNotesInputData(String title, String content, String courseId) {
         this.content = content;
         this.title = title;
         this.courseId = courseId;
-        this.userId = userId;
     }
 
     String getTitle() {
@@ -22,7 +20,5 @@ public class CreateNotesInputData {
     }
 
     String getCourseId(){return courseId;}
-
-    String getUserId(){return courseId;}
 
 }
