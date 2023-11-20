@@ -5,7 +5,7 @@ public interface LoginUserDataAccessInterface {
 
     boolean existsByName(String studentId);
 
-    void saveUser(User user);
+    void save(User user);
 
     User get(String username);
 }

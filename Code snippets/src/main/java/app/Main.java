@@ -4,6 +4,7 @@ import main.java.data_access.DBCourseDataAccessObject;
 import main.java.entity.CourseFactory;
 import main.java.data_access.DBUserDataAccessObject;
 import main.java.entity.DefaultUserFactory;
+import main.java.entity.NotesFactory;
 import main.java.entity.UserFactory;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
@@ -74,8 +75,8 @@ public class Main {
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
 
-        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory());
-        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
+        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
+        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject);
         views.add(homeView, homeView.viewName);
