@@ -202,6 +202,28 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         return accounts.containsKey(identifier);
     }
 
+    public boolean noteExists(String courseId, String notesTitle){
+        if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty()) &&
+                !(accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).isEmpty())) {
+            List<String> titles = new ArrayList<>();
+            for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
+                titles.add(i.getTitle());
+            }
+            return titles.contains(notesTitle);
+        } else {
+            return false;
+        }
+    }
+
+    public void updateContent(String courseId, String notesTitle, String notesContent){
+        for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
+            if (i.getTitle().equals(notesTitle)){
+                i.setContent(notesContent);
+            }
+        }
+        this.save();
+    }
+
     @Override
     public void clear() {
         try {
@@ -318,6 +340,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     @Override
     public void addNotes(Notes note, String courseId){
         accounts.get(Constants.CURRENT_USER).setNotes(note, courseId);
+        this.save();
+    }
+    public void addCourse(String courseId){
+        accounts.get(Constants.CURRENT_USER).setNotes(courseId);
         this.save();
     }
 

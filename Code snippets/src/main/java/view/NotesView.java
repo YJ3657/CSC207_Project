@@ -31,10 +31,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
-    private final JTextField notesTitle = new JTextField(15);
-
-    private final JTextField notesContent = new JTextField(15);
-
     private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
@@ -62,6 +58,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         JButton addCourse = new JButton("Add Course");
 
         JButton addNotes = new JButton("+");
+
+        JButton saveNotes = new JButton("Save");
 
 //        this.add(notesDisplay);
 
@@ -94,15 +92,11 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         coursesDisplay.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                // Get the index of the selected tab
                 int selectedIndex = coursesDisplay.getSelectedIndex();
 
-                // Perform actions based on the selected tab
-                // For example, you can retrieve the title of the selected tab
                 if (selectedIndex >= 0) {
                     String selectedTabTitle = coursesDisplay.getTitleAt(selectedIndex);
 
-                    // Add your logic here based on the selected tab
                     NotesState currentstate = notesViewModel.getState();
                     currentstate.setSelectedcourse(selectedTabTitle);
                     notesViewModel.setState(currentstate);
@@ -113,12 +107,48 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         addNotes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel title = new JPanel();
-                title.add(new JLabel("Topic"));
-                title.add(notesTitle);
-                JPanel content = new JPanel();
-                content.add(notesContent);
                 if (e.getSource().equals(addNotes)){
+                    JTextField notesTitle = new JTextField(null, 15);
+                    JTextField notesContent = new JTextField(null,15);
+                    JPanel title = new JPanel();
+                    title.add(new JLabel("Topic"));
+                    title.add(notesTitle);
+                    JPanel content = new JPanel();
+                    content.add(notesContent);
+                    notesTitle.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            NotesState currentState = notesViewModel.getState();
+                            currentState.setNotesTitle(notesTitle.getText() + e.getKeyChar());
+                            notesViewModel.setState(currentState);
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                        }
+                    });
+
+                    notesContent.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            NotesState currentState = notesViewModel.getState();
+                            currentState.setNotesContent(notesContent.getText() + e.getKeyChar());
+                            notesViewModel.setState(currentState);
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                        }
+                    });
+
                     int result = JOptionPane.showConfirmDialog(null, title, "Topic",
                             JOptionPane.OK_CANCEL_OPTION);
                     if (result == JOptionPane.OK_OPTION){
@@ -137,8 +167,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
-
-
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,49 +176,26 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 }
             }
         });
-        notesTitle.addKeyListener(new KeyListener() {
+        saveNotes.addActionListener(new ActionListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                NotesState currentState = notesViewModel.getState();
-                currentState.setNotesTitle(notesTitle.getText() + e.getKeyChar());
-                notesViewModel.setState(currentState);
-            }
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(saveNotes)) {
+                    NotesState currentstate = notesViewModel.getState();
+                    createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
+                            currentstate.getSelectedCourse(), true);
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        notesContent.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                NotesState currentState = notesViewModel.getState();
-                currentState.setNotesContent(notesContent.getText() + e.getKeyChar());
-                notesViewModel.setState(currentState);
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
+                }
             }
         });
         buttonPanel.add(title);
         buttonPanel.add(addCourse);
         buttonPanel.add(addNotes);
         buttonPanel.add(back);
+        buttonPanel.add(saveNotes);
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(coursesDisplay, BorderLayout.CENTER);
         this.add(coursesDisplay);
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -238,18 +243,32 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         String[] t = topics.toArray(new String[]{});
         JList<String> topicsList = new JList<>(t);
 
-        // Set selection mode to allow single selection
         topicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         topicsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                // Handle selection change here
                 if (!e.getValueIsAdjusting()) {
-                    // Get the selected topic
                     String selectedTopic = topicsList.getSelectedValue();
+                    currentstate.setNotesTitle(selectedTopic);
                     updateNotePad(content.get(selectedTopic),notePad);
                 }
+            }
+        });
+        notePad.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                NotesState currentState = notesViewModel.getState();
+                currentState.setNotesContent(notePad.getText() + e.getKeyChar());
+                notesViewModel.setState(currentState);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
 
@@ -277,6 +296,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private void updateNotePad(String selectedTopic, JEditorPane notePad) {
         notePad.setText(selectedTopic);
     }
+
 }
 
 

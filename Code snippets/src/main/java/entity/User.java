@@ -23,7 +23,7 @@ public class User{
         this.password = password;
         groupId = new ArrayList<>();
         courseId = new ArrayList<>();
-        notes = new HashMap<>(){};
+        notes = new HashMap<>();
     }
 
     //getters and setters
@@ -61,6 +61,9 @@ public class User{
         } else{
             notes.get(courseId).add(note);
         }
+    }
+    public void setNotes(String courseId){
+        notes.put(courseId, new ArrayList<>());
     }
 
     // special setters
