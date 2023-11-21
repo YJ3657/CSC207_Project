@@ -2,8 +2,8 @@ package main.java.app;
 
 import main.java.data_access.DBCourseDataAccessObject;
 import main.java.data_access.InMemoryQuizDAO;
-import main.java.entity.CourseFactory;
 import main.java.data_access.DBUserDataAccessObject;
+import main.java.entity.CourseFactory;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.NotesFactory;
 import main.java.entity.UserFactory;

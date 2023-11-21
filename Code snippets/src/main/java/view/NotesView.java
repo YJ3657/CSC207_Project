@@ -247,14 +247,15 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         topicsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+                // Handle selection change here
                 if (!e.getValueIsAdjusting()) {
                     String selectedTopic = topicsList.getSelectedValue();
-                    String a = currentstate.getNotesTitle();
-                    String b = currentstate.getNotesContent();
+                    String a = currentState.getNotesTitle();
+                    String b = currentState.getNotesContent();
                     content.remove(a);
                     content.put(a, b);
                     updateNotePad(content.get(selectedTopic),notePad);
-                    currentstate.setNotesTitle(selectedTopic);
+                    currentState.setNotesTitle(selectedTopic);
                 }
             }
         });
