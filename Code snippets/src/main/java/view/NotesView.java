@@ -13,10 +13,7 @@ import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.quiz.QuizController;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -39,6 +36,10 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
+
+    private final JButton markAsDefinition;
+
+    private final JButton markAsQuestion;
 
     public NotesView(NotesViewModel notesViewModel,
                      ViewManagerModel viewManagerModel,
@@ -69,6 +70,10 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         JButton saveNotes = new JButton("Save");
 
         JButton generateQuiz = new JButton("Generate Quiz");
+
+        this.markAsDefinition = new JButton("Mark as Definition");
+
+        this.markAsQuestion = new JButton("Mark as Question");
 
         generateQuiz.addActionListener(new ActionListener() {
             @Override
@@ -191,6 +196,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         buttonPanel.add(generateQuiz);
         buttonPanel.add(back);
         buttonPanel.add(saveNotes);
+        buttonPanel.add(markAsDefinition);
+        buttonPanel.add(markAsQuestion);
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(coursesDisplay, BorderLayout.CENTER);
         this.add(coursesDisplay);
@@ -276,6 +283,22 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
+        markAsDefinition.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] breakdown = breakdownString(notePad.getSelectedText());
+
+            }
+        });
+
+        markAsQuestion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] breakdowm = breakdownString(notePad.getSelectedText());
+            }
+        });
+
+
 
         JScrollPane noteTopics = new JScrollPane(topicsList);
 
@@ -301,6 +324,15 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         notePad.setText(selectedTopic);
     }
 
+    private String[] breakdownString(String selectedText){
+        if (selectedText == null){
+
+        } else {
+            String[] elements = new String[3];
+            ...
+            return elements;
+        }
+    }
 }
 
 
