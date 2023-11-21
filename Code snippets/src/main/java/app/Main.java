@@ -12,6 +12,7 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 import main.java.use_case.notes.NotesDataAccessInterface;
+import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
 import main.java.view.ViewManager;
@@ -78,7 +79,7 @@ public class Main {
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
 
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, (NotesDataAccessInterface) addCourseDAO, loginViewModel);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, userDataAccessObject, addCourseDAO, userDataAccessObject);

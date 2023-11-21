@@ -16,6 +16,7 @@ import main.java.interface_adapter.notes.OpenNotesPresenter;
 import main.java.use_case.notes.OpenNotesInputBoundary;
 import main.java.use_case.notes.OpenNotesInteractor;
 import main.java.use_case.notes.OpenNotesOutputBoundary;
+import main.java.view.HomeView;
 
 public class HomeUseCaseFactory {
 
@@ -27,7 +28,7 @@ public class HomeUseCaseFactory {
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject, LoginViewModel loginViewModel) {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, notesDataAcessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
-        return new HomeView(homeViewModel, openNotesController, logoutController);
+        return new HomeView(homeViewModel, openNotesController);
     }
     private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
         OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
