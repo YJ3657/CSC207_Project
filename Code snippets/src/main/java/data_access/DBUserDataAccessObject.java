@@ -203,16 +203,18 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     }
 
     public boolean noteExists(String courseId, String notesTitle){
-        if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty()) &&
-                !(accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).isEmpty())) {
-            List<String> titles = new ArrayList<>();
-            for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
-                titles.add(i.getTitle());
+        if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty())) {
+            if (!(accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).isEmpty())) {
+                List<String> titles = new ArrayList<>();
+                for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
+                    titles.add(i.getTitle());
+                }
+                return titles.contains(notesTitle);
+            } else {
+                return false;
             }
-            return titles.contains(notesTitle);
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void updateContent(String courseId, String notesTitle, String notesContent){
