@@ -243,15 +243,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         String[] t = topics.toArray(new String[]{});
         JList<String> topicsList = new JList<>(t);
 
-        // Set selection mode to allow single selection
         topicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         topicsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                // Handle selection change here
                 if (!e.getValueIsAdjusting()) {
-                    // Get the selected topic
                     String selectedTopic = topicsList.getSelectedValue();
                     currentstate.setNotesTitle(selectedTopic);
                     updateNotePad(content.get(selectedTopic),notePad);
