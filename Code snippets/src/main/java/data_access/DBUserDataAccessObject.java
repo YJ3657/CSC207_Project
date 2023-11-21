@@ -141,7 +141,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 
     public boolean noteExists(String courseId, String notesTitle){
         if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty()) &&
-                    !(accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).isEmpty())) {
+                !(accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).isEmpty())) {
             List<String> titles = new ArrayList<>();
             for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
                 titles.add(i.getTitle());
@@ -158,17 +158,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 i.setContent(notesContent);
             }
         }
-    }
-    public Notes getNotes(String courseId, String notesTitle){
-        // This variable should always be reassigned
-        int result = 0;
-
-        for (int i = 0; i <= accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).size(); i++) {
-            if (accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).get(i).getTitle().equals(notesTitle)){
-                result = i;
-            }
-        }
-        return accounts.get(Constants.CURRENT_USER).getNotes().get(courseId).get(result);
+        this.save();
     }
 
     @Override
@@ -264,6 +254,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     @Override
     public void addNotes(Notes notes, String courseId){
         accounts.get(Constants.CURRENT_USER).setNotes(notes, courseId);
+        this.save();
+    }
+    public void addCourse(String courseId){
+        accounts.get(Constants.CURRENT_USER).setNotes(courseId);
         this.save();
     }
 

@@ -62,6 +62,9 @@ public class User{
             notes.get(courseId).add(note);
         }
     }
+    public void setNotes(String courseId){
+        notes.put(courseId, new ArrayList<>());
+    }
 
     // special setters
     public void addCourse(String newcourseId){
