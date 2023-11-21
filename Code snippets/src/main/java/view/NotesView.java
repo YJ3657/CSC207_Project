@@ -10,6 +10,7 @@ import main.java.interface_adapter.notes.CreateNotesController;
 import main.java.interface_adapter.notes.NotesState;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.ViewManagerModel;
+import main.java.interface_adapter.quiz.QuizController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -41,7 +42,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
 
     public NotesView(NotesViewModel notesViewModel,
                      ViewManagerModel viewManagerModel,
-                     AddCourseController addCourseController, CreateNotesController createNotesController) {
+                     AddCourseController addCourseController,
+                     CreateNotesController createNotesController,
+                     QuizController quizController) {
         super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -63,6 +66,16 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
 
         JButton addNotes = new JButton("+");
 
+        JButton generateQuiz = new JButton("Generate Quiz");
+
+        generateQuiz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(generateQuiz)) {
+                    quizController.execute();
+                }
+            }
+        });
 //        this.add(notesDisplay);
 
         addCourse.addActionListener(
@@ -181,10 +194,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         buttonPanel.add(title);
         buttonPanel.add(addCourse);
         buttonPanel.add(addNotes);
+        buttonPanel.add(generateQuiz);
         buttonPanel.add(back);
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(coursesDisplay, BorderLayout.CENTER);
         this.add(coursesDisplay);
+
     }
 
 
@@ -213,7 +228,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         }
         this.coursesDisplay.revalidate();
         this.coursesDisplay.repaint();
-
     }
 
     private JPanel getTab(String course) {

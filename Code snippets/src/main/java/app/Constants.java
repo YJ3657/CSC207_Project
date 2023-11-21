@@ -1,7 +1,5 @@
 package main.java.app;
 
-import main.java.entity.User;
-
 public final class Constants {
 
     // For app:
@@ -20,8 +18,13 @@ public final class Constants {
     public static final String ADD_COURSE_ERROR = "Course already exists";
 
     public static final String QUIZ_ERROR = "Quiz Cannot be setup. Please input course materials in notes.";
+    public static final String QUIZ_STATE = "Quiz state";
 
     public static String CURRENT_USER;
+
+    public static int FRAME_WIDTH;
+
+    public static int FRAME_HEIGHT;
 
     // For testing:
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
