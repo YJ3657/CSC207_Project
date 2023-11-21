@@ -132,33 +132,14 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                         }
                     });
 
-                    notesContent.addKeyListener(new KeyListener() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                            NotesState currentState = notesViewModel.getState();
-                            currentState.setNotesContent(notesContent.getText() + e.getKeyChar());
-                            notesViewModel.setState(currentState);
-                        }
-
-                        @Override
-                        public void keyPressed(KeyEvent e) {
-                        }
-
-                        @Override
-                        public void keyReleased(KeyEvent e) {
-                        }
-                    });
-
                     int result = JOptionPane.showConfirmDialog(null, title, "Topic",
                             JOptionPane.OK_CANCEL_OPTION);
                     if (result == JOptionPane.OK_OPTION){
-                        JOptionPane.showConfirmDialog(null, content, "Content",
-                                JOptionPane.OK_CANCEL_OPTION);
                         NotesState currentstate = notesViewModel.getState();
                         if (currentstate.getNotesContent().isEmpty()){
                             currentstate.setNotesContent(" ");
                         }
-                        createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
+                        createNotesController.execute(currentstate.getNotesTitle(), "",
                                 currentstate.getSelectedCourse());
                         setNotesDisplay(currentstate);
                     }
@@ -250,8 +231,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     String selectedTopic = topicsList.getSelectedValue();
-                    currentstate.setNotesTitle(selectedTopic);
+                    String a = currentstate.getNotesTitle();
+                    String b = currentstate.getNotesContent();
+                    content.remove(a);
+                    content.put(a, b);
                     updateNotePad(content.get(selectedTopic),notePad);
+                    currentstate.setNotesTitle(selectedTopic);
                 }
             }
         });
