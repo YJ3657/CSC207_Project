@@ -1,2 +1,4 @@
-package main.java.use_case.LogOut;public class LogoutInputData {
+package main.java.use_case.LogOut;
+
+public class LogoutInputData {
 }
