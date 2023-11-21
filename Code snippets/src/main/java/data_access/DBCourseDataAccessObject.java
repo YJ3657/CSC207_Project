@@ -123,54 +123,8 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         return courses.get(courseId);
     }
 
-//    public static void main(String[] args) {
-//        Connection conn = null;
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            conn = DriverManager.getConnection("jdbc:mysql://csc207:3306",
-//                    "remoteUser",
-//                    "thisismysql*");
-//
-//            ResultSet databases = conn.getMetaData().getCatalogs();
-//
-//            while (databases.next()) {
-//                String databaseName = databases.getString(1).toLowerCase();
-//                if(databaseName.equals("user") || databaseName.equals("group") || databaseName.equals("course")) {
-//                    continue;
-//                }
-//                databaseName = databaseName.toUpperCase();
-//                Course course = new Course(databaseName);
-//                String sqlOrder = "SELECT chapterno, chaptertitle FROM " + databaseName + ".contents";
-//                PreparedStatement statement = conn.prepareStatement(sqlOrder);
-//                ResultSet rs = statement.executeQuery();
-//                while(rs.next()) {
-//                    int chapterNo = rs.getInt("chapterno");
-//                    String chapter = rs.getString("chaptertitle");
-//                    System.out.println(chapterNo);
-//                }
-//
-//
-//                System.out.println(databaseName + course.getId());
-//                rs.close();
-//                statement.close();
-//                databases.close();
-//            }
-//            databases.close();
-//        } catch (ClassNotFoundException e) {
-//            System.out.println("Class Not Found");
-//        } catch (SQLException e) {
-//            System.out.println("Check the database");
-//        } finally {
-//            if (conn != null) {
-//                try {
-//                    conn.close();
-//                    System.out.println("Connection closed");
-//                } catch (SQLException e) {
-//                }
-//            }
-//        }
-//    }
 
+    
 }
 
 // TODO:

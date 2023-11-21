@@ -8,17 +8,19 @@ import java.util.Collection;
 public class Notes{
 
     private String title;
-    private final String content; //what is the best data object to store note contents?
+    private String content; //what is the best data object to store note contents?
+    private final int chapterno;
     private final Reminder reminder;
 
 
-    public Notes(String title, String content){
+    public Notes(String title, String content, int chapterno){
         this.title = title;
         this.content = content;
+        this.chapterno = chapterno;
         reminder = new Reminder(title, 1); //new Reminder()
     }
-    public void setTitle(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getTitle() {
@@ -29,10 +31,7 @@ public class Notes{
         return content;
     }
 
-    public String getAllNotes(){
-        return this.content;
-    }
-
+    public int getChapterno() {return this.chapterno;}
 
 
     public Reminder getReminder() {

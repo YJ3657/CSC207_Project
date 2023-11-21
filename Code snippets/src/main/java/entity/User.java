@@ -16,8 +16,7 @@ public class User{
     // changed to generic list for clean architecture
     private final List<String> groupId;
     private final List<String> courseId;
-    private final Map<String, List<Notes>> notes = new HashMap<>(){
-    };
+    private final Map<String, List<Notes>> notes;
 
     public User(){
         this.id = "";
@@ -30,6 +29,9 @@ public class User{
         this();
         this.id = id;
         this.password = password;
+        groupId = new ArrayList<>();
+        courseId = new ArrayList<>();
+        notes = new HashMap<>();
     }
 
     //getters and setters
@@ -61,12 +63,15 @@ public class User{
 
     public void setNotes(Notes note, String courseId){
         if (notes.isEmpty() || notes.get(courseId) == null){
-            List<Notes> nlist = new ArrayList<>();
-            nlist.add(note);
-            notes.put(courseId, nlist);
-        }else{
+            List<Notes> newlist = new ArrayList<>();
+            newlist.add(note);
+            notes.put(courseId, newlist);
+        } else{
             notes.get(courseId).add(note);
         }
+    }
+    public void setNotes(String courseId){
+        notes.put(courseId, new ArrayList<>());
     }
 
     // special setters
@@ -75,7 +80,6 @@ public class User{
     }
 
     public void addGroupId(String groupIds){
-
 
     }
 

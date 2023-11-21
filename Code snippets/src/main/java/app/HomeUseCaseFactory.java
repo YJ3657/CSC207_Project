@@ -1,7 +1,11 @@
 package main.java.app;
 
-import main.java.entity.CourseFactory;
-import main.java.use_case.courses.AddCourseDataAccessInterface;
+import main.java.interface_adapter.LogOut.LogoutController;
+import main.java.interface_adapter.LogOut.LogoutPresenter;
+import main.java.interface_adapter.login.LoginViewModel;
+import main.java.use_case.LogOut.LogoutInputBoundary;
+import main.java.use_case.LogOut.LogoutInteractor;
+import main.java.use_case.LogOut.LogoutOutputBoundary;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.interface_adapter.*;
@@ -19,14 +23,26 @@ public class HomeUseCaseFactory {
 
     private HomeUseCaseFactory() {}
 
-    public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, FindUserCourseDataAccessInterface addCOurseDAO) {
-        OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, addCOurseDAO);
+
+
+
+    public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject, LoginViewModel loginViewModel) {
+        OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, notesDataAcessObject);
+        LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
         return new HomeView(homeViewModel, openNotesController);
     }
-    private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, FindUserCourseDataAccessInterface addCourseDAO) {
+    private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
         OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
 
-        OpenNotesInputBoundary clearInteractor = new OpenNotesInteractor(addCourseDAO, openNotesPresenter);
+
+//        made a small change to make my code work
+        OpenNotesInputBoundary clearInteractor = new OpenNotesInteractor((FindUserCourseDataAccessInterface) notesDataAccessObject, openNotesPresenter);
         return new OpenNotesController(clearInteractor);
+    }
+    private static LogoutController createLogoutUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel){
+        LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(loginViewModel,viewManagerModel);
+
+        LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutOutputBoundary);
+        return new LogoutController(logoutInteractor);
     }
 }

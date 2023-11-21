@@ -1,5 +1,6 @@
 import main.java.data_access.DBUserDataAccessObject;
 import main.java.entity.DefaultUserFactory;
+import main.java.entity.NotesFactory;
 import main.java.entity.User;
 public class testUserDB {
 
@@ -10,8 +11,8 @@ public class testUserDB {
         user.getGroupId().add("group1");
         user.getGroupId().add("group2");
 
-        DBUserDataAccessObject db = new DBUserDataAccessObject(new DefaultUserFactory());
-        db.saveUser(user);
+        DBUserDataAccessObject db = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
+        db.save(user);
     }
 
 }

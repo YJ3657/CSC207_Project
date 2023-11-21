@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class NotesState {
     private String notesTitle;
-    private String notesContent;
+    private String notesContent = "";
     private Map<String, List<Notes>> allNotes = new HashMap<>();
 
     private ArrayList<String> courses = new ArrayList<>();

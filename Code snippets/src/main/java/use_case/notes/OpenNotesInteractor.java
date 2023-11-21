@@ -22,7 +22,6 @@ public class OpenNotesInteractor implements OpenNotesInputBoundary {
     @Override
     public void execute() {
         Map<String, List<Notes>> courses = addCourseDAO.getUserNotes(Constants.CURRENT_USER);
-        System.out.println(courses);
         OpenNotesOutputData openNotesOutputData = new OpenNotesOutputData(courses);
         openNotesPresenter.presentNotes(openNotesOutputData);
 
