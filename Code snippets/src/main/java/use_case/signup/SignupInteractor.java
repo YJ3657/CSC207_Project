@@ -28,7 +28,7 @@ public class SignupInteractor implements SignupInputBoundary {
         } else {
 
             User user = userFactory.create(username, password);
-            userDataAccessObject.saveUser(user);
+            userDataAccessObject.save(user);
             Constants.CURRENT_USER = user.getId();
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getId(), false);

@@ -4,6 +4,7 @@ import main.java.app.Constants;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.Notes;
 import main.java.entity.UserFactory;
+import main.java.entity.NotesFactory;
 import main.java.entity.User;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.login.LoginUserDataAccessInterface;
@@ -27,9 +28,11 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     private Connection conn = null;
     private final Map<String, User> accounts = new HashMap<>();
     private UserFactory userFactory;
+    private NotesFactory notesFactory;
 
-    public DBUserDataAccessObject(UserFactory userFactory) {
+    public DBUserDataAccessObject(UserFactory userFactory, NotesFactory notesFactory) {
         this.userFactory = userFactory;
+        this.notesFactory = notesFactory;
         accounts.put("sample", userFactory.create("sample", "pass"));
 
         try {
@@ -75,10 +78,57 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 } catch (SQLException e) {}
             }
         }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/user",
+                    "remoteUser",
+                    "thisismysql*"
+            );
+
+            String sqlOrder = "SELECT userid, courseid, notes, chapterno FROM notes";
+
+            PreparedStatement statement = conn.prepareStatement(sqlOrder);
+
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()) {
+                String userId = rs.getString("userid");
+                String courseId = rs.getString("courseid");
+                String notes = rs.getString("notes");
+                int chapterNo = rs.getInt("chapterno");
+                Notes note = notesFactory.create(courseId, notes, chapterNo);
+                Map<String, List<Notes>> userNotes = accounts.get(userId).getNotes();
+                if (userNotes.containsKey(courseId)) {
+                    userNotes.get(courseId).add(note);
+                }
+                else {
+                    List<Notes> newList = new ArrayList<>();
+                    newList.add(note);
+                    userNotes.put(courseId, newList);
+                }
+            }
+            rs.close();
+            statement.close();
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class Not Found");
+        } catch (SQLException e) {
+            System.out.println("Check the database");
+        } finally {
+            if(conn != null) {
+                try {
+                    conn.close();
+                    System.out.println("Connection closed");
+                } catch (SQLException e) {}
+            }
+        }
     }
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         accounts.put(user.getId(), user);
         this.save();
     }
@@ -119,6 +169,19 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                     statement.setString(i, user.getCourseId().get(i - 11));
                 }
                 statement.executeUpdate();
+
+                for(String courseId : user.getNotes().keySet()) {
+                    String newsqlOrder = "INSERT IGNORE INTO notes (userid, courseid, notes, chapterno) " +
+                            "VALUES (?, ?, ?, ?);";
+                    for(Notes notes : user.getNotes().get(courseId)) {
+                        PreparedStatement newStatement = conn.prepareStatement(newsqlOrder);
+                        newStatement.setString(1, user.getId());
+                        newStatement.setString(2, courseId);
+                        newStatement.setString(3, notes.getContent());
+                        newStatement.setInt(4, notes.getChapterno());
+                        newStatement.executeUpdate();
+                    }
+                }
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Class Not Found");
@@ -174,6 +237,11 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 
             PreparedStatement statement = conn.prepareStatement(sqlOrder);
             statement.executeUpdate();
+
+            sqlOrder = "DELETE FROM user.notes";
+            statement = conn.prepareStatement(sqlOrder);
+            statement.executeUpdate();
+
             statement.close();
 
         } catch (ClassNotFoundException e) {
@@ -228,6 +296,24 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 statement.setString(i + 3 + user.getGroupId().size(), user.getCourseId().get(i));
             }
             statement.executeUpdate();
+
+            sqlOrder = new StringBuilder()
+                    .append("UPDATE user.notes SET ")
+                    .append("userid=?, ")
+                    .append("courseid=?, ")
+                    .append("notes=?, ")
+                    .append("chapterno=?");
+
+            for(String courseId : user.getNotes().keySet()) {
+                for(Notes note: user.getNotes().get(courseId)) {
+                    statement = conn.prepareStatement(sqlOrder.toString());
+                    statement.setString(1, user.getId());
+                    statement.setString(2, courseId);
+                    statement.setString(3, note.getContent());
+                    statement.setInt(4, note.getChapterno());
+                }
+                statement.executeUpdate();
+            }
             statement.close();
         } catch (ClassNotFoundException e) {
             System.out.println("Class Not Found");
@@ -250,10 +336,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     public Map<String, List<Notes>> getUserNotes(String userId){
         return accounts.get(userId).getNotes();
     }
-
+    // Shouldn't we have userId parameter instead?
     @Override
-    public void addNotes(Notes notes, String courseId){
-        accounts.get(Constants.CURRENT_USER).setNotes(notes, courseId);
+    public void addNotes(Notes note, String courseId){
+        accounts.get(Constants.CURRENT_USER).setNotes(note, courseId);
         this.save();
     }
     public void addCourse(String courseId){

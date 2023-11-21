@@ -55,10 +55,10 @@ public class User{
 
     public void setNotes(Notes note, String courseId){
         if (notes.isEmpty() || notes.get(courseId) == null){
-            List<Notes> nlist = new ArrayList<>();
-            nlist.add(note);
-            notes.put(courseId, nlist);
-        }else{
+            List<Notes> newlist = new ArrayList<>();
+            newlist.add(note);
+            notes.put(courseId, newlist);
+        } else{
             notes.get(courseId).add(note);
         }
     }
@@ -72,7 +72,6 @@ public class User{
     }
 
     public void addGroupId(String groupIds){
-
 
     }
 
