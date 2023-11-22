@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface AddCourseDataAccessInterface {
     public Course getCourse(String courseId);
-    public void saveCourse(Course course);
+    public void save(Course course);
     public boolean existsByID(String courseId);
 
 }

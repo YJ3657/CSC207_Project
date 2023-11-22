@@ -88,7 +88,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                     "thisismysql*"
             );
 
-            String sqlOrder = "SELECT userid, courseid, notes, chapterno FROM notes";
+            String sqlOrder = "SELECT userid, courseid, content, chapterno, title FROM notes";
 
             PreparedStatement statement = conn.prepareStatement(sqlOrder);
 
@@ -97,9 +97,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             while(rs.next()) {
                 String userId = rs.getString("userid");
                 String courseId = rs.getString("courseid");
-                String notes = rs.getString("notes");
+                List<String> contents = (ArrayList<String>) rs.getArray("contents");
                 int chapterNo = rs.getInt("chapterno");
-                Notes note = notesFactory.create(courseId, notes, chapterNo);
+                String title = rs.getString("title");
+                Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);
                 Map<String, List<Notes>> userNotes = accounts.get(userId).getNotes();
                 if (userNotes.containsKey(courseId)) {
                     userNotes.get(courseId).add(note);
@@ -112,7 +113,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             }
             rs.close();
             statement.close();
-
         } catch (ClassNotFoundException e) {
             System.out.println("Class Not Found");
         } catch (SQLException e) {
@@ -171,13 +171,13 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                 statement.executeUpdate();
 
                 for(String courseId : user.getNotes().keySet()) {
-                    String newsqlOrder = "INSERT IGNORE INTO notes (userid, courseid, notes, chapterno) " +
-                            "VALUES (?, ?, ?, ?);";
+                    String newsqlOrder = "INSERT IGNORE INTO notes (userid, courseid, contents, chapterno, title) " +
+                            "VALUES (?, ?, ?, ?, ?);";
                     for(Notes notes : user.getNotes().get(courseId)) {
                         PreparedStatement newStatement = conn.prepareStatement(newsqlOrder);
                         newStatement.setString(1, user.getId());
                         newStatement.setString(2, courseId);
-                        newStatement.setString(3, notes.getContent());
+                        newStatement.setObject(3, notes.getContents());
                         newStatement.setInt(4, notes.getChapterno());
                         newStatement.executeUpdate();
                     }
@@ -217,10 +217,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         return false;
     }
 
-    public void updateContent(String courseId, String notesTitle, String notesContent){
-        for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
-            if (i.getTitle().equals(notesTitle)){
-                i.setContent(notesContent);
+    public void updateContent(String courseId, String notesTitle, List<String> notesContent){
+        for (Notes note : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
+            if (note.getTitle().equals(notesTitle)){
+                note.setContents(notesContent);
             }
         }
         this.save();
@@ -236,7 +236,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                     "thisismysql*"
             );
             String sqlOrder = "DELETE FROM user.users";
-
             PreparedStatement statement = conn.prepareStatement(sqlOrder);
             statement.executeUpdate();
 
@@ -303,16 +302,18 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
                     .append("UPDATE user.notes SET ")
                     .append("userid=?, ")
                     .append("courseid=?, ")
-                    .append("notes=?, ")
-                    .append("chapterno=?");
+                    .append("content=?, ")
+                    .append("chapterno=?, ")
+                    .append("title=?");
 
             for(String courseId : user.getNotes().keySet()) {
                 for(Notes note: user.getNotes().get(courseId)) {
                     statement = conn.prepareStatement(sqlOrder.toString());
                     statement.setString(1, user.getId());
                     statement.setString(2, courseId);
-                    statement.setString(3, note.getContent());
+                    statement.setObject(3, note.getContents());
                     statement.setInt(4, note.getChapterno());
+                    statement.setString(5, note.getTitle());
                 }
                 statement.executeUpdate();
             }

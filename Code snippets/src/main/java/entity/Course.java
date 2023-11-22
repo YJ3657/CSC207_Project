@@ -2,7 +2,7 @@ package main.java.entity;
 
 import main.java.entity.Notes;
 import main.java.entity.Contents;
-
+import main.java.entity.Student;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,20 +12,15 @@ import java.util.List;
 //DONE FOR NOW
 public class Course {
     private String courseId;
-    private HashMap<Integer, String> contents;
+    private List<Student> students;
+    private List<Question> questions;
+    private List<Definition> definitions;
 
-    private ArrayList<String> enrolledStudentId;
-    private HashMap<Integer, List<Question>> questions;
-    private HashMap<Integer, List<Definition>> definitions;
-
-
-
-    public Course(String courseid){
-        this.courseId = courseid;
-        contents = new HashMap<>();
-        enrolledStudentId = new ArrayList<>();
-        questions = new HashMap<>();
-        definitions = new HashMap<>();
+    public Course(String courseId){
+        this.courseId = courseId;
+        this.students = new ArrayList<>();
+        this.questions = new ArrayList<>();
+        this.definitions = new ArrayList<>();
     }
 
     public void setId(String courseId) {
@@ -36,33 +31,26 @@ public class Course {
         return courseId;
     }
 
-    public void addStudent(String userId) { enrolledStudentId.add(userId);}
-
-    public ArrayList<String> getStudents() {
-        return enrolledStudentId;
+    public List<Student> getStudents() {
+        return this.students;
     }
 
-    public void addContent(Integer chapterNo, String content) { contents.put(chapterNo, content);
+    public void setStudents(List<Student> students) {
+        this.students = students;
+        return;
     }
-
-    public HashMap<Integer, String> getContents() {
-        return contents;
+    public List<Question> getQuestions() {
+        return this.questions;
     }
-
-    public void addQuestion(Integer chapterNo, Question question) {
-        questions.get(chapterNo).add(question);
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+        return;
     }
-
-    public HashMap<Integer, List<Question>> getQuestions() {
-        return questions;
+    public List<Definition> getDefinitions() {
+        return this.definitions;
     }
-
-    public void addDefinition(Integer chapterNo, Definition definition) {
-        definitions.get(chapterNo).add(definition);
+    public void setDefinitions(List<Definition> definitions) {
+        this.definitions = definitions;
+        return;
     }
-
-    public HashMap<Integer, List<Definition>> getDefinitions() {
-        return definitions;
-    }
-
 }

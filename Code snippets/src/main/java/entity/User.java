@@ -8,8 +8,7 @@ import java.util.Map;
 import main.java.entity.Course;
 
 //DONE FOR NOW
-public class User{
-
+public class User {
     private String id;
     private String password;
 
@@ -21,9 +20,9 @@ public class User{
     public User(String id, String password){
         this.id = id;
         this.password = password;
-        groupId = new ArrayList<>();
-        courseId = new ArrayList<>();
-        notes = new HashMap<>();
+        this.groupId = new ArrayList<>();
+        this.courseId = new ArrayList<>();
+        this.notes = new HashMap<>();
     }
 
     //getters and setters

@@ -1,11 +1,8 @@
 package main.java.app;
 
 import main.java.data_access.DBCourseDataAccessObject;
-import main.java.entity.CourseFactory;
+import main.java.entity.*;
 import main.java.data_access.DBUserDataAccessObject;
-import main.java.entity.DefaultUserFactory;
-import main.java.entity.NotesFactory;
-import main.java.entity.UserFactory;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
@@ -73,7 +70,7 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
-        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
+        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
