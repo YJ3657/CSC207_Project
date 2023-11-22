@@ -5,10 +5,11 @@ import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
-// Need to make updateContents, updateDefiniition, updateStudent, updateContents
+// Need to make update, clear, getQuestions, getDefinitions, getStudents
 public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
@@ -172,6 +173,29 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         return courses.get(courseId);
     }
 
+    public List<Definition> getDefinitions(String courseId) {
+        return courses.get(courseId).getDefinitions();
+    }
+
+    public List<Question> getQuestions(String courseId) {
+        return courses.get(courseId).getQuestions();
+    }
+
+    public List<Student> getStudents(String courseId) {
+        return courses.get(courseId).getStudents();
+    }
+
+    public boolean addStudentToCourse(Student student, String courseId) {
+        Course course = courses.get(courseId);
+        // The case when the student already exists
+        if(course.getStudents().stream().anyMatch(person -> student.getStudentid().equals(person.getStudentid()))) {
+            return false;
+        }
+        else {
+            course.getStudents().add(student);
+            return true;
+        }
+    }
 }
 
 
