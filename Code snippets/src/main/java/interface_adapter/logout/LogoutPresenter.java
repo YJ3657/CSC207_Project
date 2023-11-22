@@ -1,12 +1,9 @@
-package main.java.interface_adapter.LogOut;
+package main.java.interface_adapter.logout;
 
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.login.LoginViewModel;
-import main.java.interface_adapter.signup.SignupState;
-import main.java.interface_adapter.signup.SignupViewModel;
-import main.java.use_case.LogOut.LogoutOutputBoundary;
-import main.java.view.LoginView;
+import main.java.use_case.logout.LogoutOutputBoundary;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
     private final LoginViewModel loginViewModel;
