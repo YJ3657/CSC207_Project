@@ -20,7 +20,7 @@ public class CreateNotesPresenter implements CreateNotesOutputBoundary{
     public void prepareSuccessView(CreateNotesOutputData response) {
 
         NotesState notesState = notesViewModel.getState();
-        notesState.setNotesContent(response.getNotes().getContent());
+        notesState.setNotesContent(response.getNotes().getContents());
         notesState.setNotesTitle(response.getNotes().getTitle());
         this.notesViewModel.setState(notesState);
         this.notesViewModel.firePropertyChanged();

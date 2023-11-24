@@ -15,12 +15,13 @@ public class DefinitionInteractor implements DefinitionInputBoundary{
         String definition = definitionInputData.getDefinition();
 
         if (term == "" && definition == ""){
-            definitionPresenter.prepareFailView("Please highlight some text to mark as a definition");
+            definitionPresenter.prepareFailView("Please highlight some text in the format <term>:<definition> to mark as a definition");
         } else if (definition == ""){
             definitionPresenter.prepareFailView("Please enter the definition for this term");
         } else if (term == ""){
-            definitionPresenter.prepareFailView("Please highlight the format <term>:<definition>");
+            definitionPresenter.prepareFailView("Please enter the term for this definition");
         } else{
+            System.out.println("saved");
             definitionPresenter.prepareSuccessView();
         }
 

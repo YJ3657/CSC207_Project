@@ -44,6 +44,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
 
     private final JButton markAsQuestion;
 
+    // used to debug
+
     public NotesView(NotesViewModel notesViewModel,
                      ViewManagerModel viewManagerModel,
                      AddCourseController addCourseController,
@@ -246,7 +248,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         if ((currentState.getAllNotes() != null) && !(currentState.getAllNotes().isEmpty()) && !(currentState.getAllNotes().get(course) == null)) {
             for (Notes note : currentState.getAllNotes().get(course)) {
                 topics.add(note.getTitle());
-                content.put(note.getTitle(), note.getContent());
+                content.put(note.getTitle(), note.getContents());
             }
         }
         String[] t = topics.toArray(new String[]{});
@@ -294,8 +296,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                     String[] components = splitHighlightedText(potDefinition);
                     definitionController.execute(components[0], components[1]);
                 }
-                System.out.println("where are you going?");
+
             }
+
         });
 
         JScrollPane noteTopics = new JScrollPane(topicsList);
@@ -316,7 +319,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             indexOfColon = -1;
         }else{
             indexOfColon = text.indexOf(":");}
-
         if (indexOfColon == -1){
             components[0] = "";
             components[1] = "";

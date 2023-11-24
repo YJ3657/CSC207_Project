@@ -26,8 +26,8 @@ public class InMemoryQuizDAO implements QuizDataAccessInterface {
     }
 
     public void setQuestionAnswers() {
-        Definition limit = new Definition("Limit", Constants.LIMIT_DEF);
-        Definition continuity = new Definition("Continuity", Constants.CONTIUNUITY_DEF);
+        Definition limit = new Definition(1,"Limit", Constants.LIMIT_DEF);
+        Definition continuity = new Definition(1,"Continuity", Constants.CONTIUNUITY_DEF);
         QuestionAnswers.put(limit.getWord(), limit.getDefinition());
         QuestionAnswers.put(continuity.getWord(), continuity.getDefinition());
     }

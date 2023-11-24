@@ -3,6 +3,7 @@ package main.java.use_case.notes;
 import main.java.entity.Notes;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface NotesDataAccessInterface {
 

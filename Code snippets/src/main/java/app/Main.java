@@ -1,9 +1,9 @@
 package main.java.app;
 
 import main.java.data_access.DBCourseDataAccessObject;
+import main.java.entity.*;
 import main.java.data_access.InMemoryQuizDAO;
 import main.java.data_access.DBUserDataAccessObject;
-import main.java.entity.*;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
@@ -12,6 +12,10 @@ import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
 import main.java.use_case.notes.NotesDataAccessInterface;
+import main.java.view.HomeView;
+import main.java.view.LoginView;
+import main.java.view.NotesView;
+import main.java.view.ViewManager;
 import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.view.*;
 
@@ -76,7 +80,7 @@ public class Main {
 
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
-        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new DefinitionFactory());
+        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());

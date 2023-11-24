@@ -1,4 +1,4 @@
-package main.java.interface_adapter.LogOut;
+package main.java.interface_adapter.logout;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

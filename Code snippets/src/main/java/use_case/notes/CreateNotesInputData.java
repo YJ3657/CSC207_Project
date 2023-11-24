@@ -1,32 +1,45 @@
 package main.java.use_case.notes;
 
+import java.util.List;
+
 public class CreateNotesInputData {
-    final private String title;
-    final private String content;
-    final private String courseId;
+
+    private String userId;
+    private String courseId;
+    private String contents;
+    private int chapterNo;
+    private String title;
+
     private boolean overwrite = false;
 
-    public CreateNotesInputData(String title, String content, String courseId, boolean overwrite) {
-        this.content = content;
-        this.title = title;
+    public CreateNotesInputData(String userId, String courseId, String contents, int chapterNo, String title, boolean overwrite) {
+        this.userId = userId;
         this.courseId = courseId;
+        this.contents = contents;
+        this.chapterNo = chapterNo;
+        this.title = title;
         this.overwrite = overwrite;
     }
-    public CreateNotesInputData(String title, String content, String courseId) {
-        this.content = content;
+    public CreateNotesInputData(String title, String contents, String courseId) {
+        this.contents = contents;
         this.title = title;
         this.courseId = courseId;
     }
 
-    String getTitle() {
+    public int getChapterNo() {return chapterNo;}
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getTitle() {
         return title;
     }
 
-    String getContent() {
-        return content;
+    public String getContents() {
+        return this.contents;
     }
 
-    String getCourseId(){return courseId;}
+    public String getCourseId(){return courseId;}
 
     Boolean getOverwrite(){return overwrite;}
 }

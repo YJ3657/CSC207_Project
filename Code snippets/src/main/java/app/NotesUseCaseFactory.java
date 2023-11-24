@@ -2,6 +2,8 @@ package main.java.app;
 
 import main.java.entity.CourseFactory;
 import main.java.entity.NotesFactory;
+import main.java.entity.Student;
+import main.java.entity.StudentFactory;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.add_Definition.DefinitionController;
 import main.java.interface_adapter.add_Definition.DefinitionPresenter;
@@ -44,7 +46,8 @@ public class NotesUseCaseFactory {
                                                               AddCourseDataAccessInterface addCourseDAO) {
          AddCourseOutputBoundary addCoursePresenter = new AddCoursePresenter(viewManagerModel, notesViewModel);
          CourseFactory courseFactory = new CourseFactory();
-         AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(addUserCourseDAO, addCourseDAO, addCoursePresenter, courseFactory);
+         StudentFactory studentFactory = new StudentFactory();
+         AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(addUserCourseDAO, addCourseDAO, addCoursePresenter, courseFactory, studentFactory);
          return new AddCourseController(addCourseInteractor);
 
      }
