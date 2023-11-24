@@ -3,6 +3,7 @@ package main.java.view;
 import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.entity.Notes;
+import main.java.interface_adapter.add_Definition.DefinitionController;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.notes.AddCourseController;
@@ -37,6 +38,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
 
+    private final DefinitionController definitionController;
+
     private final JButton markAsDefinition;
 
     private final JButton markAsQuestion;
@@ -45,11 +48,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                      ViewManagerModel viewManagerModel,
                      AddCourseController addCourseController,
                      CreateNotesController createNotesController,
-                     QuizController quizController) {
+                     QuizController quizController, DefinitionController definitionController) {
         super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.createNotesController = createNotesController;
+        this.definitionController = definitionController;
         this.notesViewModel.addPropertyChangeListener(this);
 //        this.viewManagerModel.addPropertyChangeListener(this);
         this.addCourseController = addCourseController;
@@ -237,7 +241,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         NotesState currentState = notesViewModel.getState();
 //        tabPanel.add(notePad);
 
-
         ArrayList<String> topics = new ArrayList<>();
         Map<String, String> content = new HashMap<>();
         if ((currentState.getAllNotes() != null) && !(currentState.getAllNotes().isEmpty()) && !(currentState.getAllNotes().get(course) == null)) {
@@ -286,19 +289,14 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         markAsDefinition.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] breakdown = breakdownString(notePad.getSelectedText());
-
+                if (e.getSource().equals(markAsDefinition)){
+                    String potDefinition = notePad.getSelectedText();
+                    String[] components = splitHighlightedText(potDefinition);
+                    definitionController.execute(components[0], components[1]);
+                }
+                System.out.println("where are you going?");
             }
         });
-
-        markAsQuestion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String[] breakdowm = breakdownString(notePad.getSelectedText());
-            }
-        });
-
-
 
         JScrollPane noteTopics = new JScrollPane(topicsList);
 
@@ -311,6 +309,35 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         return tabPanel;
     }
 
+    private String[] splitHighlightedText(String text){
+        String[] components = new String[2];
+        int indexOfColon;
+        if (text == null){
+            indexOfColon = -1;
+        }else{
+            indexOfColon = text.indexOf(":");}
+
+        if (indexOfColon == -1){
+            components[0] = "";
+            components[1] = "";
+        } else { //colon exists, find it!
+            String before = text.substring(0, indexOfColon);
+            String after = text.substring(indexOfColon + 1);
+            String regex = "\\s*";
+            if (before.matches(regex)){
+                components[0] = "";
+            }else{
+                components[0] = before;
+            }
+
+            if (after.matches(regex)){
+                components[1] = "";
+            }else{
+                components[1] = after;
+            }
+        }
+        return components;
+    }
 
     private void setNotesDisplay(NotesState state) {
         ArrayList<String> courses = state.getCourses();
@@ -324,15 +351,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         notePad.setText(selectedTopic);
     }
 
-    private String[] breakdownString(String selectedText){
-        if (selectedText == null){
 
-        } else {
-            String[] elements = new String[3];
-            ...
-            return elements;
-        }
-    }
 }
 
 

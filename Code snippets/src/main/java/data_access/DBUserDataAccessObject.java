@@ -420,6 +420,11 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 //    }
 //
 //    @Override
+//    public void addCourse(String courseId) {
+//
+//    }
+//
+//    @Override
 //    public User get(String username) {
 //        return accounts.get(username);
 //    }
@@ -430,14 +435,16 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 //    }
 //
 //    @Override
-//    public void saveUser(User user) {
+//    public void save(User user) {
 //        accounts.put(user.getId(), user);
 //        this.save();
 //    }
 //
 //    @Override
 //    public void update(User user) {
-//        accounts.put(user.getId(), user);
+//        System.out.println("Update user");
+//        User currentUser = accounts.get(user.getId());
+//        currentUser.copy(user);
 //        this.save();
 //    }
 //
@@ -460,6 +467,15 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 //        this.save();
 //    }
 //
+//    @Override
+//    public boolean noteExists(String courseId, String notesTitle) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void updateContent(String courseId, String notesTitle, String notesContent) {
+//
+//    }
+//
 //
 //}
-

@@ -65,4 +65,11 @@ public class Course {
         return definitions;
     }
 
+    public List<Definition> getDefinitions(int chapterNum){
+        Integer intObject = chapterNum;
+        return definitions.get(intObject);
+
+
+    }
+
 }

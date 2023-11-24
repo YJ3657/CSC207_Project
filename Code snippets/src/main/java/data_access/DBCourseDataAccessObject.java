@@ -1,24 +1,29 @@
 package main.java.data_access;
 
 import main.java.app.Constants;
-import main.java.entity.Course;
-import main.java.entity.CourseFactory;
-import main.java.entity.User;
+import main.java.entity.*;
+import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
+import main.java.use_case.quiz.QuizDataAccessInterface;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
-public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
+public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefinitionDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;
 
-    public DBCourseDataAccessObject(CourseFactory courseFactory) {
+    private DefinitionFactory definitionFactory;
+
+    public DBCourseDataAccessObject(CourseFactory courseFactory, DefinitionFactory definitionFactory) {
         this.courseFactory = courseFactory;
+        this.definitionFactory = definitionFactory;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -123,8 +128,24 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
         return courses.get(courseId);
     }
 
+    @Override
+    public void save(int chapterNumber, String term, String definition, String userId, String courseId) {
+        Definition newDefinition = this.definitionFactory.create(term, definition);
+        courses.get(courseId).addDefinition(chapterNumber, newDefinition);
+    }
 
-    
+    @Override
+    public List<Definition> getDefinitions(int chapterNumber, String courseId) {
+        try {
+            return courses.get(courseId).getDefinitions(chapterNumber);
+        } catch(NullPointerException e){
+            return null;
+        }
+    }
+
+
+    //
+
 }
 
 // TODO:

@@ -3,16 +3,14 @@ package main.java.app;
 import main.java.data_access.DBCourseDataAccessObject;
 import main.java.data_access.InMemoryQuizDAO;
 import main.java.data_access.DBUserDataAccessObject;
-import main.java.entity.CourseFactory;
-import main.java.entity.DefaultUserFactory;
-import main.java.entity.NotesFactory;
-import main.java.entity.UserFactory;
+import main.java.entity.*;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
+import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
 import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.view.*;
@@ -78,13 +76,13 @@ public class Main {
 
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
-        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory());
+        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new DefinitionFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         QuizDataAccessInterface quizDAO = new InMemoryQuizDAO();
 //        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
-
+        DefinitionDataAccessInterface definitionDAO = addCourseDAO;
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel);
         views.add(homeView, homeView.viewName);
@@ -95,7 +93,7 @@ public class Main {
                 userDataAccessObject,
                 addCourseDAO,
                 userDataAccessObject,
-                quizDAO
+                quizDAO, definitionDAO
                 );
         views.add(notesView, notesView.viewName);
 

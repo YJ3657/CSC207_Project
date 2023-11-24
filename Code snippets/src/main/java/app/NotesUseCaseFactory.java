@@ -3,10 +3,15 @@ package main.java.app;
 import main.java.entity.CourseFactory;
 import main.java.entity.NotesFactory;
 import main.java.interface_adapter.ViewManagerModel;
+import main.java.interface_adapter.add_Definition.DefinitionController;
+import main.java.interface_adapter.add_Definition.DefinitionPresenter;
 import main.java.interface_adapter.notes.*;
 import main.java.interface_adapter.quiz.QuizController;
 import main.java.interface_adapter.quiz.QuizPresenter;
 import main.java.interface_adapter.quiz.QuizViewModel;
+import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
+import main.java.use_case.add_Definition.DefinitionInputBoundary;
+import main.java.use_case.add_Definition.DefinitionInteractor;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.*;
@@ -24,12 +29,13 @@ public class NotesUseCaseFactory {
                                    FindUserCourseDataAccessInterface addUserCourseDAO,
                                    AddCourseDataAccessInterface addCourseDAO,
                                    NotesDataAccessInterface notesDataAccessInterface,
-                                   QuizDataAccessInterface quizDAO) {
+                                   QuizDataAccessInterface quizDAO, DefinitionDataAccessInterface definitionDAO) {
         AddCourseController addCourseController = createAddCourseUseCase(viewManagerModel, notesViewModel, addUserCourseDAO, addCourseDAO);
         CreateNotesController createNotesController = createCreateNotesUseCase(viewManagerModel, notesViewModel,
                 notesDataAccessInterface);
         QuizController quizController = createQuizUseCase(viewManagerModel, quizViewModel, quizDAO);
-        return new NotesView(notesViewModel, viewManagerModel, addCourseController, createNotesController, quizController);
+        DefinitionController definitionController = createDefinitionUseCase(notesViewModel, definitionDAO);
+        return new NotesView(notesViewModel, viewManagerModel, addCourseController, createNotesController, quizController, definitionController);
     }
 
      public static AddCourseController createAddCourseUseCase(ViewManagerModel viewManagerModel,
@@ -60,5 +66,11 @@ public class NotesUseCaseFactory {
         QuizPresenter quizPresenter = new QuizPresenter(viewManagerModel, quizViewModel);
         QuizInputBoundary quizInteractor = new QuizInteractor(quizDAO, quizPresenter);
         return new QuizController(quizInteractor);
+    }
+
+    public static DefinitionController createDefinitionUseCase(NotesViewModel notesViewModel, DefinitionDataAccessInterface definitionDataAccessObject){
+        DefinitionPresenter definitionPresenter = new DefinitionPresenter(notesViewModel);
+        DefinitionInputBoundary definitionInteractor = new DefinitionInteractor(definitionDataAccessObject, definitionPresenter);
+        return new DefinitionController(definitionInteractor);
     }
 }
