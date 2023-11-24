@@ -39,7 +39,7 @@ public class AddCourseInteractorTest {
     public void FailTest() {
         AddCourseInputData inputData = new AddCourseInputData("MAT137");
         AddCourseDataAccessInterface addCourseRepo = new InMemAddCourseDAO();
-        addCourseRepo.saveCourse(new Course("MAT137"));
+        addCourseRepo.save(new Course("MAT137"));
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
             @Override
             public void prepareSuccessView(AddCourseOutputData courseData) {
