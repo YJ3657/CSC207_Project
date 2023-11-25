@@ -3,6 +3,7 @@ package main.java.use_case.notes;
 import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.entity.CourseFactory;
+import main.java.entity.StudentFactory;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 
@@ -15,12 +16,15 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
     final AddCourseOutputBoundary addCoursePresenter;
     private final CourseFactory courseFactory;
 
+    private final StudentFactory studentFactory;
+
     public AddCourseInteractor(FindUserCourseDataAccessInterface addUserCourseDAO, AddCourseDataAccessInterface addCourseDAO, AddCourseOutputBoundary addCoursePresenter,
-                               CourseFactory courseFactory) {
+                               CourseFactory courseFactory, StudentFactory studentFactory) {
         this.addUserCourseDAO = addUserCourseDAO;
         this.addCourseDAO = addCourseDAO;
         this.addCoursePresenter = addCoursePresenter;
         this.courseFactory = courseFactory;
+        this.studentFactory = studentFactory;
     }
 
     @Override
@@ -32,10 +36,22 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
             LocalDateTime now = LocalDateTime.now();
             AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
             Course course = courseFactory.create(courseID);
-            course.addStudent(Constants.CURRENT_USER);
+            course.addStudent(studentFactory.create(Constants.CURRENT_USER, "PLACEHOLDER")); // TODO: Change placeholder time!);
             addUserCourseDAO.addCourse(courseID);
-            addCourseDAO.saveCourse(course);
+            addCourseDAO.save(course);
             addCoursePresenter.prepareSuccessView(addCourseOutputData);
         }
+
+//        if ((addUserCourseDAO.getUserCourses(Constants.CURRENT_USER) == null || !(addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).containsKey(courseID)))) {
+//            LocalDateTime now = LocalDateTime.now();
+//            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
+//            Course course = courseFactory.create(courseID);
+//            course.addStudent(Constants.CURRENT_USER);
+//            addCourseDAO.saveCourse(course);
+//            addCoursePresenter.prepareSuccessView(addCourseOutputData);
+//
+//        } else {
+//            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
+//        }
     }
 }

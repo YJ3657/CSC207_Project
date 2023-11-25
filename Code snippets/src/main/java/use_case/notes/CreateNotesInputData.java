@@ -6,13 +6,13 @@ public class CreateNotesInputData {
 
     private String userId;
     private String courseId;
-    private List<String> contents;
+    private String contents;
     private int chapterNo;
     private String title;
 
     private boolean overwrite = false;
 
-    public CreateNotesInputData(String userId, String courseId, List<String> contents, int chapterNo, String title, boolean overwrite) {
+    public CreateNotesInputData(String userId, String courseId, String contents, int chapterNo, String title, boolean overwrite) {
         this.userId = userId;
         this.courseId = courseId;
         this.contents = contents;
@@ -20,7 +20,7 @@ public class CreateNotesInputData {
         this.title = title;
         this.overwrite = overwrite;
     }
-    public CreateNotesInputData(String title, List<String> contents, String courseId) {
+    public CreateNotesInputData(String title, String contents, String courseId) {
         this.contents = contents;
         this.title = title;
         this.courseId = courseId;
@@ -35,7 +35,7 @@ public class CreateNotesInputData {
         return title;
     }
 
-    public List<String> getContents() {
+    public String getContents() {
         return this.contents;
     }
 
