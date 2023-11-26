@@ -1,5 +1,7 @@
 package main.java.app;
 
+import main.java.entity.User;
+
 public final class Constants {
 
     // For app:
@@ -21,6 +23,8 @@ public final class Constants {
     public static final String QUIZ_STATE = "Quiz state";
 
     public static String CURRENT_USER;
+
+    public static User CURRENT_USER_OBJ;
 
     public static int FRAME_WIDTH;
 

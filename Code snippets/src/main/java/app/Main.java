@@ -1,5 +1,6 @@
 package main.java.app;
 
+
 import main.java.data_access.DBCourseDataAccessObject;
 import main.java.entity.*;
 import main.java.data_access.InMemoryQuizDAO;
@@ -77,7 +78,6 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         QuizViewModel quizViewModel = new QuizViewModel();
-
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
