@@ -85,7 +85,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(generateQuiz)) {
-                    quizController.execute();
+                    int activeIndex = coursesDisplay.getSelectedIndex();
+                    String courseId = coursesDisplay.getTitleAt(activeIndex);
+                    quizController.execute(courseId);
                 }
             }
         });
@@ -294,7 +296,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 if (e.getSource().equals(markAsDefinition)){
                     String potDefinition = notePad.getSelectedText();
                     String[] components = splitHighlightedText(potDefinition);
-                    definitionController.execute(components[0], components[1]);
+                    definitionController.execute(components[0], components[1], course);
                 }
 
             }

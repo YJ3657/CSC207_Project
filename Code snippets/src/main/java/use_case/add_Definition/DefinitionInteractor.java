@@ -1,5 +1,7 @@
 package main.java.use_case.add_Definition;
 
+import main.java.app.Constants;
+
 public class DefinitionInteractor implements DefinitionInputBoundary{
 
     public final DefinitionDataAccessInterface definitionDataAccessInterface;
@@ -13,6 +15,7 @@ public class DefinitionInteractor implements DefinitionInputBoundary{
     public void execute(DefinitionInputData definitionInputData) {
         String term = definitionInputData.getTerm();
         String definition = definitionInputData.getDefinition();
+        String courseId = definitionInputData.getCourseId();
 
         if (term == "" && definition == ""){
             definitionPresenter.prepareFailView("Please highlight some text in the format <term>:<definition> to mark as a definition");
@@ -23,6 +26,7 @@ public class DefinitionInteractor implements DefinitionInputBoundary{
         } else{
             System.out.println("saved");
             definitionPresenter.prepareSuccessView();
+            definitionDataAccessInterface.saveDefinition(term, definition, Constants.CHAPTERNO_PLACEHOLDER, courseId);
         }
 
     }

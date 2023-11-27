@@ -11,8 +11,8 @@ public class DefinitionController {
         this.definitionInteractor = definitionInputBoundary;
     }
 
-    public void execute(String term, String definition){
-        DefinitionInputData definitionInputData = new DefinitionInputData(term, definition);
+    public void execute(String term, String definition, String courseId){
+        DefinitionInputData definitionInputData = new DefinitionInputData(term, definition, courseId);
         definitionInteractor.execute(definitionInputData);
     }
 

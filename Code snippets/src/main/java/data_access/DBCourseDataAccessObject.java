@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
-public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefinitionDataAccessInterface {
+public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefinitionDataAccessInterface, QuizDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;
@@ -183,9 +183,9 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         return courses.get(courseId).getDefinitions();
     }
 
-    public List<Question> getQuestions(String courseId) {
-        return courses.get(courseId).getQuestions();
-    }
+//    public List<Question> getQuestions(String courseId) { //TODO: Jerry, talk to YJ about this.
+//        return courses.get(courseId).getQuestions();
+//    }
 
     public List<Student> getStudents(String courseId) {
         return courses.get(courseId).getStudents();
@@ -211,5 +211,36 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     @Override
     public List<Definition> getDefinitions(int chapterNumber, String courseId) {
         return courses.get(courseId).getDefinitions(chapterNumber);
+    }
+
+    @Override
+    public void saveDefinition(String term, String definition, int chapterNumber, String courseId) {
+        courses.get(courseId).setDefinition(definitionFactory.create(chapterNumber, term, definition));
+        this.save();
+    }
+
+    @Override
+    public ArrayList<String> getQuestions(String courseId) {
+        List<Definition> definitions = courses.get(courseId).getDefinitions();
+        ArrayList<String> questions = new ArrayList<>();
+        int i = 1;
+        for (Definition definition: definitions) {
+            questions.add(String.format("%1d) The definition of %2s is:", i, definition.getWord()));
+            i++;
+        }
+        return questions;
+    }
+
+    @Override
+    public ArrayList<String> getAnswers(String courseId) {
+        List<Definition> definitions = courses.get(courseId).getDefinitions();
+        ArrayList<String> answers = new ArrayList<>();
+        int i = 1;
+        for (Definition definition: definitions) {
+            answers.add(String.format(definition.getDefinition()));
+            i++;
+        }
+        return answers;
+
     }
 }

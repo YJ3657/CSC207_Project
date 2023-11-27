@@ -84,7 +84,6 @@ public class Main {
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
-        QuizDataAccessInterface quizDAO = new InMemoryQuizDAO();
 //        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
         DefinitionDataAccessInterface definitionDAO = addCourseDAO;
 
@@ -97,7 +96,7 @@ public class Main {
                 userDataAccessObject,
                 addCourseDAO,
                 userDataAccessObject,
-                quizDAO, definitionDAO
+                addCourseDAO, definitionDAO
                 );
         views.add(notesView, notesView.viewName);
 

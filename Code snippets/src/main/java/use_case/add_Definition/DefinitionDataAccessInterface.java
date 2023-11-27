@@ -9,4 +9,6 @@ public interface DefinitionDataAccessInterface {
 
     List<Definition> getDefinitions(int chapterNumber, String courseId);
 
+    void saveDefinition(String term, String definition, int chapterNumber, String courseId);
+
 }

@@ -56,6 +56,10 @@ public class Course {
         return;
     }
 
+    public void setDefinition(Definition definition) {
+        definitions.add(definition);
+    }
+
     public List<Definition> getDefinitions(int chapterNum){
         List<Definition> newList = new ArrayList<>();
         for (Definition def: definitions){

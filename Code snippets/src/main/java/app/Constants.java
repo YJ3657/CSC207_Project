@@ -30,6 +30,8 @@ public final class Constants {
 
     public static int FRAME_HEIGHT;
 
+    public static int CHAPTERNO_PLACEHOLDER = 1;
+
     // For testing:
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
 
