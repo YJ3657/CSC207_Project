@@ -1,17 +1,16 @@
 package main.java.data_access;
 
-import main.java.app.Constants;
 import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.quiz.QuizDataAccessInterface;
-import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
+import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 
 import java.sql.*;
 import java.util.*;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
-public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefinitionDataAccessInterface, QuizDataAccessInterface {
+public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefQuesDataAccessInterface, QuizDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;

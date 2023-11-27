@@ -3,7 +3,6 @@ package main.java.app;
 
 import main.java.data_access.DBCourseDataAccessObject;
 import main.java.entity.*;
-import main.java.data_access.InMemoryQuizDAO;
 import main.java.data_access.DBUserDataAccessObject;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
@@ -11,13 +10,11 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
-import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
-import main.java.use_case.notes.NotesDataAccessInterface;
+import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
 import main.java.view.ViewManager;
-import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.view.*;
 
 import javax.swing.*;
@@ -85,7 +82,7 @@ public class Main {
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
 //        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
-        DefinitionDataAccessInterface definitionDAO = addCourseDAO;
+        DefQuesDataAccessInterface definitionDAO = addCourseDAO;
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel);
         views.add(homeView, homeView.viewName);

@@ -1,8 +1,8 @@
-package main.java.use_case.add_Definition;
+package main.java.use_case.add_Question_Definition;
 
 import java.util.Set;
 
-public interface DefinitionDataAccessInterface {
+public interface DefQuesDataAccessInterface {
 
     Set<String> getDefinitionTerms(int chapterNumber, String courseId);
 

@@ -1,12 +1,8 @@
 package main.java.view;
 
 import main.java.app.Constants;
-import main.java.entity.Course;
 import main.java.entity.Notes;
-import main.java.interface_adapter.add_Definition.DefinitionController;
-import main.java.interface_adapter.add_Question.QuestionController;
-import main.java.interface_adapter.home.HomeViewModel;
-import main.java.interface_adapter.login.LoginState;
+import main.java.interface_adapter.add_Question_Definition.DefQuesController;
 import main.java.interface_adapter.notes.AddCourseController;
 import main.java.interface_adapter.notes.CreateNotesController;
 import main.java.interface_adapter.notes.NotesState;
@@ -23,7 +19,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class NotesView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Notes";
@@ -39,7 +34,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
 
-    private final DefinitionController definitionController;
+    private final DefQuesController defQuesController;
 
     private final JButton markAsDefinition;
 
@@ -51,12 +46,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                      ViewManagerModel viewManagerModel,
                      AddCourseController addCourseController,
                      CreateNotesController createNotesController,
-                     QuizController quizController, DefinitionController definitionController) {
+                     QuizController quizController, DefQuesController defQuesController) {
         super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.createNotesController = createNotesController;
-        this.definitionController = definitionController;
+        this.defQuesController = defQuesController;
         this.notesViewModel.addPropertyChangeListener(this);
 //        this.viewManagerModel.addPropertyChangeListener(this);
         this.addCourseController = addCourseController;
@@ -106,7 +101,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 if (e.getSource().equals(markAsDefinition)){
                     String potDefinition = textPane.getSelectedText();
                     String[] components = splitHighlightedText(potDefinition, ":");
-                    definitionController.execute(components[0], components[1], courseId, ":");
+                    defQuesController.execute(components[0], components[1], courseId, ":");
                 }
 
             }
@@ -125,7 +120,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 if (e.getSource().equals(markAsQuestion)){
                     String potQuestion = textPane.getSelectedText();
                     String[] components = splitHighlightedText(potQuestion, "?");
-                    definitionController.execute(components[0], components[1], courseId, "?");
+                    defQuesController.execute(components[0], components[1], courseId, "?");
                 }
 
             }
