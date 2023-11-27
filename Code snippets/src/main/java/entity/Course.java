@@ -35,9 +35,8 @@ public class Course {
         return this.students;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-        return;
+    public void addStudent(Student student) {
+        this.students.add(student);
     }
     public List<Question> getQuestions() {
         return this.questions;

@@ -9,13 +9,13 @@ public class CreateNotesController {
         this.createNotesInteractor = createNotesInteractor;
     }
 
-    public void execute(String title, String content, String courseId, boolean overwrite) {
-        CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId, overwrite);
+    public void execute(String title, String content, String courseId, int chapterNo, boolean overwrite) {
+        CreateNotesInputData createNotesInputData = new CreateNotesInputData(courseId, content, chapterNo, title, overwrite);
 
         createNotesInteractor.execute(createNotesInputData);
     }
 
-    public void execute(String title, String content, String courseId) {
+    public void execute(String title, String content, String courseId, int chapterNo) {
         CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId);
 
         createNotesInteractor.execute(createNotesInputData);

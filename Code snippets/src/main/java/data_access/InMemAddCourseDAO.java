@@ -18,7 +18,7 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
 
 
     @Override
-    public void saveCourse(Course course) {
+    public void save(Course course) {
         this.courses.add(course);
     }
 

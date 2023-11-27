@@ -97,10 +97,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             while(rs.next()) {
                 String userId = rs.getString("userid");
                 String courseId = rs.getString("courseid");
-                List<String> contents = (ArrayList<String>) rs.getArray("contents");
+                String content =  rs.getString("content");
                 int chapterNo = rs.getInt("chapterno");
                 String title = rs.getString("title");
-                Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);
+                Notes note = this.notesFactory.create(userId, courseId, content, chapterNo, title);
                 Map<String, List<Notes>> userNotes = accounts.get(userId).getNotes();
                 if (userNotes.containsKey(courseId)) {
                     userNotes.get(courseId).add(note);
@@ -217,10 +217,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
         return false;
     }
 
-    public void updateContent(String courseId, String notesTitle, List<String> notesContent){
+    public void updateContent(String courseId, String notesTitle, String notesContent){
         for (Notes note : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {
             if (note.getTitle().equals(notesTitle)){
-                note.setContents(notesContent);
+                note.setContent(notesContent);
             }
         }
         this.save();

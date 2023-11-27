@@ -32,9 +32,9 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
             LocalDateTime now = LocalDateTime.now();
             AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
             Course course = courseFactory.create(courseID);
-            course.addStudent(Constants.CURRENT_USER);
+            course.addStudent(Constants.CURRENT_STUDENT);
             addUserCourseDAO.addCourse(courseID);
-            addCourseDAO.saveCourse(course);
+            addCourseDAO.save(course);
             addCoursePresenter.prepareSuccessView(addCourseOutputData);
         }
     }

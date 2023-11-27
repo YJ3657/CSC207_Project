@@ -9,16 +9,16 @@ import java.util.List;
 public class Notes{
     private String userid;
     private String title;
-    private List<String> contents;
+    private String content;
     private final int chapterno;
     private String courseid;
     // private final Reminder reminder;
 
 
-    public Notes(String userid, String courseid, List<String> contents, int chapterno, String title){
+    public Notes(String userid, String courseid, String content, int chapterno, String title){
         this.userid = userid;
         this.title = title;
-        this.contents = contents;
+        this.content = content;
         this.chapterno = chapterno;
         this.courseid = courseid;
         // reminder = new Reminder(title, 1); //new Reminder()
@@ -33,11 +33,11 @@ public class Notes{
     }
     public void setTitle() { this.title = title;}
 
-    public List<String> getContents() {
-        return contents;
+    public String getContents() {
+        return content;
     }
-    public void setContents(List<String> contents) {
-        this.contents = contents;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getChapterno() {return this.chapterno;}

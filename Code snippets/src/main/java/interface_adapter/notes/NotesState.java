@@ -10,6 +10,7 @@ import java.util.Map;
 public class NotesState {
     private String notesTitle;
     private String notesContent = "";
+    private String chapterNo;
     private Map<String, List<Notes>> allNotes = new HashMap<>();
 
     private ArrayList<String> courses = new ArrayList<>();
@@ -27,6 +28,7 @@ public class NotesState {
         notesError = copy.notesError;
         selectedcourse = copy.selectedcourse;
         allNotes = copy.allNotes;
+        chapterNo = copy.chapterNo;
     }
 
     public NotesState() {
@@ -76,4 +78,8 @@ public class NotesState {
     public String getSelectedCourse(){return selectedcourse;}
 
     public void setSelectedcourse(String course){this.selectedcourse = course;}
+
+    public String getChapterNo(){return this.chapterNo;}
+
+    public void setChapterNo(String chapterNo){this.chapterNo = chapterNo;}
 }
