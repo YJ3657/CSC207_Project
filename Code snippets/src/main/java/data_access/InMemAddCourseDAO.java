@@ -15,11 +15,9 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
         return null; // Test case using this inMem DAO does not use this method currently
     }
 
-
-
     @Override
     public void save(Course course) {
-        this.courses.add(course);
+        courses.add(course);
     }
 
     @Override

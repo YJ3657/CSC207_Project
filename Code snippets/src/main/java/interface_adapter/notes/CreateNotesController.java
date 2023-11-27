@@ -1,5 +1,6 @@
 package main.java.interface_adapter.notes;
 
+import main.java.app.Constants;
 import main.java.use_case.notes.CreateNotesInputBoundary;
 import main.java.use_case.notes.CreateNotesInputData;
 
@@ -9,13 +10,15 @@ public class CreateNotesController {
         this.createNotesInteractor = createNotesInteractor;
     }
 
-    public void execute(String title, String content, String courseId, int chapterNo, boolean overwrite) {
-        CreateNotesInputData createNotesInputData = new CreateNotesInputData(courseId, content, chapterNo, title, overwrite);
+    public void execute(String title, String content, String courseId, boolean overwrite) {
+
+        //how does chapter number work?
+        CreateNotesInputData createNotesInputData = new CreateNotesInputData(Constants.CURRENT_USER, courseId, content, 0, title, overwrite);
 
         createNotesInteractor.execute(createNotesInputData);
     }
 
-    public void execute(String title, String content, String courseId, int chapterNo) {
+    public void execute(String title, String content, String courseId) {
         CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId);
 
         createNotesInteractor.execute(createNotesInputData);

@@ -2,17 +2,22 @@ package main.java.app;
 
 import main.java.data_access.DBCourseDataAccessObject;
 import main.java.entity.*;
+import main.java.data_access.InMemoryQuizDAO;
 import main.java.data_access.DBUserDataAccessObject;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
+import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
+import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
 import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
 import main.java.view.ViewManager;
+import main.java.use_case.quiz.QuizDataAccessInterface;
+import main.java.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,12 +33,15 @@ public class Main {
 
             // Set frame size
             setSize(width, height);
+            Constants.FRAME_WIDTH = width;
+            Constants.FRAME_HEIGHT = height;
 
             // Center the frame
             setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
         }
 
     }
+
     public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
@@ -68,25 +76,39 @@ public class Main {
         HomeViewModel homeViewModel = new HomeViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        QuizViewModel quizViewModel = new QuizViewModel();
+
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
-
+        QuizDataAccessInterface quizDAO = new InMemoryQuizDAO();
+//        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
+        DefinitionDataAccessInterface definitionDAO = addCourseDAO;
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel);
         views.add(homeView, homeView.viewName);
 
-        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel, notesViewModel, userDataAccessObject, addCourseDAO, userDataAccessObject);
+        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,
+                notesViewModel,
+                quizViewModel,
+                userDataAccessObject,
+                addCourseDAO,
+                userDataAccessObject,
+                quizDAO, definitionDAO
+                );
         views.add(notesView, notesView.viewName);
 
         UserFactory userFactory = new DefaultUserFactory();
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel,
-                userDataAccessObject, signupuserdataaccessinterface, signupViewModel, userFactory);
+                userDataAccessObject, userDataAccessObject, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
+
+        QuizView quizView = new QuizView(quizViewModel, viewManagerModel);
+        views.add(quizView, quizView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();

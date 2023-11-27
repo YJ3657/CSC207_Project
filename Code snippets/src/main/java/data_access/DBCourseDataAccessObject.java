@@ -3,14 +3,18 @@ package main.java.data_access;
 import main.java.app.Constants;
 import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
+import main.java.use_case.quiz.QuizDataAccessInterface;
+import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-// Need to make update, clear, getQuestions, getDefinitions, getStudents
-public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
+// Need to make updateContents, updateDefiniition, updateStudent, updateContents
+public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefinitionDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;
@@ -21,6 +25,8 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
     public DBCourseDataAccessObject(CourseFactory courseFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory,
                                     StudentFactory studentFactory) {
         this.courseFactory = courseFactory;
+        this.definitionFactory = definitionFactory;
+
         this.questionFactory = questionFactory;
         this.definitionFactory = definitionFactory;
         this.studentFactory = studentFactory;
@@ -197,6 +203,82 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
             return true;
         }
     }
+
+    @Override
+    public void save(int chapterNumber, String term, String definition, String userId, String courseId) {
+        // TODO: Implement this!
+    }
+
+    @Override
+    public List<Definition> getDefinitions(int chapterNumber, String courseId) {
+        return courses.get(courseId).getDefinitions(chapterNumber);
+    }
 }
+
+// TODO:
+
+//package main.java.data_access;
+//
+//import main.java.entity.Course;
+//import main.java.entity.CourseFactory;
+//import main.java.use_case.courses.AddCourseDataAccessInterface;
+//
+//import java.util.HashMap;
+//
+//import java.util.Map;
+//import java.io.*;
+//
+//public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
+//
+//    private final Map<String, Course> courses = new HashMap<>();
+//    private CourseFactory courseFactory;
+//
+//    public DBCourseDataAccessObject(CourseFactory courseFactory){
+//        this.courseFactory = courseFactory;
+//        try{
+//            File f = new File("course_data.txt");
+//            BufferedReader reader = new BufferedReader(new FileReader(f));
+//            String row;
+//
+//            while((row = reader.readLine()) != null){
+//                Course course = this.courseFactory.create(row);
+//                courses.put(row, course);
+//            }
+//
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    public Course getCourse(String courseId) {
+//        return courses.get(courseId);
+//    }
+//
+//    @Override
+//    public void saveCourse(Course course) {
+//        courses.put(course.getId(), course);
+//        save(course);
+//    }
+//
+//    @Override
+//    public boolean existsByID(String courseId) {
+//        return courses.containsKey(courseId);
+//    }
+//
+//    public void save(Course course) {
+//        try {
+//            BufferedWriter bw = new BufferedWriter(new FileWriter("course_data.txt"));
+//            for (String key: courses.keySet()){
+//                bw.write(key);
+//                bw.newLine();
+//            }
+//            bw.close();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//}
 
 

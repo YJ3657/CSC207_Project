@@ -1,7 +1,6 @@
 package main.java.entity;
 
 import main.java.entity.Notes;
-import main.java.entity.Contents;
 import main.java.entity.Student;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -35,8 +34,12 @@ public class Course {
         return this.students;
     }
 
-    public void addStudent(Student student) {
-        this.students.add(student);
+    public void addStudent(Student student){
+        students.add(student);
+    }
+    public void setStudents(List<Student> students) {
+        this.students = students;
+        return;
     }
     public List<Question> getQuestions() {
         return this.questions;
@@ -52,4 +55,15 @@ public class Course {
         this.definitions = definitions;
         return;
     }
+
+    public List<Definition> getDefinitions(int chapterNum){
+        List<Definition> newList = new ArrayList<>();
+        for (Definition def: definitions){
+            if (def.getChapterno() == chapterNum){
+                newList.add(def);
+            }
+        }
+        return newList;
+    }
+
 }

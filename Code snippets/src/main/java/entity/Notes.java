@@ -9,16 +9,16 @@ import java.util.List;
 public class Notes{
     private String userid;
     private String title;
-    private String content;
+    private String contents;
     private final int chapterno;
     private String courseid;
     // private final Reminder reminder;
 
 
-    public Notes(String userid, String courseid, String content, int chapterno, String title){
+    public Notes(String userid, String courseid, String contents, int chapterno, String title){
         this.userid = userid;
         this.title = title;
-        this.content = content;
+        this.contents = contents;
         this.chapterno = chapterno;
         this.courseid = courseid;
         // reminder = new Reminder(title, 1); //new Reminder()
@@ -28,16 +28,17 @@ public class Notes{
     public void setUserId(String userId) {
         this.userid = userId;
     }
+
     public String getTitle() {
         return title;
     }
     public void setTitle() { this.title = title;}
 
     public String getContents() {
-        return content;
+        return contents;
     }
-    public void setContent(String content) {
-        this.content = content;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
     public int getChapterno() {return this.chapterno;}
@@ -48,4 +49,8 @@ public class Notes{
     public void setCourseId(String courseid) {
         this.courseid = courseid;
     }
+
+//    public void setReminder(Reminder reminder) {
+//        this.reminder = reminder;
+//    }
 }
