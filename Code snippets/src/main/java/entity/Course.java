@@ -48,6 +48,19 @@ public class Course {
         this.questions = questions;
         return;
     }
+
+    public void setQuestion(Question question){
+        questions.add(question);
+    }
+
+    public List<String> getQuestionQuestions(){
+        List<String> questionQuestions = new ArrayList<>();
+        for (Question ques: this.questions){
+            questionQuestions.add(ques.getQuestion());
+        }
+        return questionQuestions;
+    }
+
     public List<Definition> getDefinitions() {
         return this.definitions;
     }
@@ -66,16 +79,6 @@ public class Course {
 
     public void setDefinition(Definition definition) {
         definitions.add(definition);
-    }
-
-    public List<Definition> getDefinitions(int chapterNum){
-        List<Definition> newList = new ArrayList<>();
-        for (Definition def: definitions){
-            if (def.getChapterno() == chapterNum){
-                newList.add(def);
-            }
-        }
-        return newList;
     }
 
 }

@@ -4,6 +4,7 @@ import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.entity.Notes;
 import main.java.interface_adapter.add_Definition.DefinitionController;
+import main.java.interface_adapter.add_Question.QuestionController;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.notes.AddCourseController;
@@ -93,7 +94,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         });
 
         markAsDefinition.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 int activeIndex = coursesDisplay.getSelectedIndex();
@@ -105,11 +105,31 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
 
                 if (e.getSource().equals(markAsDefinition)){
                     String potDefinition = textPane.getSelectedText();
-                    String[] components = splitHighlightedText(potDefinition);
-                    definitionController.execute(components[0], components[1], courseId);
+                    String[] components = splitHighlightedText(potDefinition, ":");
+                    definitionController.execute(components[0], components[1], courseId, ":");
                 }
 
             }
+        });
+
+        markAsQuestion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int activeIndex = coursesDisplay.getSelectedIndex();
+                String courseId = coursesDisplay.getTitleAt(activeIndex);
+                JPanel panel = (JPanel) NotesView.this.coursesDisplay.getSelectedComponent();
+                JSplitPane scrollPane = (JSplitPane) panel.getComponent(0);
+                JScrollPane notePad = (JScrollPane) scrollPane.getRightComponent();
+                JTextPane textPane = (JTextPane) notePad.getViewport().getView();
+
+                if (e.getSource().equals(markAsQuestion)){
+                    String potQuestion = textPane.getSelectedText();
+                    String[] components = splitHighlightedText(potQuestion, "?");
+                    definitionController.execute(components[0], components[1], courseId, "?");
+                }
+
+            }
+
 
         });
 
@@ -321,13 +341,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         return tabPanel;
     }
 
-    private String[] splitHighlightedText(String text){
+    private String[] splitHighlightedText(String text, String symbol){
         String[] components = new String[2];
         int indexOfColon;
         if (text == null){
             indexOfColon = -1;
         }else{
-            indexOfColon = text.indexOf(":");}
+            indexOfColon = text.indexOf(symbol);}
         if (indexOfColon == -1){
             components[0] = "";
             components[1] = "";

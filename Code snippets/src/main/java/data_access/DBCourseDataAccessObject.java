@@ -201,13 +201,8 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     }
 
     @Override
-    public void save(int chapterNumber, String term, String definition, String courseId) {
-        // TODO: Implement this!
-    }
-
-    @Override
     public Set<String> getDefinitionTerms(int chapterNumber, String courseId) {
-        List<Definition> currentDefinitions = courses.get(courseId).getDefinitions(chapterNumber);
+        List<Definition> currentDefinitions = courses.get(courseId).getDefinitions();
         Set<String> terms = new HashSet<>();
         for (Definition def: currentDefinitions){
             terms.add(def.getWord());
@@ -239,11 +234,50 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
      * @return
      */
     @Override
-    public String getDefinition(String term, String courseId) {
+    public String getDefinitionOnly(String term, String courseId) {
         List<Definition> courseDefinitions = courses.get(courseId).getDefinitions();
         for (Definition def: courseDefinitions){
             if (def.getWord().equals(term)){
                 return def.getDefinition();
+            }
+
+        }
+        throw new NoSuchElementException();
+    }
+
+    @Override
+    public Set<String> getQuestionQuestions(int chapterNumber, String courseId) {
+        List<Question> currentQuestions = courses.get(courseId).getQuestions();
+        Set<String> questionsOnly = new HashSet<>();
+        for (Question question: currentQuestions){
+            questionsOnly.add(question.getQuestion());
+        }
+        return questionsOnly;
+    }
+
+    @Override
+    public void saveQuestion(String question, String answer, int chapterNumber, String courseId) {
+        Course currentCourse = courses.get(courseId);
+        List<String> questions = currentCourse.getQuestionQuestions();
+        if (questions.contains(question)){
+            for (int i = 0; i < questions.size(); i++){
+                if (questions.get(i).equals(question)){
+                    currentCourse.getQuestions().get(i).setAnswer(answer);
+                    break;
+                }
+            }
+        } else {
+            currentCourse.setQuestion(questionFactory.create(chapterNumber, question, answer));
+        }
+        this.save();
+    }
+
+    @Override
+    public String getAnswerOnly(String question, String courseId) {
+        List<Question> courseQuestions = courses.get(courseId).getQuestions();
+        for (Question ques: courseQuestions){
+            if (ques.getQuestion().equals(question)){
+                return ques.getAnswer();
             }
 
         }
