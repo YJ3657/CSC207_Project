@@ -7,10 +7,7 @@ import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
@@ -204,19 +201,53 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     }
 
     @Override
-    public void save(int chapterNumber, String term, String definition, String userId, String courseId) {
+    public void save(int chapterNumber, String term, String definition, String courseId) {
         // TODO: Implement this!
     }
 
     @Override
-    public List<Definition> getDefinitions(int chapterNumber, String courseId) {
-        return courses.get(courseId).getDefinitions(chapterNumber);
+    public Set<String> getDefinitionTerms(int chapterNumber, String courseId) {
+        List<Definition> currentDefinitions = courses.get(courseId).getDefinitions(chapterNumber);
+        Set<String> terms = new HashSet<>();
+        for (Definition def: currentDefinitions){
+            terms.add(def.getWord());
+        }
+        return terms;
     }
 
     @Override
     public void saveDefinition(String term, String definition, int chapterNumber, String courseId) {
-        courses.get(courseId).setDefinition(definitionFactory.create(chapterNumber, term, definition));
+        Course currentCourse = courses.get(courseId);
+        List<String> terms = currentCourse.getDefinitionTerms();
+        if (terms.contains(term)){
+            for (int i = 0; i < terms.size(); i++){
+                if (terms.get(i).equals(term)){
+                    currentCourse.getDefinitions().get(i).setDefinition(definition);
+                    break;
+                }
+            }
+        } else {
+            currentCourse.setDefinition(definitionFactory.create(chapterNumber, term, definition));
+        }
         this.save();
+    }
+
+    /**
+     * getDefinition for term in given class. Up to caller to ensure term actually in definitions
+     * @param term
+     * @param courseId
+     * @return
+     */
+    @Override
+    public String getDefinition(String term, String courseId) {
+        List<Definition> courseDefinitions = courses.get(courseId).getDefinitions();
+        for (Definition def: courseDefinitions){
+            if (def.getWord().equals(term)){
+                return def.getDefinition();
+            }
+
+        }
+        throw new NoSuchElementException();
     }
 
     @Override

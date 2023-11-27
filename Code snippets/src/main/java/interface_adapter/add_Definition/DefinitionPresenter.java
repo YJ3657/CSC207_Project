@@ -14,8 +14,11 @@ public class DefinitionPresenter implements DefinitionOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView() {
+    public void prepareSuccessView(String msg) {
         System.out.println("Definition added to database");
+        if (!msg.equals("")){
+            JOptionPane.showMessageDialog(null, msg, "Update", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @Override

@@ -51,6 +51,14 @@ public class Course {
     public List<Definition> getDefinitions() {
         return this.definitions;
     }
+
+    public List<String> getDefinitionTerms(){
+        List<String> definitionTerms = new ArrayList<>();
+        for (Definition def: this.definitions){
+            definitionTerms.add(def.getWord());
+        }
+        return definitionTerms;
+    }
     public void setDefinitions(List<Definition> definitions) {
         this.definitions = definitions;
         return;

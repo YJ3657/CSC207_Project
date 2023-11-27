@@ -91,7 +91,27 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 }
             }
         });
-//        this.add(notesDisplay);
+
+        markAsDefinition.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int activeIndex = coursesDisplay.getSelectedIndex();
+                String courseId = coursesDisplay.getTitleAt(activeIndex);
+                JPanel panel = (JPanel) NotesView.this.coursesDisplay.getSelectedComponent();
+                JSplitPane scrollPane = (JSplitPane) panel.getComponent(0);
+                JScrollPane notePad = (JScrollPane) scrollPane.getRightComponent();
+                JTextPane textPane = (JTextPane) notePad.getViewport().getView();
+
+                if (e.getSource().equals(markAsDefinition)){
+                    String potDefinition = textPane.getSelectedText();
+                    String[] components = splitHighlightedText(potDefinition);
+                    definitionController.execute(components[0], components[1], courseId);
+                }
+
+            }
+
+        });
 
         addCourse.addActionListener(
                 new ActionListener() {
@@ -288,19 +308,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        });
-
-        markAsDefinition.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(markAsDefinition)){
-                    String potDefinition = notePad.getSelectedText();
-                    String[] components = splitHighlightedText(potDefinition);
-                    definitionController.execute(components[0], components[1], course);
-                }
-
-            }
-
         });
 
         JScrollPane noteTopics = new JScrollPane(topicsList);
