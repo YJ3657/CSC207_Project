@@ -82,7 +82,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(generateQuiz)) {
                     int activeIndex = coursesDisplay.getSelectedIndex();
-                    String courseId = coursesDisplay.getTitleAt(activeIndex);
+                    String courseId = coursesDisplay.getTitleAt(activeIndex);  //checks what course currently on
                     quizController.execute(courseId);
                 }
             }
