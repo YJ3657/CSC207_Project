@@ -68,6 +68,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                     String studentId = rs.getString("studentid");
                     String timeEnrolled = rs.getString("time_enrolled");
                     course.getStudents().add(this.studentFactory.create(studentId, timeEnrolled));
+                    Constants.CURRENT_STUDENT = this.studentFactory.create(studentId, timeEnrolled);
                 }
 
                 courses.put(databaseName, course);
