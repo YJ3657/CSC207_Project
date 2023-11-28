@@ -14,7 +14,7 @@ public class InMemoryQuizDAO implements QuizDataAccessInterface {
     }
 
     @Override
-    public ArrayList<String> getQuestions() {
+    public ArrayList<String> getQuestions(String courseId) {
         Set<String> wordSet = QuestionAnswers.keySet();
         ArrayList<String> questions = new ArrayList<>();
         int i = 1;
@@ -33,7 +33,7 @@ public class InMemoryQuizDAO implements QuizDataAccessInterface {
     }
 
     @Override
-    public ArrayList<String> getAnswers() {
+    public ArrayList<String> getAnswers(String courseId) {
         return new ArrayList<>(QuestionAnswers.values());
     }
 }

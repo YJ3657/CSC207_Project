@@ -39,6 +39,7 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
             course.addStudent(studentFactory.create(Constants.CURRENT_USER, "PLACEHOLDER")); // TODO: Change placeholder time!);
             addUserCourseDAO.addCourse(courseID);
             addCourseDAO.save(course);
+
             addCoursePresenter.prepareSuccessView(addCourseOutputData);
         }
 

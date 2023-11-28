@@ -87,14 +87,17 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
         JScrollPane answerScrollPane = new JScrollPane(answerArea);
         JTextArea solutionArea = new JTextArea(answer);
         solutionArea.setEditable(false);
-//        solutionArea.setVisible(false);
 
         JScrollPane solutionScrollPane = new JScrollPane(solutionArea);
         solutionScrollPane.setVisible(false);
+        Dimension solutionDim = new Dimension((int) width, (int) height / 3);
+        solutionScrollPane.setMinimumSize(solutionDim);
+        solutionScrollPane.setPreferredSize(solutionDim);
         answerPanel.add(answerScrollPane);
         answerPanel.add(solutionScrollPane);
 
         JButton showAnswerBtn = new JButton("Show Answer");
+//        answerPanel.add(showAnswerBtn);
 
         showAnswerBtn.addActionListener(new ActionListener() {
             @Override
@@ -119,6 +122,7 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     public void setUpQuiz(ArrayList<String> questions, ArrayList<String> answers) {
+        quizPanel.removeAll();
         for (int i = 0; i < questions.size(); i++) {
             String question = questions.get(i);
             String answer = answers.get(i);

@@ -1,11 +1,8 @@
 package main.java.view;
 
 import main.java.app.Constants;
-import main.java.entity.Course;
 import main.java.entity.Notes;
-import main.java.interface_adapter.add_Definition.DefinitionController;
-import main.java.interface_adapter.home.HomeViewModel;
-import main.java.interface_adapter.login.LoginState;
+import main.java.interface_adapter.add_Question_Definition.DefQuesController;
 import main.java.interface_adapter.notes.AddCourseController;
 import main.java.interface_adapter.notes.CreateNotesController;
 import main.java.interface_adapter.notes.NotesState;
@@ -22,7 +19,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class NotesView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Notes";
@@ -38,7 +34,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
 
-    private final DefinitionController definitionController;
+    private final DefQuesController defQuesController;
 
     private final JButton markAsDefinition;
 
@@ -50,12 +46,12 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                      ViewManagerModel viewManagerModel,
                      AddCourseController addCourseController,
                      CreateNotesController createNotesController,
-                     QuizController quizController, DefinitionController definitionController) {
+                     QuizController quizController, DefQuesController defQuesController) {
         super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.createNotesController = createNotesController;
-        this.definitionController = definitionController;
+        this.defQuesController = defQuesController;
         this.notesViewModel.addPropertyChangeListener(this);
 //        this.viewManagerModel.addPropertyChangeListener(this);
         this.addCourseController = addCourseController;
@@ -85,11 +81,52 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(generateQuiz)) {
-                    quizController.execute();
+                    int activeIndex = coursesDisplay.getSelectedIndex();
+                    String courseId = coursesDisplay.getTitleAt(activeIndex);
+                    quizController.execute(courseId);
                 }
             }
         });
-//        this.add(notesDisplay);
+
+        markAsDefinition.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int activeIndex = coursesDisplay.getSelectedIndex();
+                String courseId = coursesDisplay.getTitleAt(activeIndex);
+                JPanel panel = (JPanel) NotesView.this.coursesDisplay.getSelectedComponent();
+                JSplitPane scrollPane = (JSplitPane) panel.getComponent(0);
+                JScrollPane notePad = (JScrollPane) scrollPane.getRightComponent();
+                JTextPane textPane = (JTextPane) notePad.getViewport().getView();
+
+                if (e.getSource().equals(markAsDefinition)){
+                    String potDefinition = textPane.getSelectedText();
+                    String[] components = splitHighlightedText(potDefinition, ":");
+                    defQuesController.execute(components[0], components[1], courseId, ":");
+                }
+
+            }
+        });
+
+        markAsQuestion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int activeIndex = coursesDisplay.getSelectedIndex();
+                String courseId = coursesDisplay.getTitleAt(activeIndex);
+                JPanel panel = (JPanel) NotesView.this.coursesDisplay.getSelectedComponent();
+                JSplitPane scrollPane = (JSplitPane) panel.getComponent(0);
+                JScrollPane notePad = (JScrollPane) scrollPane.getRightComponent();
+                JTextPane textPane = (JTextPane) notePad.getViewport().getView();
+
+                if (e.getSource().equals(markAsQuestion)){
+                    String potQuestion = textPane.getSelectedText();
+                    String[] components = splitHighlightedText(potQuestion, "?");
+                    defQuesController.execute(components[0], components[1], courseId, "?");
+                }
+
+            }
+
+
+        });
 
         addCourse.addActionListener(
                 new ActionListener() {
@@ -288,19 +325,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
-        markAsDefinition.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(markAsDefinition)){
-                    String potDefinition = notePad.getSelectedText();
-                    String[] components = splitHighlightedText(potDefinition);
-                    definitionController.execute(components[0], components[1]);
-                }
-
-            }
-
-        });
-
         JScrollPane noteTopics = new JScrollPane(topicsList);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, noteTopics, textArea);
@@ -312,13 +336,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         return tabPanel;
     }
 
-    private String[] splitHighlightedText(String text){
+    private String[] splitHighlightedText(String text, String symbol){
         String[] components = new String[2];
         int indexOfColon;
         if (text == null){
             indexOfColon = -1;
         }else{
-            indexOfColon = text.indexOf(":");}
+            indexOfColon = text.indexOf(symbol);}
         if (indexOfColon == -1){
             components[0] = "";
             components[1] = "";
