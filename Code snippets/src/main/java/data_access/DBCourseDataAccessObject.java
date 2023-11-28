@@ -1,20 +1,16 @@
 package main.java.data_access;
 
-import main.java.app.Constants;
 import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.quiz.QuizDataAccessInterface;
-import main.java.use_case.add_Definition.DefinitionDataAccessInterface;
+import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
-public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefinitionDataAccessInterface {
+public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, DefQuesDataAccessInterface, QuizDataAccessInterface {
     private Connection conn = null;
     private final Map<String, Course> courses = new HashMap<>();
     private CourseFactory courseFactory;
@@ -184,9 +180,9 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         return courses.get(courseId).getDefinitions();
     }
 
-    public List<Question> getQuestions(String courseId) {
-        return courses.get(courseId).getQuestions();
-    }
+//    public List<Question> getQuestions(String courseId) { //TODO: Jerry, talk to YJ about this.
+//        return courses.get(courseId).getQuestions();
+//    }
 
     public List<Student> getStudents(String courseId) {
         return courses.get(courseId).getStudents();
@@ -205,80 +201,111 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     }
 
     @Override
-    public void save(int chapterNumber, String term, String definition, String userId, String courseId) {
-        // TODO: Implement this!
+    public Set<String> getDefinitionTerms(int chapterNumber, String courseId) {
+        List<Definition> currentDefinitions = courses.get(courseId).getDefinitions();
+        Set<String> terms = new HashSet<>();
+        for (Definition def: currentDefinitions){
+            terms.add(def.getWord());
+        }
+        return terms;
     }
 
     @Override
-    public List<Definition> getDefinitions(int chapterNumber, String courseId) {
-        return courses.get(courseId).getDefinitions(chapterNumber);
+    public void saveDefinition(String term, String definition, int chapterNumber, String courseId) {
+        Course currentCourse = courses.get(courseId);
+        List<String> terms = currentCourse.getDefinitionTerms();
+        if (terms.contains(term)){
+            for (int i = 0; i < terms.size(); i++){
+                if (terms.get(i).equals(term)){
+                    currentCourse.getDefinitions().get(i).setDefinition(definition);
+                    break;
+                }
+            }
+        } else {
+            currentCourse.setDefinition(definitionFactory.create(chapterNumber, term, definition));
+        }
+        this.save();
+    }
+
+    /**
+     * getDefinition for term in given class. Up to caller to ensure term actually in definitions
+     * @param term
+     * @param courseId
+     * @return
+     */
+    @Override
+    public String getDefinitionOnly(String term, String courseId) {
+        List<Definition> courseDefinitions = courses.get(courseId).getDefinitions();
+        for (Definition def: courseDefinitions){
+            if (def.getWord().equals(term)){
+                return def.getDefinition();
+            }
+
+        }
+        throw new NoSuchElementException();
+    }
+
+    @Override
+    public Set<String> getQuestionQuestions(int chapterNumber, String courseId) {
+        List<Question> currentQuestions = courses.get(courseId).getQuestions();
+        Set<String> questionsOnly = new HashSet<>();
+        for (Question question: currentQuestions){
+            questionsOnly.add(question.getQuestion());
+        }
+        return questionsOnly;
+    }
+
+    @Override
+    public void saveQuestion(String question, String answer, int chapterNumber, String courseId) {
+        Course currentCourse = courses.get(courseId);
+        List<String> questions = currentCourse.getQuestionQuestions();
+        if (questions.contains(question)){
+            for (int i = 0; i < questions.size(); i++){
+                if (questions.get(i).equals(question)){
+                    currentCourse.getQuestions().get(i).setAnswer(answer);
+                    break;
+                }
+            }
+        } else {
+            currentCourse.setQuestion(questionFactory.create(chapterNumber, question, answer));
+        }
+        this.save();
+    }
+
+    @Override
+    public String getAnswerOnly(String question, String courseId) {
+        List<Question> courseQuestions = courses.get(courseId).getQuestions();
+        for (Question ques: courseQuestions){
+            if (ques.getQuestion().equals(question)){
+                return ques.getAnswer();
+            }
+
+        }
+        throw new NoSuchElementException();
+    }
+
+    @Override
+    public ArrayList<String> getQuestions(String courseId) {
+        List<Definition> definitions = courses.get(courseId).getDefinitions();
+        ArrayList<String> questions = new ArrayList<>();
+        int i = 1;
+        for (Definition definition: definitions) {
+            questions.add(String.format("%1d) The definition of %2s is:", i, definition.getWord()));
+            i++;
+        }
+        return questions;
+    }
+
+    @Override
+    public ArrayList<String> getAnswers(String courseId) {
+        List<Definition> definitions = courses.get(courseId).getDefinitions();
+        ArrayList<String> answers = new ArrayList<>();
+        int i = 1;
+        for (Definition definition: definitions) {
+            answers.add(String.format(definition.getDefinition()));
+            i++;
+        }
+        return answers;
+
     }
 }
-
-// TODO:
-
-//package main.java.data_access;
-//
-//import main.java.entity.Course;
-//import main.java.entity.CourseFactory;
-//import main.java.use_case.courses.AddCourseDataAccessInterface;
-//
-//import java.util.HashMap;
-//
-//import java.util.Map;
-//import java.io.*;
-//
-//public class DBCourseDataAccessObject implements AddCourseDataAccessInterface {
-//
-//    private final Map<String, Course> courses = new HashMap<>();
-//    private CourseFactory courseFactory;
-//
-//    public DBCourseDataAccessObject(CourseFactory courseFactory){
-//        this.courseFactory = courseFactory;
-//        try{
-//            File f = new File("course_data.txt");
-//            BufferedReader reader = new BufferedReader(new FileReader(f));
-//            String row;
-//
-//            while((row = reader.readLine()) != null){
-//                Course course = this.courseFactory.create(row);
-//                courses.put(row, course);
-//            }
-//
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public Course getCourse(String courseId) {
-//        return courses.get(courseId);
-//    }
-//
-//    @Override
-//    public void saveCourse(Course course) {
-//        courses.put(course.getId(), course);
-//        save(course);
-//    }
-//
-//    @Override
-//    public boolean existsByID(String courseId) {
-//        return courses.containsKey(courseId);
-//    }
-//
-//    public void save(Course course) {
-//        try {
-//            BufferedWriter bw = new BufferedWriter(new FileWriter("course_data.txt"));
-//            for (String key: courses.keySet()){
-//                bw.write(key);
-//                bw.newLine();
-//            }
-//            bw.close();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//}
-
-

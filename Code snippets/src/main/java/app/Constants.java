@@ -1,5 +1,7 @@
 package main.java.app;
 
+import main.java.entity.User;
+
 import main.java.entity.Student;
 
 public final class Constants {
@@ -24,9 +26,13 @@ public final class Constants {
     public static Student CURRENT_STUDENT;
     public static String CURRENT_USER;
 
+    public static User CURRENT_USER_OBJ;
+
     public static int FRAME_WIDTH;
 
     public static int FRAME_HEIGHT;
+
+    public static int CHAPTERNO_PLACEHOLDER = 1;
 
     // For testing:
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
