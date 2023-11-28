@@ -1,5 +1,7 @@
 package main.java.app;
 
+import main.java.entity.Student;
+
 public final class Constants {
 
     // For app:
@@ -19,7 +21,7 @@ public final class Constants {
 
     public static final String QUIZ_ERROR = "Quiz Cannot be setup. Please input course materials in notes.";
     public static final String QUIZ_STATE = "Quiz state";
-
+    public static Student CURRENT_STUDENT;
     public static String CURRENT_USER;
 
     public static int FRAME_WIDTH;

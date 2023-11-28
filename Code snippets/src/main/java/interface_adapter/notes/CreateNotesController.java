@@ -13,13 +13,14 @@ public class CreateNotesController {
     public void execute(String title, String content, String courseId, boolean overwrite) {
 
         //how does chapter number work?
-        CreateNotesInputData createNotesInputData = new CreateNotesInputData(Constants.CURRENT_USER, courseId, content, 0, title, overwrite);
+        CreateNotesInputData createNotesInputData = new CreateNotesInputData(Constants.CURRENT_USER, courseId, content,
+                title, overwrite);
 
         createNotesInteractor.execute(createNotesInputData);
     }
 
-    public void execute(String title, String content, String courseId) {
-        CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId);
+    public void execute(String title, String content, String courseId, int chapterNo) {
+        CreateNotesInputData createNotesInputData = new CreateNotesInputData(title, content, courseId, chapterNo);
 
         createNotesInteractor.execute(createNotesInputData);
     }

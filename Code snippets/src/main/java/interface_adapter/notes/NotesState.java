@@ -53,6 +53,17 @@ public class NotesState {
     public Map<String, List<Notes>> getAllNotes() {
         return allNotes;
     }
+    public Map<String, List<String>> getAllTopics() {
+        Map<String, List<String>> result = new HashMap<>();
+        for (String course : allNotes.keySet()){
+            List<String> titles = new ArrayList<>();
+            for (Notes note : allNotes.get(course)){
+                titles.add(note.getTitle());
+            }
+            result.put(course, titles);
+        }
+        return result;
+    }
     public void setAllNotes(Map<String, List<Notes>> allNotes){this.allNotes = allNotes;}
 
     public void setCourses(ArrayList<String> courses) {
