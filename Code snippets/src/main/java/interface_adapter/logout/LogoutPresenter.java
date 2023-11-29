@@ -5,6 +5,7 @@ import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.use_case.logout.LogoutOutputBoundary;
 
+
 public class LogoutPresenter implements LogoutOutputBoundary {
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
