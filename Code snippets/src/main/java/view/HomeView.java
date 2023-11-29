@@ -1,13 +1,12 @@
 package main.java.view;
 
-import main.java.interface_adapter.LogOut.LogoutController;
+import main.java.interface_adapter.logout.LogoutController;
 import main.java.interface_adapter.home.HomeState;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.notes.OpenNotesController;
 
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;

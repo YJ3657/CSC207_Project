@@ -1,7 +1,7 @@
 package main.java.app;
 
-import main.java.interface_adapter.LogOut.LogoutController;
-import main.java.interface_adapter.LogOut.LogoutPresenter;
+import main.java.interface_adapter.logout.LogoutController;
+import main.java.interface_adapter.logout.LogoutPresenter;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.use_case.LogOut.LogoutInputBoundary;
 import main.java.use_case.LogOut.LogoutInteractor;

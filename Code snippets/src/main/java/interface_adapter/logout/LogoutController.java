@@ -1,4 +1,4 @@
-package main.java.interface_adapter.LogOut;
+package main.java.interface_adapter.logout;
 
 import main.java.use_case.LogOut.LogoutInputBoundary;
 
