@@ -1,5 +1,6 @@
 package main.java.use_case.notes;
 
+import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.entity.NotesFactory;
 
@@ -18,10 +19,19 @@ public class CreateNotesInteractor implements CreateNotesInputBoundary{
 
     @Override
     public void execute(CreateNotesInputData createNotesInputData) {
-        Notes notes = notesFactory.create(createNotesInputData.getTitle(), createNotesInputData.getContent());
-        notesDataAccessObject.addNotes(notes, createNotesInputData.getCourseId());
+        if (notesDataAccessObject.noteExists(createNotesInputData.getCourseId(), createNotesInputData.getTitle())) {
+            if (createNotesInputData.getOverwrite()){
+                notesDataAccessObject.updateContent(createNotesInputData.getCourseId(),
+                        createNotesInputData.getTitle(), createNotesInputData.getContent());
+            } else {
+                createNotesPresenter.prepareFailView("Note already exists.");
+            }
+        } else{
+            Notes notes = notesFactory.create(Constants.CURRENT_USER, createNotesInputData.getCourseId(), createNotesInputData.getContent(), createNotesInputData.getChapterNo(), createNotesInputData.getTitle());
+            notesDataAccessObject.addNotes(notes, createNotesInputData.getCourseId());
 
-        CreateNotesOutputData createNotesOutputData = new CreateNotesOutputData(notes);
-        createNotesPresenter.prepareSuccessView(createNotesOutputData);
+            CreateNotesOutputData createNotesOutputData = new CreateNotesOutputData(notes);
+            createNotesPresenter.prepareSuccessView(createNotesOutputData);
+        }
     }
 }

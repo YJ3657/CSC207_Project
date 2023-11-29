@@ -3,36 +3,54 @@ package main.java.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 //done for now
 public class Notes{
-
+    private String userid;
     private String title;
-    private final String content; //what is the best data object to store note contents?
+    private String contents;
     private final int chapterno;
-    private final Reminder reminder;
+    private String courseid;
+    // private final Reminder reminder;
 
 
-    public Notes(String title, String content, int chapterno){
+    public Notes(String userid, String courseid, String contents, int chapterno, String title){
+        this.userid = userid;
         this.title = title;
-        this.content = content;
+        this.contents = contents;
         this.chapterno = chapterno;
-        reminder = new Reminder(title, 1); //new Reminder()
+        this.courseid = courseid;
+        // reminder = new Reminder(title, 1); //new Reminder()
     }
-    public void setTitle(String title) {
-        this.title = title;
+    public String getUserId() {
+        return this.userid;}
+    public void setUserId(String userId) {
+        this.userid = userId;
     }
 
     public String getTitle() {
         return title;
     }
+    public void setTitle() { this.title = title;}
 
-    public String getContent() {
-        return content;
+    public String getContents() {
+        return contents;
+    }
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
     public int getChapterno() {return this.chapterno;}
 
+    public String getCourseId() {
+        return this.courseid;}
 
+    public void setCourseId(String courseid) {
+        this.courseid = courseid;
+    }
 
+//    public void setReminder(Reminder reminder) {
+//        this.reminder = reminder;
+//    }
 }

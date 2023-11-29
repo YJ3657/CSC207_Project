@@ -8,4 +8,5 @@ import java.util.Map;
 public interface FindUserCourseDataAccessInterface {
     public List<String> getUserCourses(String userid);
     Map<String, List<Notes>> getUserNotes(String userId);
+    void addCourse(String courseId);
 }

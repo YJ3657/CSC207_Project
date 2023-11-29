@@ -1,6 +1,6 @@
 package main.java.interface_adapter.logout;
 
-import main.java.use_case.LogOut.LogoutInputBoundary;
+import main.java.use_case.logout.LogoutInputBoundary;
 
 public class LogoutController {
     private final LogoutInputBoundary logoutInUseCaseInteractor;

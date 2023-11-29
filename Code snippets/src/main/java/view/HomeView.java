@@ -55,6 +55,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
             }
         }
         );
+        practice.addActionListener(this);
+
     }
 
     @Override
@@ -63,6 +65,13 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
             HomeState currentstate = homeViewModel.getState();
             openNotesController.execute();
         }
+//        if (e.getSource().equals(notes)) {
+//            HomeState currentstate = homeViewModel.getState();
+//            openNotesController.execute(currentstate.getUsername());
+//        } else if (e.getSource().equals(practice)){
+//
+//        }
+
     }
 
     @Override

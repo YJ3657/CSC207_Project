@@ -8,22 +8,30 @@ import java.util.Map;
 import main.java.entity.Course;
 
 //DONE FOR NOW
-public class User{
-
+public class User {
     private String id;
     private String password;
 
     // changed to generic list for clean architecture
-    private final List<String> groupId;
-    private final List<String> courseId;
-    private final Map<String, List<Notes>> notes;
+    private List<String> groupId;
+    private List<String> courseId;
+    private Map<String, List<Notes>> notes;
+
+    public User(){
+        this.id = "";
+        this.password = "";
+        this.groupId = new ArrayList<>();
+        this.courseId = new ArrayList<>();
+        this.notes = new HashMap<String, List<Notes>>();
+    }
 
     public User(String id, String password){
+        this();
         this.id = id;
         this.password = password;
-        groupId = new ArrayList<>();
-        courseId = new ArrayList<>();
-        notes = new HashMap<>(){};
+        this.groupId = new ArrayList<>();
+        this.courseId = new ArrayList<>();
+        this.notes = new HashMap<>();
     }
 
     //getters and setters
@@ -62,6 +70,9 @@ public class User{
             notes.get(courseId).add(note);
         }
     }
+    public void setNotes(String courseId){
+        notes.put(courseId, new ArrayList<>());
+    }
 
     // special setters
     public void addCourse(String newcourseId){
@@ -70,6 +81,14 @@ public class User{
 
     public void addGroupId(String groupIds){
 
+    }
+
+    public void copy(User user){
+        this.id = user.getId();
+        this.password = user.getPassword();
+        this.groupId = user.getGroupId();
+        this.courseId = user.getCourseId();
+        this.notes = user.getNotes();
     }
 
 }

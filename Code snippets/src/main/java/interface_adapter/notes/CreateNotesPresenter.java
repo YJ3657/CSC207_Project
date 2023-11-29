@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class CreateNotesPresenter implements CreateNotesOutputBoundary{
     private final NotesViewModel notesViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public CreateNotesPresenter(ViewManagerModel viewManagerModel,
                            NotesViewModel notesViewModel) {
@@ -18,15 +18,22 @@ public class CreateNotesPresenter implements CreateNotesOutputBoundary{
 
     @Override
     public void prepareSuccessView(CreateNotesOutputData response) {
-        // On success, switch to the home view.
 
         NotesState notesState = notesViewModel.getState();
-        notesState.setNotesContent(response.getNotes().getAllNotes());
+        notesState.setNotesContent(response.getNotes().getContents());
         notesState.setNotesTitle(response.getNotes().getTitle());
         this.notesViewModel.setState(notesState);
         this.notesViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(notesViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        NotesState notesState = notesViewModel.getState();
+        notesState.setNotesError(error);
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         this.viewManagerModel.firePropertyChanged();
     }
 }

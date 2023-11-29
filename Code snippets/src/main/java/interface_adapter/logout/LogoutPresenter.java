@@ -3,7 +3,8 @@ package main.java.interface_adapter.logout;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.login.LoginViewModel;
-import main.java.use_case.LogOut.LogoutOutputBoundary;
+import main.java.use_case.logout.LogoutOutputBoundary;
+
 
 public class LogoutPresenter implements LogoutOutputBoundary {
     private final LoginViewModel loginViewModel;
