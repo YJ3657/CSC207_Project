@@ -12,6 +12,7 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 import main.java.use_case.notes.NotesDataAccessInterface;
+import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
 import main.java.view.ViewManager;

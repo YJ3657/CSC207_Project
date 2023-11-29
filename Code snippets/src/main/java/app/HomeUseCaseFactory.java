@@ -16,6 +16,7 @@ import main.java.interface_adapter.notes.OpenNotesPresenter;
 import main.java.use_case.notes.OpenNotesInputBoundary;
 import main.java.use_case.notes.OpenNotesInteractor;
 import main.java.use_case.notes.OpenNotesOutputBoundary;
+import main.java.view.HomeView;
 
 public class HomeUseCaseFactory {
 
