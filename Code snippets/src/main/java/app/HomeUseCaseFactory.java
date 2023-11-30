@@ -29,7 +29,7 @@ public class HomeUseCaseFactory {
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject, LoginViewModel loginViewModel) {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, notesDataAcessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
-        return new HomeView(homeViewModel, openNotesController);
+        return new HomeView(homeViewModel, openNotesController, logoutController);
     }
     private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
         OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
