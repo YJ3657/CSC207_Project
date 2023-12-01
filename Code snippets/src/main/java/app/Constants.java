@@ -38,6 +38,8 @@ public final class Constants {
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
 
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
+
+    public static final String REMINDER_ERROR = "Reminder cannot be shown. Please add course to the user.";
     private Constants() {}
 
 
