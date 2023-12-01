@@ -174,10 +174,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(addNotes)){
                     JTextField notesTitle = new JTextField(null, 15);
+                    JTextField chapterNo = new JTextField(null, 3);
                     JTextField notesContent = new JTextField(null,15);
                     JPanel title = new JPanel();
                     title.add(new JLabel("Topic"));
                     title.add(notesTitle);
+                    title.add(new JLabel("#"));
+                    title.add(chapterNo);
                     JPanel content = new JPanel();
                     content.add(notesContent);
                     notesTitle.addKeyListener(new KeyListener() {
@@ -185,6 +188,22 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                         public void keyTyped(KeyEvent e) {
                             NotesState currentState = notesViewModel.getState();
                             currentState.setNotesTitle(notesTitle.getText() + e.getKeyChar());
+                            notesViewModel.setState(currentState);
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                        }
+                    });
+                    chapterNo.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            NotesState currentState = notesViewModel.getState();
+                            currentState.setChapterNo(chapterNo.getText() + e.getKeyChar());
                             notesViewModel.setState(currentState);
                         }
 
@@ -205,7 +224,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                             currentstate.setNotesContent(" ");
                         }
                         createNotesController.execute(currentstate.getNotesTitle(), "",
-                                currentstate.getSelectedCourse());
+                                currentstate.getSelectedCourse(), Integer.parseInt(currentstate.getChapterNo()));
                         setNotesDisplay(currentstate);
                     }
                 }
@@ -227,9 +246,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(saveNotes)) {
                     NotesState currentstate = notesViewModel.getState();
-                    createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
-                            currentstate.getSelectedCourse(), true);
-
+                    if(currentstate.getAllTopics().get(currentstate.getSelectedCourse()).contains(currentstate.getNotesTitle())){
+                        createNotesController.execute(currentstate.getNotesTitle(), currentstate.getNotesContent(),
+                                currentstate.getSelectedCourse(), true);
+                    }else{
+                        JOptionPane.showMessageDialog(null,
+                                "Please select a note.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -299,12 +322,11 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 // Handle selection change here
                 if (!e.getValueIsAdjusting()) {
                     String selectedTopic = topicsList.getSelectedValue();
-                    String a = currentState.getNotesTitle();
-                    String b = currentState.getNotesContent();
-                    content.remove(a);
-                    content.put(a, b);
-                    updateNotePad(content.get(selectedTopic),notePad);
+                    content.remove(currentState.getNotesTitle());
+                    content.put(currentState.getNotesTitle(), currentState.getNotesContent());
                     currentState.setNotesTitle(selectedTopic);
+                    currentState.setNotesContent(content.get(selectedTopic));
+                    updateNotePad(content.get(selectedTopic),notePad);
                 }
             }
         });

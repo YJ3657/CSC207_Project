@@ -1,10 +1,11 @@
 package main.java.data_access;
 
+import main.java.app.Constants;
 import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
-
+import main.java.app.Constants;
 import java.sql.*;
 import java.util.*;
 
@@ -21,21 +22,19 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     public DBCourseDataAccessObject(CourseFactory courseFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory,
                                     StudentFactory studentFactory) {
         this.courseFactory = courseFactory;
-        this.definitionFactory = definitionFactory;
-
         this.questionFactory = questionFactory;
         this.definitionFactory = definitionFactory;
         this.studentFactory = studentFactory;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://csc207:3306",
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
                     "remoteUser",
                     "thisismysql*");
 
             ResultSet databases = conn.getMetaData().getCatalogs();
 
             while (databases.next()) {
-                String databaseName = databases.getString(1).toLowerCase();
+                String databaseName = databases.getString(1);
                 if(databaseName.equals("user") || databaseName.equals("group") || databaseName.equals("course")) {
                     continue;
                 }
@@ -48,7 +47,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                     int chapterNo = rs.getInt("chapterno");
                     String question = rs.getString("question");
                     String answer = rs.getString("answer");
-                    course.getQuestions().add(this.questionFactory.create(chapterNo, question, answer));
+                    course.setQuestion(this.questionFactory.create(chapterNo, question, answer));
                 }
 
                 sqlOrder = "SELECT chapterno, word, definition FROM " + databaseName + ".definitions";
@@ -58,7 +57,20 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                     int chapterNo = rs.getInt("chapterno");
                     String word = rs.getString("word");
                     String definition = rs.getString("definition");
-                    course.getDefinitions().add(this.definitionFactory.create(chapterNo, word, definition));
+                    course.setDefinition(this.definitionFactory.create(chapterNo, word, definition));
+                }
+
+                sqlOrder = "SELECT chapterno, content FROM " + databaseName + ".contents";
+                statement = conn.prepareStatement(sqlOrder);
+                rs = statement.executeQuery();
+                while(rs.next()) {
+                    int chapterNo = rs.getInt("chapterno");
+                    String content = rs.getString("content");
+                    Map<Integer, String> contents = course.getContents();
+                    if(contents.containsKey(chapterNo)) {
+                        continue;
+                    }
+                    contents.put(chapterNo, content);
                 }
 
                 sqlOrder = "SELECT studentid, time_enrolled FROM " + databaseName + ".students";
@@ -100,7 +112,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://csc207:3306/",
+                    "jdbc:mysql://localhost:3306/",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -112,11 +124,12 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                 String sqlOrder = "USE " + course.getId().toUpperCase();
                 PreparedStatement prestatement = conn.prepareStatement(sqlOrder);
                 prestatement.executeQuery();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), qustion varchar(50), answer varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), question varchar(50), answer varchar(50))");
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS definitions (chapterno INT(3), word varchar(50), definition varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS contents (chapterno INT(3), content varchar(50))");
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (studentid varchar(50), time_enrolled varchar(50))");
 
-                sqlOrder = "INSERT IGNORE INTO questions (chapterno, qustion, answer)" +
+                sqlOrder = "INSERT IGNORE INTO questions (chapterno, question, answer)" +
                         "VALUES (?, ?, ?)";
 
                 for (Question question : course.getQuestions()) {
@@ -136,6 +149,17 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                     prestatement.setInt(1, definition.getChapterno());
                     prestatement.setString(2, definition.getWord());
                     prestatement.setString(3, definition.getDefinition());
+                    prestatement.executeUpdate();
+                    prestatement.close();
+                }
+
+                sqlOrder = "INSERT IGNORE INTO contents (chapterno, content)" +
+                        "VALUES (?, ?)";
+
+                for (int chapterno : course.getContents().keySet()) {
+                    prestatement = conn.prepareStatement(sqlOrder);
+                    prestatement.setInt(1, chapterno);
+                    prestatement.setString(2, course.getContents().get(chapterno));
                     prestatement.executeUpdate();
                     prestatement.close();
                 }

@@ -1,71 +1,24 @@
 package main.java.entity;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 //done for now
 public class Reminder {
+    // One reminder for one course
+    private final String courseid;
+    private final Map<Integer, String> reviewMaterials;
 
-    private LocalDateTime deadline; // documentation I used: https://www.w3schools.com/java/java_date.asp
-    private String title;
-    private int frequency; //I am assuming frequency is a number on a scale(exp. 1-10), where 1 is remind very infrequently and 10 is remind very frequently
-    private boolean enabled;
-
-    public Reminder(String title, int frequency){
-        this.deadline = null;
-        this.title = title;
-        this.frequency = frequency;
-        this.enabled = false;
+    public Reminder(String courseid, Map<Integer, String> reviewMaterials){
+        this.courseid = courseid;
+        this.reviewMaterials = reviewMaterials;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    public String getCourseid() {
+        return courseid;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public Map<Integer, String> getReviewMaterials() {
+        return reviewMaterials;
     }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    //special methods
-
-    /**
-     * Notify user about what to study
-     */
-    public void remind(){
-        //DO SOMETHING TO REMIND USER
-        setNextReminder();
-    }
-
-    /**
-     * Set up next reminder to study
-     */
-    private void setNextReminder(){
-
-
-    }
-
-
 }

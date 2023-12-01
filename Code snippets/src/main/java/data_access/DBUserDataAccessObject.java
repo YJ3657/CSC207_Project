@@ -97,7 +97,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             while(rs.next()) {
                 String userId = rs.getString("userid");
                 String courseId = rs.getString("courseid");
-                String contents = rs.getString("contents"); // TODO: Yeong jae check this over, I'm assuming this is how it would work if change contents to string
+                String contents = rs.getString("content"); // TODO: Yeong jae check this over, I'm assuming this is how it would work if change contents to string
                 int chapterNo = rs.getInt("chapterno");
                 String title = rs.getString("title");
                 Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);

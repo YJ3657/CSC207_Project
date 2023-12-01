@@ -2,6 +2,8 @@ package main.java.app;
 
 import main.java.entity.User;
 
+import main.java.entity.Student;
+
 public final class Constants {
 
     // For app:
@@ -21,7 +23,7 @@ public final class Constants {
 
     public static final String QUIZ_ERROR = "Quiz Cannot be setup. Please input course materials in notes.";
     public static final String QUIZ_STATE = "Quiz state";
-
+    public static Student CURRENT_STUDENT;
     public static String CURRENT_USER;
 
     public static User CURRENT_USER_OBJ;
@@ -36,6 +38,8 @@ public final class Constants {
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
 
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
+
+    public static final String REMINDER_ERROR = "Reminder cannot be shown. Please add course to the user.";
     private Constants() {}
 
 

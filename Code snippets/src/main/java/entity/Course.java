@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 //DONE FOR NOW
@@ -15,11 +16,14 @@ public class Course {
     private List<Question> questions;
     private List<Definition> definitions;
 
+    private Map<Integer, String> contents;
+
     public Course(String courseId){
         this.courseId = courseId;
         this.students = new ArrayList<>();
         this.questions = new ArrayList<>();
         this.definitions = new ArrayList<>();
+        this.contents = new HashMap<Integer, String>();
     }
 
     public void setId(String courseId) {
@@ -79,6 +83,15 @@ public class Course {
 
     public void setDefinition(Definition definition) {
         definitions.add(definition);
+    }
+
+    public void setContents(Map<Integer, String> contents) {
+        this.contents = contents;
+        return;
+    }
+
+    public Map<Integer, String> getContents() {
+        return this.contents;
     }
 
 }
