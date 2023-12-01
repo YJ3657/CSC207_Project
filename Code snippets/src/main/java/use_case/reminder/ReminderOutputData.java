@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ReminderOutputData {
 
-    Map<String, List<String>> reviewContents;
+    public Map<String, List<String>> reviewContents;
 
     public ReminderOutputData(Map<String, List<String>> reviewContents) {
         this.reviewContents = reviewContents;
