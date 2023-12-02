@@ -17,7 +17,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 
     @Override
     public void prepareLogout() {
-        //switch to signup view
+        //switch to log-in view
         LoginState loginState = new LoginState();
         this.loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
