@@ -1,8 +1,16 @@
 package main.java.app;
 
+import main.java.data_access.FileInstructionsDataAccessObject;
+import main.java.interface_adapter.instructions.InstructionsController;
+import main.java.interface_adapter.instructions.InstructionsPresenter;
+import main.java.interface_adapter.instructions.InstructionsViewModel;
 import main.java.interface_adapter.logout.LogoutController;
 import main.java.interface_adapter.logout.LogoutPresenter;
 import main.java.interface_adapter.login.LoginViewModel;
+import main.java.use_case.instructions.InstructionsInputBoundary;
+import main.java.use_case.instructions.InstructionsInteractor;
+import main.java.use_case.instructions.InstructionsOutputBoundary;
+import main.java.use_case.instructions.InstructionsOutputData;
 import main.java.use_case.logout.LogoutInputBoundary;
 import main.java.use_case.logout.LogoutInteractor;
 import main.java.use_case.logout.LogoutOutputBoundary;
@@ -26,12 +34,25 @@ public class HomeUseCaseFactory {
 
 
 
-    public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject, LoginViewModel loginViewModel) {
+    public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
+                                  NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject,
+                                  LoginViewModel loginViewModel, InstructionsViewModel instructionsViewModel, FileInstructionsDataAccessObject fileInstructionsDataAccessObject) {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, notesDataAcessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
-        return new HomeView(homeViewModel, openNotesController, logoutController);
+        InstructionsController instructionsController = createInstructionsUseCase(instructionsViewModel, viewManagerModel, fileInstructionsDataAccessObject);
+        return new HomeView(homeViewModel, openNotesController, logoutController, instructionsController);
     }
-    private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
+
+    private static InstructionsController createInstructionsUseCase(InstructionsViewModel instructionsViewModel, ViewManagerModel viewManagerModel, FileInstructionsDataAccessObject dataAccessObject) {
+        InstructionsOutputBoundary instructionPresenter = new InstructionsPresenter(instructionsViewModel, viewManagerModel);
+        InstructionsInputBoundary instructionsInteractor = new InstructionsInteractor(dataAccessObject, instructionPresenter);
+        return new InstructionsController(instructionsInteractor);
+    }
+
+
+
+    private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel
+        notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
         OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
 
 
