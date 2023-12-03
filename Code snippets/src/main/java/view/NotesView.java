@@ -259,8 +259,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                             }
                         }
                         currentstate.getAllNotes().get(currentstate.getSelectedCourse()).remove(tbd);
-                        deleteNotesController.execute(currentstate.getNotesTitle(), currentstate.getSelectedCourse(),
-                                Integer.parseInt(currentstate.getChapterNo()), tbd);
+                        deleteNotesController.execute(currentstate.getNotesTitle(), currentstate.getSelectedCourse(), tbd);
                         setNotesDisplay(currentstate);
                     }
                 }
