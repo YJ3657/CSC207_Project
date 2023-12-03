@@ -17,7 +17,7 @@ public class FileInstructionsDataAccessObject implements InstructionsUserDataAcc
             String row;
 
             while((row = reader.readLine()) != null){
-                instructions = instructions + row;
+                instructions = instructions + row + "\n";
             }
 
         } catch (FileNotFoundException e) {
