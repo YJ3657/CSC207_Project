@@ -1,0 +1,19 @@
+Welcome to RetainU, the all in one educational notetaking app.
+
+From the main page, you will see the buttons:
+'Notes':
+    Manage your notes
+
+From the notes page, you will see the buttons:
+'Add Course':
+    Opens up a section of notes for a course, if you have not already previously opened up the section
+'+':
+    Adds a subnote for a course. Must have a course selected.
+'Generate Quiz':
+    Creates a quiz for the selected course, based on the questions and definitions every user has highlighted for that course
+'Save':
+    Saves edits for the current note
+'Mark as Definition':
+    If a note under a course is open, you may highlight a definition in the form <term>:<definition> and click this button to save this as a definition under the course. Can be used for quiz generation.
+'Mark as Question':
+    If a note under a course is open, you may highlight a question in the form <question>?<answer> and click this button to save this as a question under the course. The answer may be left blank for an open ended question. Can be used for quiz generation.
