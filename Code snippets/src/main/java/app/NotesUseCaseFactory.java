@@ -16,6 +16,8 @@ import main.java.use_case.add_Question_Definition.DefQuesInteractor;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.*;
+import main.java.use_case.notes.delete_notes.DeleteNotesInputBoundary;
+import main.java.use_case.notes.delete_notes.DeleteNotesInteractor;
 import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.use_case.quiz.QuizInputBoundary;
 import main.java.use_case.quiz.QuizInteractor;
@@ -36,7 +38,9 @@ public class NotesUseCaseFactory {
                 notesDataAccessInterface);
         QuizController quizController = createQuizUseCase(viewManagerModel, quizViewModel, quizDAO);
         DefQuesController defQuesController = createDefinitionUseCase(notesViewModel, definitionDAO);
-        return new NotesView(notesViewModel, viewManagerModel, addCourseController, createNotesController, quizController, defQuesController);
+        DeleteNotesController deleteNotesController = createDeleteNotesUseCase(notesDataAccessInterface);
+        return new NotesView(notesViewModel, viewManagerModel, addCourseController, createNotesController, quizController, defQuesController,
+                deleteNotesController);
     }
 
      public static AddCourseController createAddCourseUseCase(ViewManagerModel viewManagerModel,
@@ -59,6 +63,11 @@ public class NotesUseCaseFactory {
         CreateNotesInputBoundary createNotesInteractor = new CreateNotesInteractor(notesDataAccessInterface,
                 createNotesPresenter, notesFactory);
         return new CreateNotesController(createNotesInteractor);
+    }
+
+    public static DeleteNotesController createDeleteNotesUseCase(NotesDataAccessInterface notesDataAccessInterface) {
+        DeleteNotesInputBoundary deleteNotesInteractor = new DeleteNotesInteractor(notesDataAccessInterface);
+        return new DeleteNotesController(deleteNotesInteractor);
     }
 
     public static QuizController createQuizUseCase(ViewManagerModel viewManagerModel,
