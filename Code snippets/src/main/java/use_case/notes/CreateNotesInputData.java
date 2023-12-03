@@ -12,18 +12,18 @@ public class CreateNotesInputData {
 
     private boolean overwrite = false;
 
-    public CreateNotesInputData(String userId, String courseId, String contents, int chapterNo, String title, boolean overwrite) {
+    public CreateNotesInputData(String userId, String courseId, String contents, String title, boolean overwrite) {
         this.userId = userId;
         this.courseId = courseId;
         this.contents = contents;
-        this.chapterNo = chapterNo;
         this.title = title;
         this.overwrite = overwrite;
     }
-    public CreateNotesInputData(String title, String contents, String courseId) {
+    public CreateNotesInputData(String title, String contents, String courseId, int chapterNo) {
         this.contents = contents;
         this.title = title;
         this.courseId = courseId;
+        this.chapterNo = chapterNo;
     }
 
     public int getChapterNo() {return chapterNo;}

@@ -2,10 +2,12 @@ package main.java.app;
 
 
 import main.java.data_access.DBCourseDataAccessObject;
+import main.java.data_access.FileInstructionsDataAccessObject;
 import main.java.entity.*;
 import main.java.data_access.DBUserDataAccessObject;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.instructions.InstructionsViewModel;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.quiz.QuizViewModel;
@@ -75,6 +77,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         QuizViewModel quizViewModel = new QuizViewModel();
+        InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
 
 //        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
@@ -83,8 +86,9 @@ public class Main {
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
 //        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
         DefQuesDataAccessInterface definitionDAO = addCourseDAO;
+        FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,
@@ -99,6 +103,9 @@ public class Main {
 
         UserFactory userFactory = new DefaultUserFactory();
 
+        InstructionsView instructionsView = InstructionsUseCaseFactory.create(viewManagerModel,instructionsViewModel);
+        views.add(instructionsView, instructionsView.viewName);
+
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel,
                 userDataAccessObject, userDataAccessObject, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
@@ -108,6 +115,7 @@ public class Main {
 
         viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
+
 
 //        application.pack();
         application.setVisible(true);

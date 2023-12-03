@@ -5,6 +5,7 @@ import main.java.interface_adapter.login.LoginState;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.use_case.logout.LogoutOutputBoundary;
 
+
 public class LogoutPresenter implements LogoutOutputBoundary {
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
@@ -16,7 +17,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 
     @Override
     public void prepareLogout() {
-        //switch to signup view
+        //switch to log-in view
         LoginState loginState = new LoginState();
         this.loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();

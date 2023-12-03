@@ -10,6 +10,7 @@ import java.util.Map;
 public class NotesState {
     private String notesTitle;
     private String notesContent = "";
+    private String chapterNo;
     private Map<String, List<Notes>> allNotes = new HashMap<>();
 
     private ArrayList<String> courses = new ArrayList<>();
@@ -27,6 +28,7 @@ public class NotesState {
         notesError = copy.notesError;
         selectedcourse = copy.selectedcourse;
         allNotes = copy.allNotes;
+        chapterNo = copy.chapterNo;
     }
 
     public NotesState() {
@@ -50,6 +52,17 @@ public class NotesState {
 
     public Map<String, List<Notes>> getAllNotes() {
         return allNotes;
+    }
+    public Map<String, List<String>> getAllTopics() {
+        Map<String, List<String>> result = new HashMap<>();
+        for (String course : allNotes.keySet()){
+            List<String> titles = new ArrayList<>();
+            for (Notes note : allNotes.get(course)){
+                titles.add(note.getTitle());
+            }
+            result.put(course, titles);
+        }
+        return result;
     }
     public void setAllNotes(Map<String, List<Notes>> allNotes){this.allNotes = allNotes;}
 
@@ -76,4 +89,8 @@ public class NotesState {
     public String getSelectedCourse(){return selectedcourse;}
 
     public void setSelectedcourse(String course){this.selectedcourse = course;}
+
+    public String getChapterNo(){return this.chapterNo;}
+
+    public void setChapterNo(String chapterNo){this.chapterNo = chapterNo;}
 }
