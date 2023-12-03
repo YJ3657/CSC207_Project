@@ -1,17 +1,29 @@
 package main.java.view;
 
+import main.java.app.Constants;
+import main.java.entity.Notes;
 import main.java.interface_adapter.instructions.InstructionsController;
 import main.java.interface_adapter.logout.LogoutController;
 import main.java.interface_adapter.home.HomeState;
 import main.java.interface_adapter.home.HomeViewModel;
+import main.java.interface_adapter.notes.NotesState;
 import main.java.interface_adapter.notes.OpenNotesController;
 
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "home";
@@ -50,6 +62,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         buttons.add(logout);
         this.add(logo);
         this.add(buttons);
+        this.add(getReminderPanel());
 //        this.add(title);
 
 
@@ -88,6 +101,25 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 //        }
 
     }
+
+    private JPanel getReminderPanel() {
+        JPanel reminderPanel = new JPanel(new BorderLayout());
+        String[] reminderList = new String[5];
+        reminderList[0] = "Sample Reminder 1";
+        reminderList[1] = "Sample Reminder 2";
+        reminderList[2] = "Sample Reminder 3";
+        reminderList[3] = "Sample Reminder 4";
+        reminderList[4] = "Sample Reminder 5";
+        JList<String> homeList = new JList<>(reminderList);
+        homeList.setFixedCellHeight(80);
+        homeList.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder("To Do"),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        reminderPanel.add(new JScrollPane(homeList), BorderLayout.CENTER);
+        reminderPanel.setPreferredSize(new Dimension(800, 400));
+        return reminderPanel;
+    }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
