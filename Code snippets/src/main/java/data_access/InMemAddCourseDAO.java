@@ -1,18 +1,32 @@
 package main.java.data_access;
 
-import main.java.entity.Course;
+import main.java.app.Constants;
+import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
+import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
+public class InMemAddCourseDAO implements AddCourseDataAccessInterface, FindUserCourseDataAccessInterface {
 
     private final ArrayList<Course> courses = new ArrayList<>();
+    public final Map<String, User> accounts = new HashMap<>();
+
+    public InMemAddCourseDAO() {
+        accounts.put(Constants.CURRENT_USER, new User(Constants.CURRENT_USER, Constants.TEST_USER_PW));
+    }
 
     @Override
     public Course getCourse(String courseId) {
-        return null; // Test case using this inMem DAO does not use this method currently
+        for (Course course : courses) {
+            if (course.getId().equals(courseId)) {
+                return course;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -31,5 +45,22 @@ public class InMemAddCourseDAO implements AddCourseDataAccessInterface {
 
     public Map<String, Course> getCourses() {
         return null;
+    }
+
+    @Override
+    public List<String> getUserCourses(String userid) {
+        return accounts.get(userid).getCourseId();
+    }
+
+    @Override
+    public Map<String, List<Notes>> getUserNotes(String userId) {
+        return accounts.get(userId).getNotes();
+    }
+
+    @Override
+    public void addCourse(String courseId) {
+        User currentUserObj = accounts.get(Constants.CURRENT_USER);
+        currentUserObj.setNotes(courseId);
+        currentUserObj.addCourse(courseId);
     }
 }
