@@ -227,6 +227,17 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     }
 
     @Override
+    public void deleteNotes(Notes tbd, String courseId) {
+        if(Constants.CURRENT_USER_OBJ.getNotes().get(courseId).size() == 1){
+            Constants.CURRENT_USER_OBJ.getNotes().get(courseId).clear();
+        } else {
+            Constants.CURRENT_USER_OBJ.getNotes().get(courseId).
+                    remove(tbd);
+            this.save();
+        }
+    }
+
+    @Override
     public void clear() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

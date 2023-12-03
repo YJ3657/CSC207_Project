@@ -10,4 +10,5 @@ public interface NotesDataAccessInterface {
     public void addNotes(Notes notes, String courseId);
     public boolean noteExists(String courseId, String notesTitle);
     public void updateContent(String courseId, String notesTitle, String notesContent);
+    public void deleteNotes(Notes tbd, String courseId);
 }
