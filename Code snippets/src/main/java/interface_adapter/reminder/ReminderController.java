@@ -1,5 +1,6 @@
 package main.java.interface_adapter.reminder;
 
+import main.java.interface_adapter.home.HomeState;
 import main.java.use_case.reminder.ReminderInputBoundary;
 import main.java.use_case.reminder.ReminderInputData;
 

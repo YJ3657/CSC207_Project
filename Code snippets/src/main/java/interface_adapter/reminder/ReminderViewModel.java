@@ -9,15 +9,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ReminderViewModel extends ViewModel {
-    public final String TITLE_LABEL = "Quiz View";
+    public final String TITLE_LABEL = "Reminder View";
 
     public final String BACK_BUTTON_LABEL = "Back";
 
-    public final String SHOW_ANSWERS_BUTTON_LABEL = "Show Answers";
     private ReminderState state = new ReminderState();
 
     public ReminderViewModel() {
-        super(Constants.QUIZ_VIEWNAME);
+        super(Constants.REMINDER_VIEWNAME);
     }
 
     public void setState(ReminderState state) {
