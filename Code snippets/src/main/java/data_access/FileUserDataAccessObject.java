@@ -125,5 +125,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     }
 
+    public void deleteNotes(Notes tbd, String courseId) {
+        Constants.CURRENT_USER_OBJ.getNotes().get(courseId).
+                remove(tbd);
+        this.save();
+    }
+
 
 }

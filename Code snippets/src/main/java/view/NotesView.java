@@ -3,10 +3,7 @@ package main.java.view;
 import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.interface_adapter.add_Question_Definition.DefQuesController;
-import main.java.interface_adapter.notes.AddCourseController;
-import main.java.interface_adapter.notes.CreateNotesController;
-import main.java.interface_adapter.notes.NotesState;
-import main.java.interface_adapter.notes.NotesViewModel;
+import main.java.interface_adapter.notes.*;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.quiz.QuizController;
 
@@ -34,6 +31,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
 
+    private final DeleteNotesController deleteNotesController;
+
     private final DefQuesController defQuesController;
 
     private final JButton markAsDefinition;
@@ -46,11 +45,13 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                      ViewManagerModel viewManagerModel,
                      AddCourseController addCourseController,
                      CreateNotesController createNotesController,
-                     QuizController quizController, DefQuesController defQuesController) {
+                     QuizController quizController, DefQuesController defQuesController,
+                     DeleteNotesController deleteNotesController) {
         super(new BorderLayout());
         this.notesViewModel = notesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.createNotesController = createNotesController;
+        this.deleteNotesController = deleteNotesController;
         this.defQuesController = defQuesController;
         this.notesViewModel.addPropertyChangeListener(this);
 //        this.viewManagerModel.addPropertyChangeListener(this);
@@ -70,6 +71,8 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         JButton addNotes = new JButton("+");
 
         JButton saveNotes = new JButton("Save");
+
+        JButton deleteNotes = new JButton("Delete");
 
         JButton generateQuiz = new JButton("Generate Quiz");
 
@@ -173,7 +176,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(addNotes)){
-                    JTextField notesTitle = new JTextField(null, 15);
+                    JTextField notesTitle = new JTextField(null, 10);
                     JTextField chapterNo = new JTextField(null, 3);
                     JTextField notesContent = new JTextField(null,15);
                     JPanel title = new JPanel();
@@ -241,6 +244,28 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                 }
             }
         });
+        deleteNotes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(deleteNotes)) {
+                    int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this note?",
+                            "Warning", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        NotesState currentstate = notesViewModel.getState();
+                        Notes tbd = null;
+                        for(Notes note : currentstate.getAllNotes().get(currentstate.getSelectedCourse())){
+                            if (currentstate.getNotesTitle().equals(note.getTitle())){
+                                tbd = note;
+                            }
+                        }
+                        currentstate.getAllNotes().get(currentstate.getSelectedCourse()).remove(tbd);
+                        deleteNotesController.execute(currentstate.getNotesTitle(), currentstate.getSelectedCourse(),
+                                Integer.parseInt(currentstate.getChapterNo()), tbd);
+                        setNotesDisplay(currentstate);
+                    }
+                }
+            }
+        });
         saveNotes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -262,6 +287,7 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         buttonPanel.add(generateQuiz);
         buttonPanel.add(back);
         buttonPanel.add(saveNotes);
+        buttonPanel.add(deleteNotes);
         buttonPanel.add(markAsDefinition);
         buttonPanel.add(markAsQuestion);
         this.add(buttonPanel, BorderLayout.NORTH);
