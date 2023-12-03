@@ -8,6 +8,7 @@ import main.java.interface_adapter.home.HomeState;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.notes.NotesState;
 import main.java.interface_adapter.notes.OpenNotesController;
+import main.java.interface_adapter.reminder.ReminderController;
 
 
 import javax.swing.*;
@@ -31,6 +32,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final OpenNotesController openNotesController;
     private final LogoutController logoutController;
     private final InstructionsController instructionsController;
+    private final ReminderController reminderController;
     private HomeViewModel homeViewModel;
     private final JButton practice;
     private final JButton reminder;
@@ -38,11 +40,12 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton logout;
 
     public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController, LogoutController
-            logoutController, InstructionsController instructionsController) {
+            logoutController, InstructionsController instructionsController, ReminderController reminderController) {
         this.openNotesController = openNotesController;
         this.homeViewModel = homeViewModel;
         this.logoutController = logoutController;
         this.instructionsController = instructionsController;
+        this.reminderController = reminderController;
         homeViewModel.addPropertyChangeListener(this);
 
 //        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
@@ -81,8 +84,17 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                   instructionsController.execute();
               }
           }
-      }
+        }
         );
+        reminder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(reminder)) {
+                    HomeState homeViewState = homeViewModel.getState();
+                    reminderController.execute(homeViewState.getUsername());
+                }
+            }
+        });
         practice.addActionListener(this);
 
     }
