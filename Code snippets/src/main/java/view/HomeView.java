@@ -38,6 +38,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton reminder;
     private final JButton instructions;
     private final JButton logout;
+    private final JButton chatbotButton;
 
     public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController, LogoutController
             logoutController, InstructionsController instructionsController, ReminderController reminderController) {
@@ -63,11 +64,19 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         buttons.add(instructions);
         logout = new JButton(HomeViewModel.LOGOUT_LABEL);
         buttons.add(logout);
+
+        ImageIcon chatbotIcon = new ImageIcon("chatbot.png");
+        Image image = chatbotIcon.getImage();
+        Image newImg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        ImageIcon newChatbotIcon = new ImageIcon(newImg);
+        chatbotButton = new JButton(newChatbotIcon);
+        chatbotButton.setMargin(new Insets(1,1,1,1));
+        buttons.add(chatbotButton);
+
         this.add(logo);
         this.add(buttons);
         this.add(getReminderPanel());
 //        this.add(title);
-
 
         notes.addActionListener(this);
         logout.addActionListener( new ActionListener() {

@@ -1,5 +1,4 @@
-package main.java.api;
-
+package main.java.data_access;
 
 import okhttp3.*;
 import java.io.BufferedReader;
@@ -8,19 +7,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+public class ChatGptDAO {
+    private final String API_URL = "https://api.openai.com/v1/chat/completions";
+    private final String model = "gpt-3.5-turbo";
+    private final String apiKey = "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";
+    public ChatGptDAO(){
+    }
 
-
-// TODO: Each test costs 17 tokens, have 4096 total
-public class ChatAPI {
-    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-
-    public static void main(String[] args) throws Exception {
+    public String execute(String prompt){
         OkHttpClient client = new OkHttpClient();
-
-        String apiKey = "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";
-        String prompt = "Hi";
-        String model = "gpt-3.5-turbo";
-
         try{
             //HTTP Post request
             URL obj = new URL(API_URL);
@@ -46,13 +41,13 @@ public class ChatAPI {
             }
             in.close();
 
-            int start = response.indexOf("content")+11; //Where the content starts.
-            int end = response.indexOf("\"", start); // Where the content ends.
-            System.out.println(response.substring(start, end));
+            int start = response.indexOf("content")+11; // Where the content starts
+            int end = response.indexOf("\"", start); // Where the content ends
+            return response.substring(start, end);
         }catch(IOException e){
             throw new RuntimeException(e);
         }
-
     }
-}
 
+
+}
