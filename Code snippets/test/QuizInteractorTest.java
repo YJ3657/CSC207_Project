@@ -15,8 +15,9 @@ public class QuizInteractorTest {
 
     @Test
     public void SuccessTest() {
-        QuizDataAccessInterface quizRepo = new InMemoryQuizDAO();
+        InMemoryQuizDAO quizRepo = new InMemoryQuizDAO();
         quizRepo.setQuestionAnswers();
+        QuizInputData quizInputData = new QuizInputData("MAT137");
         QuizOutputBoundary successPresenter = new QuizOutputBoundary() {
             @Override
             public void prepareSuccessView(QuizOutputData quizOutputData) {
@@ -34,12 +35,13 @@ public class QuizInteractorTest {
             }
         };
         QuizInputBoundary interactor = new QuizInteractor(quizRepo, successPresenter);
-        interactor.execute();
+        interactor.execute(quizInputData);
     }
 
     @Test
     public void FailTest() {
         QuizDataAccessInterface quizRepo = new InMemoryQuizDAO();
+        QuizInputData quizInputData = new QuizInputData("MAT137");
         QuizOutputBoundary failPresenter = new QuizOutputBoundary() {
             @Override
             public void prepareSuccessView(QuizOutputData quizOutputData) {
@@ -52,6 +54,6 @@ public class QuizInteractorTest {
             }
         };
         QuizInputBoundary interactor = new QuizInteractor(quizRepo, failPresenter);
-        interactor.execute();
+        interactor.execute(quizInputData);
     }
 }

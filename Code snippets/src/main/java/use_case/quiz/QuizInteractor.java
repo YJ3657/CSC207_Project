@@ -11,7 +11,6 @@ public class QuizInteractor implements QuizInputBoundary{
     }
     public void execute(QuizInputData quizInputData) {
         String courseId = quizInputData.getCourseId();
-//        quizDAO.setQuestionAnswers(); // TODO: For Jerry: Remove this once we're hooked up with DB
         QuizOutputData quizOutputData = new QuizOutputData(quizDAO.getQuizQuestions(courseId), quizDAO.getAnswers(courseId));
         if (!quizOutputData.answers.isEmpty()) {
             quizPresenter.prepareSuccessView(quizOutputData);

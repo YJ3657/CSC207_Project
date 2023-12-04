@@ -3,6 +3,7 @@ package main.java.use_case.notes;
 import main.java.app.Constants;
 import main.java.entity.Course;
 import main.java.entity.CourseFactory;
+import main.java.entity.Student;
 import main.java.entity.StudentFactory;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
@@ -34,9 +35,11 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
             addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
         } else {
             LocalDateTime now = LocalDateTime.now();
-            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
+
             Course course = courseFactory.create(courseID);
-            course.addStudent(studentFactory.create(Constants.CURRENT_USER, "PLACEHOLDER")); // TODO: Change placeholder time!);
+            Student studentToAdd = studentFactory.create(Constants.CURRENT_USER, now.toString());
+            course.addStudent(studentToAdd);
+            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString(), studentToAdd);
             addUserCourseDAO.addCourse(courseID);
             addCourseDAO.save(course);
 
