@@ -17,7 +17,7 @@ public class ChatAPI {
     public static void main(String[] args) throws Exception {
         OkHttpClient client = new OkHttpClient();
 
-        String apiKey = "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";
+        String apiKey = "HIDDEN";
         String prompt = "Hi";
         String model = "gpt-3.5-turbo";
 
