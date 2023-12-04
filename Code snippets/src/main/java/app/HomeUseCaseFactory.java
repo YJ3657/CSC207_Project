@@ -1,6 +1,7 @@
 package main.java.app;
 
 import main.java.data_access.DBReminderDataAccessObject;
+import main.java.data_access.DBUserDataAccessObject;
 import main.java.data_access.FileInstructionsDataAccessObject;
 import main.java.interface_adapter.instructions.InstructionsController;
 import main.java.interface_adapter.instructions.InstructionsPresenter;
@@ -45,8 +46,8 @@ public class HomeUseCaseFactory {
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                   NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject,
                                   LoginViewModel loginViewModel, InstructionsViewModel instructionsViewModel, FileInstructionsDataAccessObject fileInstructionsDataAccessObject,
-                                  DBReminderDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel) {
-        OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, notesDataAcessObject);
+                                  DBReminderDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBUserDataAccessObject userDataAccessObject) {
+        OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, userDataAccessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
         InstructionsController instructionsController = createInstructionsUseCase(instructionsViewModel, viewManagerModel, fileInstructionsDataAccessObject);
         ReminderController reminderController = createReminderUseCase(reminderViewModel, viewManagerModel, dbReminderDataAccessObject);
@@ -69,7 +70,7 @@ public class HomeUseCaseFactory {
 
 
     private static OpenNotesController createOpenNotesUseCase(ViewManagerModel viewManagerModel, NotesViewModel
-        notesViewModel, NotesDataAccessInterface notesDataAccessObject) {
+        notesViewModel, DBUserDataAccessObject notesDataAccessObject) {
         OpenNotesOutputBoundary openNotesPresenter = new OpenNotesPresenter(viewManagerModel, notesViewModel);
 
 

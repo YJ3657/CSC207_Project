@@ -1,11 +1,8 @@
 package main.java.app;
 
 
-import main.java.data_access.DBCourseDataAccessObject;
-import main.java.data_access.DBReminderDataAccessObject;
-import main.java.data_access.FileInstructionsDataAccessObject;
+import main.java.data_access.*;
 import main.java.entity.*;
-import main.java.data_access.DBUserDataAccessObject;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.instructions.InstructionsViewModel;
@@ -82,18 +79,18 @@ public class Main {
         InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
         ReminderViewModel reminderViewModel = new ReminderViewModel();
 
-//        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
+        DBNotesDataAccessObject notesDataAccessObject = new DBNotesDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory());
         DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
 
         DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
         DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
-//        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
+//      DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
         DefQuesDataAccessInterface definitionDAO = addCourseDAO;
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
         DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(userDataAccessObject,addCourseDAO, new ReminderFactory());
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
-                dbReminderDataAccessObject, reminderViewModel);
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
+                dbReminderDataAccessObject, reminderViewModel, userDataAccessObject);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,
@@ -101,7 +98,7 @@ public class Main {
                 quizViewModel,
                 userDataAccessObject,
                 addCourseDAO,
-                userDataAccessObject,
+                notesDataAccessObject,
                 addCourseDAO, definitionDAO
                 );
         views.add(notesView, notesView.viewName);

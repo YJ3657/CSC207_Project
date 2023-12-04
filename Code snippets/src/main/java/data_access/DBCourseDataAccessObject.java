@@ -8,6 +8,7 @@ import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 import main.java.app.Constants;
 import java.sql.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
@@ -27,15 +28,17 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         this.studentFactory = studentFactory;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306",
                     "remoteUser",
-                    "thisismysql*");
+                    "thisismysql*"
+            );
 
             ResultSet databases = conn.getMetaData().getCatalogs();
-
             while (databases.next()) {
                 String databaseName = databases.getString(1);
-                if(databaseName.equals("user") || databaseName.equals("group") || databaseName.equals("course")) {
+                if(!Pattern.matches("[A-Z][A-Z][A-Z]\\d\\d\\d", databaseName)) {
                     continue;
                 }
                 Course course = this.courseFactory.create(databaseName);
@@ -109,7 +112,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     }
 
     public void save() {
-        try {
+        try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/",
