@@ -38,7 +38,7 @@ public final class Constants {
 
     // For testing:
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
-
+    public static String LIMIT_TERM = "Limits";
     public static String TEST_USERNAME = "User for Test";
     public static String TEST_USER_PW = "12345";
 
