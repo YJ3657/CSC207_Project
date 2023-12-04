@@ -308,27 +308,41 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     }
 
     @Override
-    public ArrayList<String> getQuestions(String courseId) {
+    public ArrayList<String> getQuizQuestions(String courseId) {
         List<Definition> definitions = courses.get(courseId).getDefinitions();
-        ArrayList<String> questions = new ArrayList<>();
+        List<Question> questions = courses.get(courseId).getQuestions();
+        ArrayList<String> quizQuestions = new ArrayList<>();
         int i = 1;
         for (Definition definition: definitions) {
-            questions.add(String.format("%1d) The definition of %2s is:", i, definition.getWord()));
+            quizQuestions.add(String.format("%1d) The definition of %2s is:", i, definition.getWord()));
             i++;
         }
-        return questions;
+
+        for (Question ques: questions){
+            quizQuestions.add(String.format("%1d) %2s?", i, ques.getQuestion()));
+            i++;
+        }
+
+        return quizQuestions;
     }
 
     @Override
     public ArrayList<String> getAnswers(String courseId) {
         List<Definition> definitions = courses.get(courseId).getDefinitions();
-        ArrayList<String> answers = new ArrayList<>();
+        List<Question> questions = courses.get(courseId).getQuestions();
+        ArrayList<String> quizAnswers = new ArrayList<>();
         int i = 1;
         for (Definition definition: definitions) {
-            answers.add(String.format(definition.getDefinition()));
+            quizAnswers.add(String.format(definition.getDefinition()));
             i++;
         }
-        return answers;
+
+        for (Question ques: questions){
+            quizAnswers.add(String.format(ques.getAnswer()));
+            i++;
+        }
+
+        return quizAnswers;
 
     }
 }

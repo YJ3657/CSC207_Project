@@ -39,6 +39,9 @@ public final class Constants {
     // For testing:
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
 
+    public static String TEST_USERNAME = "User for Test";
+    public static String TEST_USER_PW = "12345";
+
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
 
     public static final String REMINDER_ERROR = "Reminder cannot be shown. Please add course to the user.";

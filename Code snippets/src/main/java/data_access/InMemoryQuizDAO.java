@@ -14,7 +14,7 @@ public class InMemoryQuizDAO implements QuizDataAccessInterface {
     }
 
     @Override
-    public ArrayList<String> getQuestions(String courseId) {
+    public ArrayList<String> getQuizQuestions(String courseId) {
         Set<String> wordSet = QuestionAnswers.keySet();
         ArrayList<String> questions = new ArrayList<>();
         int i = 1;

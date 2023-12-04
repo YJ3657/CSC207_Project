@@ -358,7 +358,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     }
     public void addCourse(String courseId){
         User currentUserObj = accounts.get(Constants.CURRENT_USER);
-        currentUserObj.setNotes(courseId);
+        currentUserObj.setNotes(courseId); //TODO: Question: User vs Student
         currentUserObj.addCourse(courseId);
         this.save();
     }
