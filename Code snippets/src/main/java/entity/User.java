@@ -22,7 +22,7 @@ public class User {
         this.password = "";
         this.groupId = new ArrayList<>();
         this.courseId = new ArrayList<>();
-        this.notes = new HashMap<String, List<Notes>>();
+        this.notes = new HashMap<>();
     }
 
     public User(String id, String password){

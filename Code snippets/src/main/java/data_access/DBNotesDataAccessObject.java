@@ -26,6 +26,7 @@ public class DBNotesDataAccessObject implements NotesDataAccessInterface {
         this.notesFactory = notesFactory;
         this.courseFactory = courseFactory;
         this.studentFactory = studentFactory;
+        accounts.put("sample", userFactory.create("sample", "pass"));
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -309,6 +310,7 @@ public class DBNotesDataAccessObject implements NotesDataAccessInterface {
     }
 
     public boolean noteExists(String courseId, String notesTitle){
+        System.out.println(accounts.keySet());
         if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty())) {
             if (accounts.get(Constants.CURRENT_USER).getNotes().containsKey(courseId)) {
                 List<String> titles = new ArrayList<>();
@@ -460,6 +462,7 @@ public class DBNotesDataAccessObject implements NotesDataAccessInterface {
         accounts.get(Constants.CURRENT_USER).setNotes(note, courseId);
         courses.put(courseId, new Course(courseId));
         courses.get(courseId).getContents().put(note.getChapterno(), note.getTitle());
+        Constants.CURRENT_USER_OBJ = accounts.get(Constants.CURRENT_USER);
         this.save();
     }
     public void addCourse(String courseId){
