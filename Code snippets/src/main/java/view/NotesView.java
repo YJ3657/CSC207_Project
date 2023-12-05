@@ -30,13 +30,10 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
-
     private final DeleteNotesController deleteNotesController;
-
     private final DefQuesController defQuesController;
 
     private final JButton markAsDefinition;
-
     private final JButton markAsQuestion;
 
     // used to debug
@@ -289,7 +286,9 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
         buttonPanel.add(deleteNotes);
         buttonPanel.add(markAsDefinition);
         buttonPanel.add(markAsQuestion);
+
         this.add(buttonPanel, BorderLayout.NORTH);
+
         this.add(coursesDisplay, BorderLayout.CENTER);
         this.add(coursesDisplay);
 

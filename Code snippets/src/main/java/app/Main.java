@@ -1,11 +1,7 @@
 package main.java.app;
 
-
-import main.java.data_access.DBCourseDataAccessObject;
-import main.java.data_access.DBReminderDataAccessObject;
-import main.java.data_access.FileInstructionsDataAccessObject;
+import main.java.data_access.*;
 import main.java.entity.*;
-import main.java.data_access.DBUserDataAccessObject;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.home.HomeViewModel;
 import main.java.interface_adapter.instructions.InstructionsViewModel;
@@ -82,28 +78,33 @@ public class Main {
         InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
         ReminderViewModel reminderViewModel = new ReminderViewModel();
 
-//        NotesDataAccessObject notesDataAccessObject = new NotesDataAccessObject();
-        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
-
-        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
-        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
-//        DBUserDataAccessObject signupuserdataaccessinterface = new DBUserDataAccessObject(new DefaultUserFactory());
-        DefQuesDataAccessInterface definitionDAO = addCourseDAO;
+//        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
+//        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
+//        DefQuesDataAccessInterface definitionDAO = addCourseDAO;
+        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
-        DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(userDataAccessObject,addCourseDAO, new ReminderFactory());
 
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, userDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
-                dbReminderDataAccessObject, reminderViewModel);
+        ChatGptDAO chatGptDAO = new ChatGptDAO();
+
+        // DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(dbDataAccessObject, dbDataAccessObject, new ReminderFactory());
+//        DBNotesDataAccessObject notesDataAccessObject = new DBNotesDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory());
+
+       // dbDataAccessObject.clear();
+
+
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
+                dbDataAccessObject, reminderViewModel, dbDataAccessObject);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,
                 notesViewModel,
                 quizViewModel,
-                userDataAccessObject,
-                addCourseDAO,
-                userDataAccessObject,
-                addCourseDAO, definitionDAO
+                dbDataAccessObject,
+                dbDataAccessObject,
+                dbDataAccessObject,
+                dbDataAccessObject, dbDataAccessObject, chatGptDAO
                 );
+
         views.add(notesView, notesView.viewName);
 
         UserFactory userFactory = new DefaultUserFactory();
@@ -115,7 +116,7 @@ public class Main {
         views.add(reminderView, reminderView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel,
-                userDataAccessObject, userDataAccessObject, signupViewModel, userFactory);
+                dbDataAccessObject, dbDataAccessObject, signupViewModel, userFactory);
         views.add(loginView, loginView.viewName);
 
         QuizView quizView = new QuizView(quizViewModel, viewManagerModel);

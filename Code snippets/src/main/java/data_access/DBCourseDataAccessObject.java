@@ -8,6 +8,7 @@ import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 import main.java.app.Constants;
 import java.sql.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 
 // Need to make updateContents, updateDefiniition, updateStudent, updateContents
@@ -27,15 +28,17 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         this.studentFactory = studentFactory;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306",
+
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306",
                     "remoteUser",
-                    "thisismysql*");
+                    "thisismysql*"
+            );
 
             ResultSet databases = conn.getMetaData().getCatalogs();
-
             while (databases.next()) {
                 String databaseName = databases.getString(1);
-                if(databaseName.equals("user") || databaseName.equals("group") || databaseName.equals("course")) {
+                if(!Pattern.matches("[A-Z][A-Z][A-Z]\\d\\d\\d", databaseName)) {
                     continue;
                 }
                 Course course = this.courseFactory.create(databaseName);
@@ -95,7 +98,6 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
             if (conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) {
                 }
             }
@@ -109,7 +111,7 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
     }
 
     public void save() {
-        try {
+        try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/",
@@ -124,10 +126,10 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                 String sqlOrder = "USE " + course.getId().toUpperCase();
                 PreparedStatement prestatement = conn.prepareStatement(sqlOrder);
                 prestatement.executeQuery();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), question varchar(50), answer varchar(50))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS definitions (chapterno INT(3), word varchar(50), definition varchar(50))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS contents (chapterno INT(3), content varchar(50))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (studentid varchar(50), time_enrolled varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), question varchar(50) UNIQUE, answer varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS definitions (chapterno INT(3), word varchar(50) UNIQUE, definition varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS contents (chapterno INT(3) UNIQUE, content varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (studentid varchar(50) UNIQUE, time_enrolled varchar(50))");
 
                 sqlOrder = "INSERT IGNORE INTO questions (chapterno, question, answer)" +
                         "VALUES (?, ?, ?)";
@@ -183,7 +185,6 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
             if(conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) {}
             }
         }
@@ -314,15 +315,14 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         ArrayList<String> quizQuestions = new ArrayList<>();
         int i = 1;
         for (Definition definition: definitions) {
-            quizQuestions.add(String.format("%1d) The definition of %2s is:", i, definition.getWord()));
+            quizQuestions.add(String.format("The definition of %2s is:", definition.getWord()));
             i++;
         }
 
         for (Question ques: questions){
-            quizQuestions.add(String.format("%1d) %2s?", i, ques.getQuestion()));
+            quizQuestions.add(String.format("%2s?", ques.getQuestion()));
             i++;
         }
-
         return quizQuestions;
     }
 

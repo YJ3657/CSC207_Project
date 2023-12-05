@@ -9,6 +9,7 @@ import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 
 //import java.lang.constant.Constable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 public class AddCourseInteractor implements AddCourseInputBoundary{
 
@@ -34,11 +35,12 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
         if (addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).contains(courseID)) {
             addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
         } else {
-            LocalDateTime now = LocalDateTime.now();
-
+            LocalDate now = LocalDate.now();
             Course course = courseFactory.create(courseID);
             Student studentToAdd = studentFactory.create(Constants.CURRENT_USER, now.toString());
             course.addStudent(studentToAdd);
+            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString(), studentToAdd);
+            addUserCourseDAO.addCourse(courseID);
             addCourseDAO.save(course);
             addUserCourseDAO.addCourse(courseID);
             AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString(), studentToAdd);
