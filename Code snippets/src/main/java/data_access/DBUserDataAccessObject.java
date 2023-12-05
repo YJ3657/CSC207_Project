@@ -74,7 +74,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             if(conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) {}
             }
         }
@@ -121,7 +120,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             if(conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) {}
             }
         }
@@ -193,7 +191,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             if(conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) {}
             }
         }
@@ -265,7 +262,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             if(conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) {}
             }
         }
@@ -338,7 +334,6 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
             if (conn != null) {
                 try {
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException e) { }
             }
         }

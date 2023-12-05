@@ -12,11 +12,11 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
-    private final DBUserDataAccessObject dbUserDataAccessObject;
-    private final DBCourseDataAccessObject dbCourseDataAccessObject;
+    private final DBDataAccessObject dbUserDataAccessObject;
+    private final DBDataAccessObject dbCourseDataAccessObject;
     private final ReminderFactory reminderFactory;
     private final Map<String, Reminder> courseReminders;
-    public DBReminderDataAccessObject(DBUserDataAccessObject dbUserDataAccessObject, DBCourseDataAccessObject dbCourseDataAccessObject,
+    public DBReminderDataAccessObject(DBDataAccessObject dbUserDataAccessObject, DBDataAccessObject dbCourseDataAccessObject,
                                       ReminderFactory reminderFactory) {
         this.dbUserDataAccessObject = dbUserDataAccessObject;
         this.dbCourseDataAccessObject = dbCourseDataAccessObject;
@@ -30,6 +30,7 @@ public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
         Map<String, Integer> courseDays = new HashMap<String, Integer>();
         LocalDate today = LocalDate.now();
         for(String courseid : userCourses) {
+            System.out.println(courseid);
             List<Student> students = this.dbCourseDataAccessObject.getStudents(courseid);
             for(Student student : students) {
                 if(!student.getStudentid().equals(userid)) {

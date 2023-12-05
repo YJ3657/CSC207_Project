@@ -76,7 +76,19 @@ public class User {
 
     // special setters
     public void addCourse(String newcourseId){
-        courseId.add(newcourseId);
+        Boolean found = false;
+        if(this.courseId.size() < 8) {
+            this.courseId.add(newcourseId);
+            return;
+        }
+        for(int i = 0; i < this.courseId.size(); i++) {
+            if(courseId.get(i).equals("NONE")) {
+                courseId.set(i,newcourseId);
+                found = true;
+                break;
+            }
+        }
+        if(!found) System.out.println("No space");
     }
 
     public void addGroupId(String groupIds){
