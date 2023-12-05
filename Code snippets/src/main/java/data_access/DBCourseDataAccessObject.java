@@ -126,10 +126,10 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
                 String sqlOrder = "USE " + course.getId().toUpperCase();
                 PreparedStatement prestatement = conn.prepareStatement(sqlOrder);
                 prestatement.executeQuery();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), question varchar(50), answer varchar(50))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS definitions (chapterno INT(3), word varchar(50), definition varchar(50))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS contents (chapterno INT(3), content varchar(50))");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (studentid varchar(50), time_enrolled varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), question varchar(50) UNIQUE, answer varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS definitions (chapterno INT(3), word varchar(50) UNIQUE, definition varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS contents (chapterno INT(3) UNIQUE, content varchar(50))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (studentid varchar(50) UNIQUE, time_enrolled varchar(50))");
 
                 sqlOrder = "INSERT IGNORE INTO questions (chapterno, question, answer)" +
                         "VALUES (?, ?, ?)";

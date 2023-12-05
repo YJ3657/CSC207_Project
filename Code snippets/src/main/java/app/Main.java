@@ -82,19 +82,19 @@ public class Main {
 //        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
 //        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
 //        DefQuesDataAccessInterface definitionDAO = addCourseDAO;
-        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory());
+        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
 
         ChatGptDAO chatGptDAO = new ChatGptDAO();
 
-        DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(dbDataAccessObject, dbDataAccessObject, new ReminderFactory());
+        // DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(dbDataAccessObject, dbDataAccessObject, new ReminderFactory());
 //        DBNotesDataAccessObject notesDataAccessObject = new DBNotesDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory());
 
        // dbDataAccessObject.clear();
 
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
-                dbReminderDataAccessObject, reminderViewModel, dbDataAccessObject);
+                dbDataAccessObject, reminderViewModel, dbDataAccessObject);
         views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,
@@ -103,7 +103,7 @@ public class Main {
                 dbDataAccessObject,
                 dbDataAccessObject,
                 dbDataAccessObject,
-                dbDataAccessObject, dbDataAccessObject
+                dbDataAccessObject, dbDataAccessObject, chatGptDAO
                 );
 
         views.add(notesView, notesView.viewName);

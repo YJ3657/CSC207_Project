@@ -1,8 +1,6 @@
 package main.java.app;
 
 import main.java.data_access.DBDataAccessObject;
-import main.java.data_access.DBReminderDataAccessObject;
-import main.java.data_access.DBUserDataAccessObject;
 import main.java.data_access.FileInstructionsDataAccessObject;
 import main.java.interface_adapter.instructions.InstructionsController;
 import main.java.interface_adapter.instructions.InstructionsPresenter;
@@ -16,7 +14,6 @@ import main.java.interface_adapter.reminder.ReminderViewModel;
 import main.java.use_case.instructions.InstructionsInputBoundary;
 import main.java.use_case.instructions.InstructionsInteractor;
 import main.java.use_case.instructions.InstructionsOutputBoundary;
-import main.java.use_case.instructions.InstructionsOutputData;
 import main.java.use_case.logout.LogoutInputBoundary;
 import main.java.use_case.logout.LogoutInteractor;
 import main.java.use_case.logout.LogoutOutputBoundary;
@@ -34,7 +31,6 @@ import main.java.use_case.notes.OpenNotesOutputBoundary;
 import main.java.use_case.reminder.ReminderInputBoundary;
 import main.java.use_case.reminder.ReminderInteractor;
 import main.java.use_case.reminder.ReminderOutputBoundary;
-import main.java.use_case.reminder.ReminderOutputData;
 import main.java.view.HomeView;
 
 public class HomeUseCaseFactory {
@@ -47,7 +43,7 @@ public class HomeUseCaseFactory {
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                   NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject,
                                   LoginViewModel loginViewModel, InstructionsViewModel instructionsViewModel, FileInstructionsDataAccessObject fileInstructionsDataAccessObject,
-                                  DBReminderDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBDataAccessObject userDataAccessObject) {
+                                  DBDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBDataAccessObject userDataAccessObject) {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, userDataAccessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
         InstructionsController instructionsController = createInstructionsUseCase(instructionsViewModel, viewManagerModel, fileInstructionsDataAccessObject);
@@ -56,7 +52,7 @@ public class HomeUseCaseFactory {
     }
 
     private static ReminderController createReminderUseCase(ReminderViewModel reminderViewModel, ViewManagerModel viewManagerModel,
-                                                            DBReminderDataAccessObject dbReminderDataAccessObject) {
+                                                            DBDataAccessObject dbReminderDataAccessObject) {
         ReminderOutputBoundary reminderPresenter = new ReminderPresenter(viewManagerModel, reminderViewModel);
         ReminderInputBoundary reminderInteractor = new ReminderInteractor(dbReminderDataAccessObject, reminderPresenter);
         return new ReminderController(reminderInteractor);
