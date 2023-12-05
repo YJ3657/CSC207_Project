@@ -35,7 +35,7 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
         if (addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).contains(courseID)) {
             addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
         } else {
-            LocalDate now = LocalDate.of(2023, 12, 1);
+            LocalDate now = LocalDate.now();
 
             Course course = courseFactory.create(courseID);
             Student studentToAdd = studentFactory.create(Constants.CURRENT_USER, now.toString());
