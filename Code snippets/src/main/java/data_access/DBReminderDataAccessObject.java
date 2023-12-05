@@ -30,7 +30,6 @@ public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
         Map<String, Integer> courseDays = new HashMap<String, Integer>();
         LocalDate today = LocalDate.now();
         for(String courseid : userCourses) {
-            System.out.println(courseid);
             List<Student> students = this.dbCourseDataAccessObject.getStudents(courseid);
             for(Student student : students) {
                 if(!student.getStudentid().equals(userid)) {
@@ -51,7 +50,7 @@ public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
             this.courseReminders.put(courseid, courseReminder);
             Course course = this.dbCourseDataAccessObject.getCourse(courseid);
             Map<Integer, String> contents = course.getContents();
-
+            System.out.println(courseid + courseDays.get(courseid));
             if(courseDays.get(courseid) > 1) {
                 String content = course.getContents().get(courseDays.get(courseid) - 1);
                 this.courseReminders.get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 1, content);
