@@ -34,7 +34,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final InstructionsController instructionsController;
     private final ReminderController reminderController;
     private HomeViewModel homeViewModel;
-    private final JButton practice;
     private final JButton reminder;
     private final JButton instructions;
     private final JButton logout;
@@ -56,8 +55,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel buttons = new JPanel();
         notes = new JButton(HomeViewModel.NOTES_LABEL);
         buttons.add(notes);
-        practice = new JButton(HomeViewModel.PRACTICE_LABEL);
-        buttons.add(practice);
         reminder = new JButton(HomeViewModel.REMINDERS_LABEL);
         buttons.add(reminder);
         instructions = new JButton(HomeViewModel.INSTRUCTIONS_LABEL);
@@ -104,8 +101,6 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                 }
             }
         });
-        practice.addActionListener(this);
-
     }
 
     @Override

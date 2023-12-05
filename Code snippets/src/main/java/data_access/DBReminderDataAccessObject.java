@@ -12,20 +12,20 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
-    private final DBUserDataAccessObject dbUserDataAccessObject;
-    private final DBCourseDataAccessObject dbCourseDataAccessObject;
+    private final DBDataAccessObject dbUserDataAccessObject;
+    private final DBDataAccessObject dbCourseDataAccessObject;
     private final ReminderFactory reminderFactory;
-    private final Map<String, Reminder> courseReminders;
-    public DBReminderDataAccessObject(DBUserDataAccessObject dbUserDataAccessObject, DBCourseDataAccessObject dbCourseDataAccessObject,
+    private Map<String, Reminder> courseReminders;
+    public DBReminderDataAccessObject(DBDataAccessObject dbUserDataAccessObject, DBDataAccessObject dbCourseDataAccessObject,
                                       ReminderFactory reminderFactory) {
         this.dbUserDataAccessObject = dbUserDataAccessObject;
         this.dbCourseDataAccessObject = dbCourseDataAccessObject;
         this.reminderFactory = reminderFactory;
-        this.courseReminders = new HashMap<String, Reminder>();
     }
 
     @Override
     public Map<String, Reminder> getUserReviewChapters(String userid) {
+        this.courseReminders = new HashMap<>();
         List<String> userCourses = this.dbUserDataAccessObject.getUserCourses(userid);
         Map<String, Integer> courseDays = new HashMap<String, Integer>();
         LocalDate today = LocalDate.now();
@@ -50,7 +50,7 @@ public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
             this.courseReminders.put(courseid, courseReminder);
             Course course = this.dbCourseDataAccessObject.getCourse(courseid);
             Map<Integer, String> contents = course.getContents();
-
+            System.out.println(courseid + courseDays.get(courseid));
             if(courseDays.get(courseid) > 1) {
                 String content = course.getContents().get(courseDays.get(courseid) - 1);
                 this.courseReminders.get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 1, content);
