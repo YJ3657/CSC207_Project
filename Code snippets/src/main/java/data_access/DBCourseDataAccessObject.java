@@ -315,12 +315,12 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
         ArrayList<String> quizQuestions = new ArrayList<>();
         int i = 1;
         for (Definition definition: definitions) {
-            quizQuestions.add(String.format("%1d) The definition of %2s is:", i, definition.getWord()));
+            quizQuestions.add(String.format("The definition of %2s is:", definition.getWord()));
             i++;
         }
 
         for (Question ques: questions){
-            quizQuestions.add(String.format("%1d) %2s?", i, ques.getQuestion()));
+            quizQuestions.add(String.format("%2s?", ques.getQuestion()));
             i++;
         }
 
