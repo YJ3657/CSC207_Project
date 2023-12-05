@@ -45,10 +45,6 @@ public final class Constants {
     public static String CONTINUITY_TERM = "Continuity";
     public static String TEST_USERNAME = "User for Test";
     public static String TEST_USER_PW = "12345";
-
-    public static String TEST_USERNAME = "User for Test";
-    public static String TEST_USER_PW = "12345";
-
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
     public static String LIMIT_QUES = "What is the definition of limit?";
 
