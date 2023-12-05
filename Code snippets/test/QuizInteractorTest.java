@@ -1,5 +1,8 @@
 import main.java.app.Constants;
+import main.java.data_access.ChatGPTDataAccessInterface;
+import main.java.data_access.ChatGptDAO;
 import main.java.data_access.InMemoryQuizDAO;
+import main.java.entity.Question;
 import main.java.use_case.notes.AddCourseInputData;
 import main.java.use_case.notes.AddCourseOutputBoundary;
 import main.java.use_case.quiz.*;
@@ -17,6 +20,7 @@ public class QuizInteractorTest {
     public void SuccessTest() {
         InMemoryQuizDAO quizRepo = new InMemoryQuizDAO();
         quizRepo.setQuestionAnswers();
+        ChatGPTDataAccessInterface chatgptDAO = new ChatGptDAO();
         QuizInputData quizInputData = new QuizInputData("MAT137");
         QuizOutputBoundary successPresenter = new QuizOutputBoundary() {
             @Override
@@ -24,9 +28,13 @@ public class QuizInteractorTest {
                 ArrayList<String> questions = new ArrayList<>();
                 questions.add("1) The definition of Limit is:");
                 questions.add("2) The definition of Continuity is:");
-                assertEquals(questions, quizOutputData.getQuestions());
+                List<String> outputQuestions = quizOutputData.getQuestions();
+                assert questions.size() == outputQuestions.size() - 1;
+                assertEquals(questions, outputQuestions.subList(0, 2));
                 ArrayList<String> answers = new ArrayList<>(List.of(Constants.LIMIT_DEF, Constants.CONTIUNUITY_DEF));
-                assertEquals(answers, quizOutputData.getAnswers());
+                List<String> outputAnswers = quizOutputData.getAnswers();
+                assertEquals(answers, outputAnswers.subList(0, 2));
+                assert answers.size() == outputAnswers.size() - 1;
             }
 
             @Override
@@ -34,13 +42,14 @@ public class QuizInteractorTest {
                 fail("Failure not supposed to happen");
             }
         };
-        QuizInputBoundary interactor = new QuizInteractor(quizRepo, successPresenter);
+        QuizInputBoundary interactor = new QuizInteractor(quizRepo, successPresenter, chatgptDAO);
         interactor.execute(quizInputData);
     }
 
     @Test
     public void FailTest() {
         QuizDataAccessInterface quizRepo = new InMemoryQuizDAO();
+        ChatGPTDataAccessInterface chatgptDAO = new ChatGptDAO();
         QuizInputData quizInputData = new QuizInputData("MAT137");
         QuizOutputBoundary failPresenter = new QuizOutputBoundary() {
             @Override
@@ -53,7 +62,7 @@ public class QuizInteractorTest {
                 assertEquals(Constants.QUIZ_ERROR, error);
             }
         };
-        QuizInputBoundary interactor = new QuizInteractor(quizRepo, failPresenter);
+        QuizInputBoundary interactor = new QuizInteractor(quizRepo, failPresenter, chatgptDAO);
         interactor.execute(quizInputData);
     }
 }
