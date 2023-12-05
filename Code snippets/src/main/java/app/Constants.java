@@ -36,15 +36,32 @@ public final class Constants {
 
     public static int CHAPTERNO_PLACEHOLDER = 1;
 
+    public static final String REMINDER_ERROR = "Reminder cannot be shown. Please add course to the user.";
+
     // For testing:
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
+    public static String LIMIT_TERM = "Limits";
+
+    public static String CONTINUITY_TERM = "Continuity";
+    public static String TEST_USERNAME = "User for Test";
+    public static String TEST_USER_PW = "12345";
 
     public static String TEST_USERNAME = "User for Test";
     public static String TEST_USER_PW = "12345";
 
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
+    public static String LIMIT_QUES = "What is the definition of limit?";
 
-    public static final String REMINDER_ERROR = "Reminder cannot be shown. Please add course to the user.";
+    public static String CONTINUITY_QUES = "What is the definition of Continuity?";
+
+    public static String DERIVATIVES_QUES = "What is the definition of derivatives?";
+
+    public static String DERIVATIVES_DEF = "lim x->c (f(x)-f(c))/(x-c) = 0";
+
+    public static String DERIVATIVES_TERM = "Derivatives";
+
+    public static String TEST_COURSE_ID = "MAT137";
+
     private Constants() {}
 
 

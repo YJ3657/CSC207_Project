@@ -23,8 +23,4 @@ public class AddCourseOutputData {
 
     public Student getStudentAdded() {return studentAdded;}
 
-    public void setCreationTime(String creationTime) {
-        this.creationTime = creationTime;
-    }
-
 }

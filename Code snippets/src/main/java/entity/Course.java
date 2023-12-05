@@ -26,9 +26,9 @@ public class Course {
         this.contents = new HashMap<Integer, String>();
     }
 
-    public void setId(String courseId) {
-        this.courseId = courseId;
-    }
+//    public void setId(String courseId) {
+//        this.courseId = courseId;
+//    }
 
     public String getId() {
         return courseId;
@@ -41,10 +41,10 @@ public class Course {
     public void addStudent(Student student){
         students.add(student);
     }
-    public void setStudents(List<Student> students) {
-        this.students = students;
-        return;
-    }
+//    public void setStudents(List<Student> students) {
+//        this.students = students;
+//        return;
+//    }
     public List<Question> getQuestions() {
         return this.questions;
     }
@@ -78,7 +78,6 @@ public class Course {
     }
     public void setDefinitions(List<Definition> definitions) {
         this.definitions = definitions;
-        return;
     }
 
     public void setDefinition(Definition definition) {
@@ -93,5 +92,4 @@ public class Course {
     public Map<Integer, String> getContents() {
         return this.contents;
     }
-
 }
