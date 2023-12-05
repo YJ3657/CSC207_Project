@@ -14,9 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OpenNotesInteractorTest {
 
-
-    private final InMemAddCourseDAO addCourseDAO = new InMemAddCourseDAO();
-
     @BeforeEach
     void setUp() {
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
