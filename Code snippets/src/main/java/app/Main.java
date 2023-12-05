@@ -1,6 +1,5 @@
 package main.java.app;
 
-
 import main.java.data_access.*;
 import main.java.entity.*;
 import main.java.interface_adapter.ViewManagerModel;

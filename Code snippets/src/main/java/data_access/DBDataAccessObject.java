@@ -31,7 +31,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
     private QuestionFactory questionFactory;
     private DefinitionFactory definitionFactory;
     private final ReminderFactory reminderFactory;
-    private final Map<String, Reminder> courseReminders;
+    private Map<String, Reminder> courseReminders;
 
     public DBDataAccessObject(UserFactory userFactory, NotesFactory notesFactory, CourseFactory courseFactory,
                                    StudentFactory studentFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory, ReminderFactory reminderFactory) {
@@ -42,7 +42,6 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         this.definitionFactory = definitionFactory;
         this.studentFactory = studentFactory;
         this.reminderFactory = reminderFactory;
-        this.courseReminders = new HashMap<String, Reminder>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -723,6 +722,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
     }
 
     public Map<String, Reminder> getUserReviewChapters(String userid) {
+        this.courseReminders = new HashMap<>();
         List<String> userCourses = this.getUserCourses(userid);
         Map<String, Integer> courseDays = new HashMap<String, Integer>();
         LocalDate today = LocalDate.now();

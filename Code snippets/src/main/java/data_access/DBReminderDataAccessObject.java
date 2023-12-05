@@ -15,17 +15,17 @@ public class DBReminderDataAccessObject implements ReminderDataAccessInterface {
     private final DBDataAccessObject dbUserDataAccessObject;
     private final DBDataAccessObject dbCourseDataAccessObject;
     private final ReminderFactory reminderFactory;
-    private final Map<String, Reminder> courseReminders;
+    private Map<String, Reminder> courseReminders;
     public DBReminderDataAccessObject(DBDataAccessObject dbUserDataAccessObject, DBDataAccessObject dbCourseDataAccessObject,
                                       ReminderFactory reminderFactory) {
         this.dbUserDataAccessObject = dbUserDataAccessObject;
         this.dbCourseDataAccessObject = dbCourseDataAccessObject;
         this.reminderFactory = reminderFactory;
-        this.courseReminders = new HashMap<String, Reminder>();
     }
 
     @Override
     public Map<String, Reminder> getUserReviewChapters(String userid) {
+        this.courseReminders = new HashMap<>();
         List<String> userCourses = this.dbUserDataAccessObject.getUserCourses(userid);
         Map<String, Integer> courseDays = new HashMap<String, Integer>();
         LocalDate today = LocalDate.now();
