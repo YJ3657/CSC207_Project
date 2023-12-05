@@ -88,6 +88,7 @@ public class Main {
         DefQuesDataAccessInterface definitionDAO = addCourseDAO;
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
         DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(userDataAccessObject,addCourseDAO, new ReminderFactory());
+        ChatGptDAO chatGptDAO = new ChatGptDAO();
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, notesDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
                 dbReminderDataAccessObject, reminderViewModel, userDataAccessObject);
@@ -99,8 +100,8 @@ public class Main {
                 userDataAccessObject,
                 addCourseDAO,
                 notesDataAccessObject,
-                addCourseDAO, definitionDAO
-                );
+                addCourseDAO, definitionDAO,
+                chatGptDAO);
         views.add(notesView, notesView.viewName);
 
         UserFactory userFactory = new DefaultUserFactory();

@@ -78,7 +78,7 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
         questionComponent.setPreferredSize(preferredSize);
         questionComponent.setMinimumSize(preferredSize);
         questionComponent.setMaximumSize(preferredSize);
-        questionArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//        questionArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel answerPanel = new JPanel();
         answerPanel.setLayout(new BoxLayout(answerPanel, BoxLayout.Y_AXIS));
