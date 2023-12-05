@@ -35,7 +35,8 @@ public class CreateNotesInteractor implements CreateNotesInputBoundary{
                     createNotesInputData.getContents(), createNotesInputData.getChapterNo(), createNotesInputData.getTitle());
             notesDataAccessObject.addNotes(notes, createNotesInputData.getCourseId());
 
-            CreateNotesOutputData createNotesOutputData = new CreateNotesOutputData(notes);
+            CreateNotesOutputData createNotesOutputData = new CreateNotesOutputData(notes,
+                    Constants.CURRENT_USER_OBJ.getNotes());
             createNotesPresenter.prepareSuccessView(createNotesOutputData);
         }
     }
