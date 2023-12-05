@@ -1,11 +1,10 @@
 package main.java.data_access;
 
-import main.java.app.Constants;
 import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.quiz.QuizDataAccessInterface;
 import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
-import main.java.app.Constants;
+
 import java.sql.*;
 import java.util.*;
 import java.util.regex.Pattern;
