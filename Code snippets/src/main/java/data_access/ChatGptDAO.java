@@ -10,7 +10,7 @@ import java.net.URL;
 public class ChatGptDAO implements ChatGPTDataAccessInterface{
     private final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final String model = "gpt-3.5-turbo";
-    private final String apiKey = "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";
+    private final String apiKey = "Hidden";
     public ChatGptDAO(){
     }
 

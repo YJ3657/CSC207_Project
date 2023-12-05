@@ -42,7 +42,6 @@ public class AddCourseInteractor implements AddCourseInputBoundary{
             AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString(), studentToAdd);
             addUserCourseDAO.addCourse(courseID);
             addCourseDAO.save(course);
-            addUserCourseDAO.addCourse(courseID);
 
             addCoursePresenter.prepareSuccessView(addCourseOutputData);
         }
