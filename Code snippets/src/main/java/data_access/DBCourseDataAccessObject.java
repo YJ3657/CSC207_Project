@@ -323,7 +323,6 @@ public class DBCourseDataAccessObject implements AddCourseDataAccessInterface, D
             quizQuestions.add(String.format("%2s?", ques.getQuestion()));
             i++;
         }
-
         return quizQuestions;
     }
 
