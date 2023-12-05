@@ -30,7 +30,6 @@ public class ReminderPresenter implements ReminderOutputBoundary{
 
     @Override
     public void prepareSuccessView(ReminderOutputData response) {
-        // On success, switch to the home view.
         ReminderState reminderState = reminderViewModel.getState();
         Map<String, Reminder> reviewContents = response.getReviewChapters();
         //Saving reminder object in state
