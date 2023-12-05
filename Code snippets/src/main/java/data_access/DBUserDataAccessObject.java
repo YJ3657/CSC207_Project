@@ -349,7 +349,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
     }
 
     public Map<String, List<Notes>> getUserNotes(String userId){
-        return accounts.get(userId).getNotes();
+        return Constants.CURRENT_USER_OBJ.getNotes();
     }
     // Shouldn't we have userId parameter instead?
 
