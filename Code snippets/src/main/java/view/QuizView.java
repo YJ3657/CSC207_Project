@@ -42,6 +42,8 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
 
         JButton back = new JButton(quizViewModel.BACK_BUTTON_LABEL);
 
+        JButton results = new JButton("Results");
+
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,8 +53,16 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
                 }
             }
         });
+        results.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(results)) {
+                }
+            }
+        });
         buttonPanel.add(title);
         buttonPanel.add(back);
+        buttonPanel.add(results);
         this.add(buttonPanel, BorderLayout.NORTH);
         quizScrollPane.setViewportView(quizPanel);
         this.add(quizScrollPane, BorderLayout.CENTER);
