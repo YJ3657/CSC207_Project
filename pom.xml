@@ -33,6 +33,11 @@
             <artifactId>okhttp</artifactId>
             <version>3.14.9</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.25</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -40,5 +45,3 @@
         <maven.compiler.target>1.9</maven.compiler.target>
     </properties>
 </project>
-
-
