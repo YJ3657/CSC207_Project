@@ -43,6 +43,18 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         this.studentFactory = studentFactory;
         this.reminderFactory = reminderFactory;
 
+        LocalDate date = LocalDate.of(2023, 12, 5);
+        User sampleUser = this.userFactory.create("sample", "password");
+        sampleUser.addCourse("CSC236");
+        Course newCourse = this.courseFactory.create("CSC236");
+        Student newStudent = this.studentFactory.create("sample", date.toString());
+        newCourse.addStudent(newStudent);
+        newCourse.getContents().put(1, "Induction");
+        newCourse.getDefinitions().add(this.definitionFactory.create(1, "Induction", "Induction"));
+        newCourse.getQuestions().add(this.questionFactory.create(1, "What’s the structural induction?", "special type of induction"));
+        accounts.put("sample", sampleUser);
+        courses.put("CSC236", newCourse);
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
