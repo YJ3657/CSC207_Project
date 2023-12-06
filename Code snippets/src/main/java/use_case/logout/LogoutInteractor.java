@@ -1,5 +1,7 @@
 package main.java.use_case.logout;
 
+import main.java.app.Constants;
+
 public class LogoutInteractor implements LogoutInputBoundary{
     LogoutOutputBoundary userPresenter;
 
@@ -8,6 +10,8 @@ public class LogoutInteractor implements LogoutInputBoundary{
     }
     @Override
     public void execute() {
+        Constants.CURRENT_USER = null;
+        Constants.CURRENT_USER_OBJ = null;
         userPresenter.prepareLogout();
     }
 }
