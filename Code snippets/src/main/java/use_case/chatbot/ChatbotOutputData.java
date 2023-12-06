@@ -10,5 +10,4 @@ public class ChatbotOutputData {
     public String getAnswer() {
         return this.answer;
     }
-
 }

@@ -1,11 +1,8 @@
 package main.java.use_case.quiz;
 
 import main.java.app.Constants;
-import main.java.data_access.ChatGPTDataAccessInterface;
-import main.java.data_access.ChatGptDAO;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
