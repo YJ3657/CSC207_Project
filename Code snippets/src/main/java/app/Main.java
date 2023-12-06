@@ -77,14 +77,11 @@ public class Main {
         InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
         ReminderViewModel reminderViewModel = new ReminderViewModel();
 
-
         DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
-
         ChatGptDAO chatGptDAO = new ChatGptDAO();
 
        // dbDataAccessObject.clear();
-
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
                 dbDataAccessObject, reminderViewModel, dbDataAccessObject);

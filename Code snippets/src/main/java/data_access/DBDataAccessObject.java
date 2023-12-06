@@ -44,16 +44,28 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         this.reminderFactory = reminderFactory;
 
         LocalDate date = LocalDate.of(2023, 12, 5);
-        User sampleUser = this.userFactory.create("sample", "password");
-        sampleUser.addCourse("CSC236");
-        Course newCourse = this.courseFactory.create("CSC236");
-        Student newStudent = this.studentFactory.create("sample", date.toString());
-        newCourse.addStudent(newStudent);
-        newCourse.getContents().put(1, "Induction");
-        newCourse.getDefinitions().add(this.definitionFactory.create(1, "Induction", "Induction"));
-        newCourse.getQuestions().add(this.questionFactory.create(1, "What’s the structural induction?", "special type of induction"));
-        accounts.put("sample", sampleUser);
-        courses.put("CSC236", newCourse);
+        User sampleUser1 = this.userFactory.create("sample1", "password");
+        sampleUser1.addCourse("CSC236");
+        Course newCourse1 = this.courseFactory.create("CSC236");
+        Student newStudent1 = this.studentFactory.create("sample1", date.toString());
+        newCourse1.addStudent(newStudent1);
+        newCourse1.getContents().put(1, "Induction");
+        newCourse1.getDefinitions().add(this.definitionFactory.create(1, "Induction", "Induction"));
+        newCourse1.getQuestions().add(this.questionFactory.create(1, "What’s the structural induction?", "special type of induction"));
+        accounts.put("sample1", sampleUser1);
+        courses.put("CSC236", newCourse1);
+
+        date = LocalDate.of(2023, 12, 5);
+        User sampleUser2 = this.userFactory.create("sample2", "password");
+        sampleUser2.addCourse("CSC207");
+        Course newCourse2 = this.courseFactory.create("CSC207");
+        Student newStudent2 = this.studentFactory.create("sample2", date.toString());
+        newCourse2.addStudent(newStudent2);
+        newCourse2.getContents().put(1, "Java");
+        newCourse2.getDefinitions().add(this.definitionFactory.create(1, "Java", "Java"));
+        newCourse2.getQuestions().add(this.questionFactory.create(1, "What’s the Java?", "language"));
+        accounts.put("sample2", sampleUser2);
+        courses.put("CSC207", newCourse2);
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -2,6 +2,7 @@ package main.java.view;
 
 import main.java.app.Constants;
 import main.java.entity.Notes;
+import main.java.entity.Reminder;
 import main.java.interface_adapter.instructions.InstructionsController;
 import main.java.interface_adapter.logout.LogoutController;
 import main.java.interface_adapter.home.HomeState;
@@ -72,7 +73,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.add(logo);
         this.add(buttons);
-        this.add(getReminderPanel());
+    //    this.add(getReminderPanel());
 //        this.add(title);
 
         notes.addActionListener(this);
@@ -118,23 +119,46 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
     }
 
-    private JPanel getReminderPanel() {
-        JPanel reminderPanel = new JPanel(new BorderLayout());
-        String[] reminderList = new String[5];
-        reminderList[0] = "Sample Reminder 1";
-        reminderList[1] = "Sample Reminder 2";
-        reminderList[2] = "Sample Reminder 3";
-        reminderList[3] = "Sample Reminder 4";
-        reminderList[4] = "Sample Reminder 5";
-        JList<String> homeList = new JList<>(reminderList);
-        homeList.setFixedCellHeight(80);
-        homeList.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("To Do"),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        reminderPanel.add(new JScrollPane(homeList), BorderLayout.CENTER);
-        reminderPanel.setPreferredSize(new Dimension(800, 400));
-        return reminderPanel;
-    }
+//    private JPanel getReminderPanel() {
+//        String[] reminderList;
+//        JPanel reminderPanel = new JPanel(new BorderLayout());
+//        if(Constants.CURRENT_USER != null) {
+//            Map<String, Reminder> reminders = this.reminderController.execute(Constants.CURRENT_USER);
+//            reminderList = new String[reminders.keySet().size()];
+//            int idx = 0;
+//
+//            for (String courseid : reminders.keySet()) {
+//                if (courseid.equals("NONE")) continue;
+//                StringBuilder message = new StringBuilder(courseid + " : ");
+//                if (reminders.get(courseid).getReviewMaterials().isEmpty()) {
+//                    message.append("You don't have anything to review yet!");
+//                    reminderList[idx] = message.toString();
+//                    idx += 1;
+//                    continue;
+//                }
+//                for (int chapter : reminders.get(courseid).getReviewMaterials().keySet()) {
+//                    message.append("(chap").append(chapter).append(" ").append(reminders.get(courseid).getReviewMaterials().get(chapter)).append(")");
+//                }
+//                reminderList[idx] = message.toString();
+//                idx += 1;
+//            }
+//        } else {
+//            reminderList = new String[5];
+//            reminderList[0] = "Sample Reminder 1";
+//            reminderList[1] = "Sample Reminder 2";
+//            reminderList[2] = "Sample Reminder 3";
+//            reminderList[3] = "Sample Reminder 4";
+//            reminderList[4] = "Sample Reminder 5";
+//        }
+//        JList<String> homeList = new JList<>(reminderList);
+//        homeList.setFixedCellHeight(80);
+//        homeList.setBorder(BorderFactory.createCompoundBorder(
+//                BorderFactory.createTitledBorder("What to Review"),
+//                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+//        reminderPanel.add(new JScrollPane(homeList), BorderLayout.CENTER);
+//        reminderPanel.setPreferredSize(new Dimension(800, 400));
+//        return reminderPanel;
+//    }
 
 
     @Override
