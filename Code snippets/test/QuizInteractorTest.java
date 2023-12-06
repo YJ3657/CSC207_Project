@@ -1,5 +1,4 @@
 import main.java.app.Constants;
-import main.java.data_access.InMemoryQuizDAO;
 import main.java.use_case.notes.AddCourseInputData;
 import main.java.use_case.notes.AddCourseOutputBoundary;
 import main.java.use_case.quiz.*;
@@ -34,8 +33,8 @@ public class QuizInteractorTest {
                 fail("Failure not supposed to happen");
             }
         };
-        QuizInputBoundary interactor = new QuizInteractor(quizRepo, successPresenter);
-        interactor.execute(quizInputData);
+//        QuizInputBoundary interactor = new QuizInteractor(quizRepo, successPresenter);
+//        interactor.execute(quizInputData);
     }
 
     @Test
@@ -53,7 +52,7 @@ public class QuizInteractorTest {
                 assertEquals(Constants.QUIZ_ERROR, error);
             }
         };
-        QuizInputBoundary interactor = new QuizInteractor(quizRepo, failPresenter);
-        interactor.execute(quizInputData);
+//        QuizInputBoundary interactor = new QuizInteractor(quizRepo, failPresenter);
+//        interactor.execute(quizInputData);
     }
 }

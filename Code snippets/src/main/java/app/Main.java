@@ -10,7 +10,6 @@ import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.interface_adapter.reminder.ReminderViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
-import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
@@ -78,16 +77,11 @@ public class Main {
         InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
         ReminderViewModel reminderViewModel = new ReminderViewModel();
 
-//        DBCourseDataAccessObject addCourseDAO = new DBCourseDataAccessObject(new CourseFactory(), new QuestionFactory(), new DefinitionFactory(), new StudentFactory());
-//        DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new DefaultUserFactory(), new NotesFactory());
-//        DefQuesDataAccessInterface definitionDAO = addCourseDAO;
+
         DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
 
         ChatGptDAO chatGptDAO = new ChatGptDAO();
-
-        // DBReminderDataAccessObject dbReminderDataAccessObject = new DBReminderDataAccessObject(dbDataAccessObject, dbDataAccessObject, new ReminderFactory());
-//        DBNotesDataAccessObject notesDataAccessObject = new DBNotesDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory());
 
        // dbDataAccessObject.clear();
 
@@ -125,8 +119,6 @@ public class Main {
         viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
 
-
-//        application.pack();
         application.setVisible(true);
     }
 }

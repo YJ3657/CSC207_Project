@@ -1,7 +1,6 @@
 package main.java.use_case.notes;
 
 import main.java.app.Constants;
-import main.java.data_access.InMemAddCourseDAO;
 import main.java.entity.Notes;
 import main.java.entity.User;
 import org.junit.jupiter.api.BeforeEach;

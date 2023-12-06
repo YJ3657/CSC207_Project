@@ -17,7 +17,7 @@ public class ChatAPI {
     public static void main(String[] args) throws Exception {
         OkHttpClient client = new OkHttpClient();
 
-        String apiKey = "Hidden";
+        String apiKey = "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";
         String prompt = "Create a single summary question based on the provided questions: Hi? No";
         String model = "gpt-3.5-turbo";
 
