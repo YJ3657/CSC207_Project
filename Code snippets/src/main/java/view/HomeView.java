@@ -41,7 +41,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton chatbotButton;
 
     public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController, LogoutController
-            logoutController, InstructionsController instructionsController, ReminderController reminderController) throws InterruptedException {
+            logoutController, InstructionsController instructionsController, ReminderController reminderController, ChatbotPanel chatbotPanel) throws InterruptedException {
         this.openNotesController = openNotesController;
         this.homeViewModel = homeViewModel;
         this.logoutController = logoutController;
@@ -75,6 +75,15 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(buttons);
         this.add(getReminderPanel());
 //        this.add(title);
+
+        chatbotButton.addActionListener( new ActionListener() {
+            @Override public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(chatbotButton)) {
+                    chatbotPanel.setVisible(true);
+                }
+            }
+        }
+        );
 
         notes.addActionListener(this);
         logout.addActionListener( new ActionListener() {

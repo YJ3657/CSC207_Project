@@ -35,31 +35,4 @@ public class QuizState {
         return answers;
     }
 
-//    public Map<Course, List<Definition>> getQuestions() {
-//        return questions;
-//    }
-
-//    public List<Definition> getSingleCourseQuestions(Course course){
-//        try{
-//            return questions.get(course);
-//
-//        }catch (NoSuchElementException e){
-//            System.out.println(e + "\nReturning empty list");
-//            return new ArrayList<>();
-//        }
-//    }
-//
-//    public void addSingleCourseQuestion(Course course, Definition question){
-//        if (!questions.containsKey(course)){
-//            questions.put(course, new ArrayList<>());
-//        }
-//        questions.get(course).add(question);
-//    }
-//
-//    public void addSingleCourseQuestions(Course course, List<Definition> questions){
-//        for (Definition ques: questions){
-//            this.addSingleCourseQuestion(course, ques);
-//        }
-//    }
-//
 }

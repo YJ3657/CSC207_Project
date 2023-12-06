@@ -25,25 +25,6 @@ public class QuizPresenter implements QuizOutputBoundary {
         this.quizViewModel = quizViewModel;
     }
 
-
-//    public class ListenerChecker {
-//
-//        public void checkListeners(PropertyChangeSupport pcs) {
-//            try {
-//                // Access the private field "listeners" in PropertyChangeSupport class
-//                Field field = PropertyChangeSupport.class.getDeclaredField("listeners");
-//                field.setAccessible(true); // Make it accessible
-//
-//                // Get the value of this field for the pcs object
-//                PropertyChangeListener[] listeners = (PropertyChangeListener[]) field.get(pcs);
-//
-//                // Print the listeners
-//                System.out.println("Listeners: " + Arrays.toString(listeners));
-//            } catch (NoSuchFieldException | IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
     @Override
     public void prepareSuccessView(QuizOutputData quizOutputData) {
         QuizState quizState = quizViewModel.getState();

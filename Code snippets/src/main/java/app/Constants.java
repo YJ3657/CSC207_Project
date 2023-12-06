@@ -11,6 +11,8 @@ public final class Constants {
     public static final String NOTES_VIEWNAME = "Notes";
     public static final String QUIZ_VIEWNAME = "Quiz";
     public static final String REMINDER_VIEWNAME = "Reminders";
+
+    public static final String CHATBOT_VIEWNAME = "Chatbot";
     public static final String INSTRUCTIONS_VIEWNAME = "Instructions";
 
     public static final String COURSES_PROPNAME = "courses";
