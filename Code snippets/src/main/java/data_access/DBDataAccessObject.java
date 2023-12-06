@@ -68,40 +68,40 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         courses.put("CSC207", newCourse2);
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+           Class.forName("com.mysql.cj.jdbc.Driver");
 
-            conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
-                    "remoteUser",
-                    "thisismysql*"
-            );
-            System.out.println("no error till here");
-            String sqlOrder = "SELECT userid, password, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6," +
-                    " groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, courseid6, courseid7, courseid8 FROM users";
+           conn = DriverManager.getConnection(
+                   "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                   "remoteUser",
+                   "thisismysql*"
+           );
+           System.out.println("no error till here");
+           String sqlOrder = "SELECT userid, password, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6," +
+                   " groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, courseid6, courseid7, courseid8 FROM users";
 
-            PreparedStatement statement = conn.prepareStatement(sqlOrder);
+           PreparedStatement statement = conn.prepareStatement(sqlOrder);
 
-            ResultSet rs = statement.executeQuery();
+           ResultSet rs = statement.executeQuery();
 
-            while(rs.next()) {
-                String userId = rs.getString("userid");
-                String userPw = rs.getString("password");
-                User user = this.userFactory.create(userId, userPw);
-                for(int i = 1; i <= 8; i++) {
-                    user.getGroupId().add(rs.getString("groupid" + i));
-                }
-                for(int i = 1; i <= 8; i++) {
-                    user.getCourseId().add(rs.getString("courseid" + i));
-                }
-                accounts.put(userId, user);
-            }
-            rs.close();
-            statement.close();
+           while(rs.next()) {
+               String userId = rs.getString("userid");
+               String userPw = rs.getString("password");
+               User user = this.userFactory.create(userId, userPw);
+               for(int i = 1; i <= 8; i++) {
+                   user.getGroupId().add(rs.getString("groupid" + i));
+               }
+               for(int i = 1; i <= 8; i++) {
+                   user.getCourseId().add(rs.getString("courseid" + i));
+               }
+               accounts.put(userId, user);
+           }
+           rs.close();
+           statement.close();
 
         } catch (ClassNotFoundException e) {
             System.out.println("Class Not Found");
-        } catch (SQLException e) {
-            System.out.println("Error1");
+       } catch (SQLException e) {
+           System.out.println("Error1");
         } finally {
             if(conn != null) {
                 try {
