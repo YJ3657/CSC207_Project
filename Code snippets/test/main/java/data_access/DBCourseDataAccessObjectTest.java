@@ -1,5 +1,6 @@
 package main.java.data_access;
 
+import main.java.DBCourseDataAccessObject;
 import main.java.app.Constants;
 import main.java.entity.*;
 import org.junit.jupiter.api.BeforeEach;

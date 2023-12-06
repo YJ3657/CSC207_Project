@@ -100,6 +100,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             SignupState currentState = signupViewModel.getState();
                             if (result == JOptionPane.OK_OPTION){
                                 signupController.execute(currentState.getUsername(), currentState.getPassword(), currentState.getRepeatPassword());
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                             }
                         }
                     }

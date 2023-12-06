@@ -1,7 +1,7 @@
 package main.java.use_case.login;
 
+import main.java.DBUserDataAccessObject;
 import main.java.app.Constants;
-import DBUserDataAccessObject;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.NotesFactory;
 import main.java.entity.UserFactory;

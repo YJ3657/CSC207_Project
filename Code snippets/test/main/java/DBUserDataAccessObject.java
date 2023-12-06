@@ -1,3 +1,5 @@
+package main.java;
+
 import main.java.app.Constants;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.Notes;
@@ -377,12 +379,12 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface, Lo
 //import java.util.List;
 //import java.util.Map;
 //
-//public class DBUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, ClearUserDataAccessInterface,
+//public class main.java.DBUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, ClearUserDataAccessInterface,
 //        UpdateUserDataAccessInterface, FindUserCourseDataAccessInterface, NotesDataAccessInterface {
 //
 //    private final Map<String, User> accounts = new HashMap<>();
 //    private UserFactory userFactory;
-//    public DBUserDataAccessObject(UserFactory userFactory){
+//    public main.java.DBUserDataAccessObject(UserFactory userFactory){
 //        this.userFactory = userFactory;
 //        try{
 //            File f = new File("user_data.txt");

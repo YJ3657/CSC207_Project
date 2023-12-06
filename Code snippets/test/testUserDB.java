@@ -1,3 +1,4 @@
+import main.java.DBUserDataAccessObject;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.NotesFactory;
 import main.java.entity.User;

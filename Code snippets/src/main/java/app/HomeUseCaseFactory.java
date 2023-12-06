@@ -37,13 +37,10 @@ public class HomeUseCaseFactory {
 
     private HomeUseCaseFactory() {}
 
-
-
-
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                   NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject,
                                   LoginViewModel loginViewModel, InstructionsViewModel instructionsViewModel, FileInstructionsDataAccessObject fileInstructionsDataAccessObject,
-                                  DBDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBDataAccessObject userDataAccessObject) {
+                                  DBDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBDataAccessObject userDataAccessObject) throws InterruptedException {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, userDataAccessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
         InstructionsController instructionsController = createInstructionsUseCase(instructionsViewModel, viewManagerModel, fileInstructionsDataAccessObject);
