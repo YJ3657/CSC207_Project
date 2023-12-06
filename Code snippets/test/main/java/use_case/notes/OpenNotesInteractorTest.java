@@ -1,6 +1,5 @@
 package main.java.use_case.notes;
 
-import main.java.InMemAddCourseDAO;
 import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.entity.User;
