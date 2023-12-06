@@ -75,7 +75,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
                     "remoteUser",
                     "thisismysql*"
             );
-
+            System.out.println("no error till here");
             String sqlOrder = "SELECT userid, password, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6," +
                     " groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, courseid6, courseid7, courseid8 FROM users";
 
@@ -115,6 +115,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
 
             conn = DriverManager.getConnection(
                     "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+
                     "remoteUser",
                     "thisismysql*"
             );
