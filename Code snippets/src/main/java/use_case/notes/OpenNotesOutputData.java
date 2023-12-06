@@ -15,6 +15,6 @@ public class OpenNotesOutputData {
     }
 
     public Map<String, List<Notes>> getNotes() {
-        return notes;
+        return this.notes;
     }
 }
