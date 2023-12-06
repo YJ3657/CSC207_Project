@@ -1,14 +1,9 @@
 import main.java.app.Constants;
 import main.java.data_access.ChatGPTDataAccessInterface;
 import main.java.data_access.ChatGptDAO;
-import main.java.data_access.InMemoryQuizDAO;
-import main.java.entity.Question;
-import main.java.use_case.notes.AddCourseInputData;
-import main.java.use_case.notes.AddCourseOutputBoundary;
 import main.java.use_case.quiz.*;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

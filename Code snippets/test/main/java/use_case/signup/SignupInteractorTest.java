@@ -1,8 +1,7 @@
 package main.java.use_case.signup;
 
 import main.java.app.Constants;
-import main.java.data_access.DBDataAccessObject;
-import main.java.data_access.DBUserDataAccessObject;
+import DBUserDataAccessObject;
 import main.java.entity.DefaultUserFactory;
 import main.java.entity.NotesFactory;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,3 @@
-package main.java.data_access;
-
 import main.java.entity.Course;
 import main.java.entity.Reminder;
 import main.java.entity.ReminderFactory;

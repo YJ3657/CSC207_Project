@@ -1,5 +1,3 @@
-package main.java.data_access;
-
 import main.java.app.Constants;
 import main.java.entity.*;
 import main.java.use_case.courses.AddCourseDataAccessInterface;

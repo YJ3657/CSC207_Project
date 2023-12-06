@@ -1,5 +1,3 @@
-package main.java.data_access;
-
 import main.java.app.Constants;
 import main.java.entity.Definition;
 import main.java.use_case.quiz.QuizDataAccessInterface;
