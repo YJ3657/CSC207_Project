@@ -108,14 +108,8 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
                 int chapterNo = rs.getInt("chapterno");
                 String title = rs.getString("title");
                 Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);
-                Map<String, List<Notes>> userNotes = accounts.get(userId).getNotes();
-                if (userNotes.containsKey(courseId)) {
-                    userNotes.get(courseId).add(note);
-                }
-                else {
-                    List<Notes> newList = new ArrayList<>();
-                    newList.add(note);
-                    userNotes.put(courseId, newList);
+                if (accounts.get(userId).getCourseId().contains(courseId)) {
+                    accounts.get(userId).getNotes().get(courseId).add(note);
                 }
             }
             rs.close();

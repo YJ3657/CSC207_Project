@@ -74,6 +74,10 @@ public class User {
         notes.put(courseId, new ArrayList<>());
     }
 
+    public void setNotes(String courseId, List<Notes> notes){
+        this.notes.put(courseId, notes);
+    }
+
     // special setters
     public void addCourse(String newcourseId){
         Boolean found = false;
