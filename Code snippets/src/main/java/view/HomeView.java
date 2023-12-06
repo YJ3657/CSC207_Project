@@ -41,7 +41,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton chatbotButton;
 
     public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController, LogoutController
-            logoutController, InstructionsController instructionsController, ReminderController reminderController) {
+            logoutController, InstructionsController instructionsController, ReminderController reminderController) throws InterruptedException {
         this.openNotesController = openNotesController;
         this.homeViewModel = homeViewModel;
         this.logoutController = logoutController;
@@ -73,7 +73,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.add(logo);
         this.add(buttons);
-    //    this.add(getReminderPanel());
+        this.add(getReminderPanel());
 //        this.add(title);
 
         notes.addActionListener(this);
@@ -119,46 +119,41 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
     }
 
-//    private JPanel getReminderPanel() {
-//        String[] reminderList;
-//        JPanel reminderPanel = new JPanel(new BorderLayout());
-//        if(Constants.CURRENT_USER != null) {
-//            Map<String, Reminder> reminders = this.reminderController.execute(Constants.CURRENT_USER);
-//            reminderList = new String[reminders.keySet().size()];
-//            int idx = 0;
-//
-//            for (String courseid : reminders.keySet()) {
-//                if (courseid.equals("NONE")) continue;
-//                StringBuilder message = new StringBuilder(courseid + " : ");
-//                if (reminders.get(courseid).getReviewMaterials().isEmpty()) {
-//                    message.append("You don't have anything to review yet!");
-//                    reminderList[idx] = message.toString();
-//                    idx += 1;
-//                    continue;
-//                }
-//                for (int chapter : reminders.get(courseid).getReviewMaterials().keySet()) {
-//                    message.append("(chap").append(chapter).append(" ").append(reminders.get(courseid).getReviewMaterials().get(chapter)).append(")");
-//                }
-//                reminderList[idx] = message.toString();
-//                idx += 1;
-//            }
-//        } else {
-//            reminderList = new String[5];
-//            reminderList[0] = "Sample Reminder 1";
-//            reminderList[1] = "Sample Reminder 2";
-//            reminderList[2] = "Sample Reminder 3";
-//            reminderList[3] = "Sample Reminder 4";
-//            reminderList[4] = "Sample Reminder 5";
-//        }
-//        JList<String> homeList = new JList<>(reminderList);
-//        homeList.setFixedCellHeight(80);
-//        homeList.setBorder(BorderFactory.createCompoundBorder(
-//                BorderFactory.createTitledBorder("What to Review"),
-//                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-//        reminderPanel.add(new JScrollPane(homeList), BorderLayout.CENTER);
-//        reminderPanel.setPreferredSize(new Dimension(800, 400));
-//        return reminderPanel;
-//    }
+    private synchronized JPanel getReminderPanel() throws InterruptedException {
+        System.out.println("executed");
+        String[] reminderList = new String[0];
+        JPanel reminderPanel = new JPanel(new BorderLayout());
+        while(Constants.CURRENT_USER == null) Thread.sleep(1000);;
+
+            Map<String, Reminder> reminders = this.reminderController.execute(Constants.CURRENT_USER);
+            reminderList = new String[reminders.keySet().size()];
+            int idx = 0;
+
+            for (String courseid : reminders.keySet()) {
+                if (courseid.equals("NONE")) continue;
+                StringBuilder message = new StringBuilder(courseid + " : ");
+                if (reminders.get(courseid).getReviewMaterials().isEmpty()) {
+                    message.append("You don't have anything to review yet!");
+                    reminderList[idx] = message.toString();
+                    idx += 1;
+                    continue;
+                }
+                for (int chapter : reminders.get(courseid).getReviewMaterials().keySet()) {
+                    message.append("(chap").append(chapter).append(" ").append(reminders.get(courseid).getReviewMaterials().get(chapter)).append(")");
+                }
+                reminderList[idx] = message.toString();
+                idx += 1;
+            }
+
+        JList<String> homeList = new JList<>(reminderList);
+        homeList.setFixedCellHeight(80);
+        homeList.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder("What to Review"),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        reminderPanel.add(new JScrollPane(homeList), BorderLayout.CENTER);
+        reminderPanel.setPreferredSize(new Dimension(800, 400));
+        return reminderPanel;
+    }
 
 
     @Override
