@@ -1,4 +1,4 @@
-package main.java.use_case.notes;
+package main.java.use_case.courses.add_course;
 
 public interface AddCourseOutputBoundary {
     public void prepareSuccessView(AddCourseOutputData addCourseOutputData);

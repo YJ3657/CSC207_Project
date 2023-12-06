@@ -1,9 +1,11 @@
-package main.java.interface_adapter.notes;
+package main.java.interface_adapter.add_course;
 
 import main.java.app.Constants;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.use_case.notes.AddCourseOutputBoundary;
-import main.java.use_case.notes.AddCourseOutputData;
+import main.java.interface_adapter.notes.NotesState;
+import main.java.interface_adapter.notes.NotesViewModel;
+import main.java.use_case.courses.add_course.AddCourseOutputBoundary;
+import main.java.use_case.courses.add_course.AddCourseOutputData;
 
 public class AddCoursePresenter implements AddCourseOutputBoundary {
 

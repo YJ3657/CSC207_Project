@@ -1,6 +1,6 @@
 package main.java.interface_adapter.notes;
 
-import main.java.use_case.notes.OpenNotesInputBoundary;
+import main.java.use_case.notes.open_notes.OpenNotesInputBoundary;
 
 public class OpenNotesController {
     final OpenNotesInputBoundary openNotesInteractor;

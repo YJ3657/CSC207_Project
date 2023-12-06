@@ -1,8 +1,9 @@
 import main.java.app.Constants;
-import main.java.data_access.DBDataAccessObject;
 import main.java.data_access.InMemAddCourseDAO;
 import main.java.entity.*;
-import main.java.use_case.notes.*;
+import main.java.use_case.courses.add_course.*;
+import main.java.use_case.notes.add_course.*;
+import main.java.use_case.notes.create_notes.CreateNotesInputData;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

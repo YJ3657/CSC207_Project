@@ -3,14 +3,6 @@ package main.java.view;
 import main.java.app.Constants;
 import main.java.entity.Reminder;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.add_Question_Definition.DefQuesController;
-import main.java.interface_adapter.instructions.InstructionsState;
-import main.java.interface_adapter.notes.AddCourseController;
-import main.java.interface_adapter.notes.CreateNotesController;
-import main.java.interface_adapter.notes.NotesViewModel;
-import main.java.interface_adapter.quiz.QuizController;
-import main.java.interface_adapter.reminder.ReminderController;
-import main.java.interface_adapter.reminder.ReminderPresenter;
 import main.java.interface_adapter.reminder.ReminderState;
 import main.java.interface_adapter.reminder.ReminderViewModel;
 

@@ -1,8 +1,9 @@
-package main.java.use_case.notes;
+package main.java.use_case.notes.create_notes;
 
 import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.entity.NotesFactory;
+import main.java.use_case.notes.NotesDataAccessInterface;
 
 public class CreateNotesInteractor implements CreateNotesInputBoundary{
     final NotesDataAccessInterface notesDataAccessObject;

@@ -1,7 +1,7 @@
 import main.java.app.Constants;
 import main.java.entity.*;
-import main.java.use_case.courses.AddCourseDataAccessInterface;
-import main.java.use_case.notes.*;
+import main.java.use_case.courses.add_course.*;
+import main.java.use_case.notes.add_course.*;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

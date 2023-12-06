@@ -1,13 +1,14 @@
 package main.java.app;
 
 import main.java.data_access.ChatGPTDataAccessInterface;
-import main.java.data_access.ChatGptDAO;
 import main.java.entity.CourseFactory;
 import main.java.entity.NotesFactory;
 import main.java.entity.StudentFactory;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.add_Question_Definition.DefQuesController;
 import main.java.interface_adapter.add_Question_Definition.DefQuesPresenter;
+import main.java.interface_adapter.add_course.AddCourseController;
+import main.java.interface_adapter.add_course.AddCoursePresenter;
 import main.java.interface_adapter.notes.*;
 import main.java.interface_adapter.quiz.QuizController;
 import main.java.interface_adapter.quiz.QuizPresenter;
@@ -18,6 +19,12 @@ import main.java.use_case.add_Question_Definition.DefQuesInteractor;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.*;
+import main.java.use_case.courses.add_course.AddCourseInputBoundary;
+import main.java.use_case.courses.add_course.AddCourseInteractor;
+import main.java.use_case.courses.add_course.AddCourseOutputBoundary;
+import main.java.use_case.notes.create_notes.CreateNotesInputBoundary;
+import main.java.use_case.notes.create_notes.CreateNotesInteractor;
+import main.java.use_case.notes.create_notes.CreateNotesOutputBoundary;
 import main.java.use_case.notes.delete_notes.DeleteNotesInputBoundary;
 import main.java.use_case.notes.delete_notes.DeleteNotesInteractor;
 import main.java.use_case.quiz.QuizDataAccessInterface;

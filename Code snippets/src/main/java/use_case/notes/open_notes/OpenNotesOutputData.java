@@ -1,4 +1,4 @@
-package main.java.use_case.notes;
+package main.java.use_case.notes.open_notes;
 
 import main.java.entity.Course;
 import main.java.entity.Notes;

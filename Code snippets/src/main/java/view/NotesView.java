@@ -3,6 +3,7 @@ package main.java.view;
 import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.interface_adapter.add_Question_Definition.DefQuesController;
+import main.java.interface_adapter.add_course.AddCourseController;
 import main.java.interface_adapter.notes.*;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.quiz.QuizController;

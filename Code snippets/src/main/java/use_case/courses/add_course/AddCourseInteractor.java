@@ -1,4 +1,4 @@
-package main.java.use_case.notes;
+package main.java.use_case.courses.add_course;
 
 import main.java.app.Constants;
 import main.java.entity.Course;
@@ -10,7 +10,7 @@ import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 
 //import java.lang.constant.Constable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 public class AddCourseInteractor implements AddCourseInputBoundary{
 
     final FindUserCourseDataAccessInterface addUserCourseDAO;

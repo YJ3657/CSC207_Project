@@ -1,7 +1,7 @@
-package main.java.interface_adapter.notes;
+package main.java.interface_adapter.add_course;
 
-import main.java.use_case.notes.AddCourseInputBoundary;
-import main.java.use_case.notes.AddCourseInputData;
+import main.java.use_case.courses.add_course.AddCourseInputBoundary;
+import main.java.use_case.courses.add_course.AddCourseInputData;
 
 public class AddCourseController {
     final AddCourseInputBoundary addCourseInteractor;

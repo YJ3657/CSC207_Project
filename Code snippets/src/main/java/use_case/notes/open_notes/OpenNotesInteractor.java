@@ -1,11 +1,9 @@
-package main.java.use_case.notes;
+package main.java.use_case.notes.open_notes;
 
 import main.java.app.Constants;
-import main.java.entity.Course;
 import main.java.entity.Notes;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
-import main.java.use_case.update_users.UpdateUserDataAccessInterface;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
