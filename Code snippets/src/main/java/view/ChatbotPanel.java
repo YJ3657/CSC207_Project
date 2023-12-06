@@ -40,7 +40,7 @@ public class ChatbotPanel extends JPanel implements ActionListener, PropertyChan
         minimize = new JButton(chatbotViewModel.MINIMIZE_BUTTON_LABEL);
         buttons.add(minimize);
         send = new JButton(chatbotViewModel.SEND_BUTTON_LABEL);
-        buttons.add(minimize);
+        buttons.add(send);
 
         minimize.addActionListener(  // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -56,7 +56,7 @@ public class ChatbotPanel extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
-                            chatbotController.execute(...);
+                            chatbotController.execute(chatbotViewModel.getState().getPromptArea());
                         }
                     }
                 }
@@ -71,7 +71,7 @@ public class ChatbotPanel extends JPanel implements ActionListener, PropertyChan
             @Override
             public void keyTyped(KeyEvent e) {
                 ChatbotState currentState = chatbotViewModel.getState();
-                ChatbotState.setPromptArea(promptArea.getText() + e.getKeyChar());
+                currentState.setPromptArea(promptArea.getText() + e.getKeyChar());
                 chatbotViewModel.setState(currentState);
             }
 
@@ -83,15 +83,7 @@ public class ChatbotPanel extends JPanel implements ActionListener, PropertyChan
             public void keyReleased(KeyEvent e) {
             }
         });
-
-
-
-
-
-
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
     }

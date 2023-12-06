@@ -3,6 +3,8 @@ package main.java.view;
 import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.entity.Reminder;
+import main.java.interface_adapter.chatbot.ChatbotController;
+import main.java.interface_adapter.chatbot.ChatbotViewModel;
 import main.java.interface_adapter.instructions.InstructionsController;
 import main.java.interface_adapter.logout.LogoutController;
 import main.java.interface_adapter.home.HomeState;
@@ -34,6 +36,8 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final LogoutController logoutController;
     private final InstructionsController instructionsController;
     private final ReminderController reminderController;
+
+    private final ChatbotController chatbotController;
     private HomeViewModel homeViewModel;
     private final JButton reminder;
     private final JButton instructions;
@@ -41,12 +45,13 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton chatbotButton;
 
     public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController, LogoutController
-            logoutController, InstructionsController instructionsController, ReminderController reminderController, ChatbotPanel chatbotPanel) throws InterruptedException {
+            logoutController, InstructionsController instructionsController, ReminderController reminderController, ChatbotController chatbotController) throws InterruptedException {
         this.openNotesController = openNotesController;
         this.homeViewModel = homeViewModel;
         this.logoutController = logoutController;
         this.instructionsController = instructionsController;
         this.reminderController = reminderController;
+        this.chatbotController = chatbotController;
         homeViewModel.addPropertyChangeListener(this);
 
 //        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
@@ -71,15 +76,23 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         chatbotButton.setMargin(new Insets(1,1,1,1));
         buttons.add(chatbotButton);
 
+        ChatbotPanel chatbotPanel = new ChatbotPanel(new ChatbotViewModel(),chatbotController);
+        JPanel jPanel = new JPanel();
+
+
         this.add(logo);
         this.add(buttons);
         this.add(getReminderPanel());
+        this.add(chatbotPanel);
+        this.add(jPanel);
 //        this.add(title);
 
         chatbotButton.addActionListener( new ActionListener() {
             @Override public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(chatbotButton)) {
+                    System.out.println("hi");
                     chatbotPanel.setVisible(true);
+                    jPanel.setVisible(true);
                 }
             }
         }

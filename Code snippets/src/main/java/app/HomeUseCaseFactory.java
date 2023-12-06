@@ -1,7 +1,9 @@
 package main.java.app;
 
+import main.java.data_access.ChatGptDAO;
 import main.java.data_access.DBDataAccessObject;
 import main.java.data_access.FileInstructionsDataAccessObject;
+import main.java.interface_adapter.chatbot.ChatbotPresenter;
 import main.java.interface_adapter.instructions.InstructionsController;
 import main.java.interface_adapter.instructions.InstructionsPresenter;
 import main.java.interface_adapter.instructions.InstructionsViewModel;
@@ -11,6 +13,11 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.reminder.ReminderController;
 import main.java.interface_adapter.reminder.ReminderPresenter;
 import main.java.interface_adapter.reminder.ReminderViewModel;
+import main.java.interface_adapter.chatbot.ChatbotController;
+import main.java.interface_adapter.chatbot.ChatbotViewModel;
+import main.java.use_case.chatbot.ChatbotInputBoundary;
+import main.java.use_case.chatbot.ChatbotInteractor;
+import main.java.use_case.chatbot.ChatbotOutputBoundary;
 import main.java.use_case.instructions.InstructionsInputBoundary;
 import main.java.use_case.instructions.InstructionsInteractor;
 import main.java.use_case.instructions.InstructionsOutputBoundary;
@@ -31,6 +38,7 @@ import main.java.use_case.notes.OpenNotesOutputBoundary;
 import main.java.use_case.reminder.ReminderInputBoundary;
 import main.java.use_case.reminder.ReminderInteractor;
 import main.java.use_case.reminder.ReminderOutputBoundary;
+import main.java.view.ChatbotPanel;
 import main.java.view.HomeView;
 
 public class HomeUseCaseFactory {
@@ -40,14 +48,21 @@ public class HomeUseCaseFactory {
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                   NotesViewModel notesViewModel, NotesDataAccessInterface notesDataAcessObject,
                                   LoginViewModel loginViewModel, InstructionsViewModel instructionsViewModel, FileInstructionsDataAccessObject fileInstructionsDataAccessObject,
-                                  DBDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBDataAccessObject userDataAccessObject) throws InterruptedException {
+                                  DBDataAccessObject dbReminderDataAccessObject, ReminderViewModel reminderViewModel, DBDataAccessObject userDataAccessObject, ChatbotViewModel chatbotViewModel) throws InterruptedException {
         OpenNotesController openNotesController = createOpenNotesUseCase(viewManagerModel, notesViewModel, userDataAccessObject);
         LogoutController logoutController = createLogoutUseCase(viewManagerModel,loginViewModel);
         InstructionsController instructionsController = createInstructionsUseCase(instructionsViewModel, viewManagerModel, fileInstructionsDataAccessObject);
         ReminderController reminderController = createReminderUseCase(reminderViewModel, viewManagerModel, dbReminderDataAccessObject);
-        return new HomeView(homeViewModel, openNotesController, logoutController, instructionsController, reminderController);
+        ChatbotController chatbotController = createChatbotUseCase(chatbotViewModel, new ChatGptDAO());
+        return new HomeView(homeViewModel, openNotesController, logoutController, instructionsController, reminderController, chatbotController);
     }
 
+
+    private static ChatbotController createChatbotUseCase(ChatbotViewModel chatbotViewModel, ChatGptDAO chatGptDAO){
+        ChatbotOutputBoundary chatbotPresenter = new ChatbotPresenter(chatbotViewModel);
+        ChatbotInputBoundary chatbotInteractor = new ChatbotInteractor(chatGptDAO, chatbotPresenter);
+        return new ChatbotController(chatbotInteractor);
+    }
     private static ReminderController createReminderUseCase(ReminderViewModel reminderViewModel, ViewManagerModel viewManagerModel,
                                                             DBDataAccessObject dbReminderDataAccessObject) {
         ReminderOutputBoundary reminderPresenter = new ReminderPresenter(viewManagerModel, reminderViewModel);

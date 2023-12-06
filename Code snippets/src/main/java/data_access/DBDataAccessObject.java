@@ -34,7 +34,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
     private Map<String, Reminder> courseReminders;
 
     public DBDataAccessObject(UserFactory userFactory, NotesFactory notesFactory, CourseFactory courseFactory,
-                                   StudentFactory studentFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory, ReminderFactory reminderFactory) {
+                              StudentFactory studentFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory, ReminderFactory reminderFactory) {
         this.userFactory = userFactory;
         this.notesFactory = notesFactory;
         this.courseFactory = courseFactory;
@@ -43,39 +43,15 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         this.studentFactory = studentFactory;
         this.reminderFactory = reminderFactory;
 
-        LocalDate date = LocalDate.of(2023, 12, 5);
-        User sampleUser1 = this.userFactory.create("sample1", "password");
-        sampleUser1.addCourse("CSC236");
-        Course newCourse1 = this.courseFactory.create("CSC236");
-        Student newStudent1 = this.studentFactory.create("sample1", date.toString());
-        newCourse1.addStudent(newStudent1);
-        newCourse1.getContents().put(1, "Induction");
-        newCourse1.getDefinitions().add(this.definitionFactory.create(1, "Induction", "Induction"));
-        newCourse1.getQuestions().add(this.questionFactory.create(1, "What’s the structural induction?", "special type of induction"));
-        accounts.put("sample1", sampleUser1);
-        courses.put("CSC236", newCourse1);
-
-        date = LocalDate.of(2023, 12, 5);
-        User sampleUser2 = this.userFactory.create("sample2", "password");
-        sampleUser2.addCourse("CSC207");
-        Course newCourse2 = this.courseFactory.create("CSC207");
-        Student newStudent2 = this.studentFactory.create("sample2", date.toString());
-        newCourse2.addStudent(newStudent2);
-        newCourse2.getContents().put(1, "Java");
-        newCourse2.getDefinitions().add(this.definitionFactory.create(1, "Java", "Java"));
-        newCourse2.getQuestions().add(this.questionFactory.create(1, "What’s the Java?", "language"));
-        accounts.put("sample2", sampleUser2);
-        courses.put("CSC207", newCourse2);
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                    "jdbc:mysql://localhost:3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
-            System.out.println("no error till here");
+
             String sqlOrder = "SELECT userid, password, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6," +
                     " groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, courseid6, courseid7, courseid8 FROM users";
 
@@ -114,8 +90,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
-
+                    "jdbc:mysql://localhost:3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -161,7 +136,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306",
+                    "jdbc:mysql://localhost:3306",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -270,7 +245,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
 
             for(User user : accounts.values()) {
                 conn = DriverManager.getConnection(
-                        "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                        "jdbc:mysql://localhost:3306/user",
                         "remoteUser",
                         "thisismysql*"
                 );
@@ -300,7 +275,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
                             "VALUES (?, ?, ?, ?, ?);";
                     for(Notes notes : user.getNotes().get(courseId)) {
                         conn = DriverManager.getConnection(
-                                "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                                "jdbc:mysql://localhost:3306/user",
                                 "remoteUser",
                                 "thisismysql*"
                         );
@@ -331,7 +306,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/",
+                    "jdbc:mysql://localhost:3306/",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -450,7 +425,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                    "jdbc:mysql://localhost:3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -483,7 +458,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                    "jdbc:mysql://localhost:3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -532,7 +507,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             for(String courseId : user.getNotes().keySet()) {
                 for(Notes note: user.getNotes().get(courseId)) {
                     conn = DriverManager.getConnection(
-                            "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
+                            "jdbc:mysql://localhost:3306/user",
                             "remoteUser",
                             "thisismysql*"
                     );
@@ -795,3 +770,4 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         return this.courseReminders;
     }
 }
+

@@ -1,5 +1,6 @@
 package main.java.app;
 
+import main.java.data_access.ChatGptDAO;
 import main.java.entity.CourseFactory;
 import main.java.entity.NotesFactory;
 import main.java.entity.StudentFactory;
@@ -13,6 +14,7 @@ import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
 import main.java.use_case.add_Question_Definition.DefQuesInputBoundary;
 import main.java.use_case.add_Question_Definition.DefQuesInteractor;
+import main.java.use_case.chatbot.ChatbotDataAccessInterface;
 import main.java.use_case.courses.AddCourseDataAccessInterface;
 import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.notes.*;
@@ -32,7 +34,7 @@ public class NotesUseCaseFactory {
                                    FindUserCourseDataAccessInterface addUserCourseDAO,
                                    AddCourseDataAccessInterface addCourseDAO,
                                    NotesDataAccessInterface notesDataAccessInterface,
-                                   QuizDataAccessInterface quizDAO, DefQuesDataAccessInterface definitionDAO, ChatGPTDataAccessInterface chatGPTDAO) {
+                                   QuizDataAccessInterface quizDAO, DefQuesDataAccessInterface definitionDAO, ChatbotDataAccessInterface chatGPTDAO) {
         AddCourseController addCourseController = createAddCourseUseCase(viewManagerModel, notesViewModel, addUserCourseDAO, addCourseDAO);
         CreateNotesController createNotesController = createCreateNotesUseCase(viewManagerModel, notesViewModel,
                 notesDataAccessInterface);
@@ -72,7 +74,7 @@ public class NotesUseCaseFactory {
 
     public static QuizController createQuizUseCase(ViewManagerModel viewManagerModel,
                                                    QuizViewModel quizViewModel,
-                                                   QuizDataAccessInterface quizDAO, ChatGPTDataAccessInterface chatGptDAO) {
+                                                   QuizDataAccessInterface quizDAO, ChatbotDataAccessInterface chatGptDAO) {
 //        QuizViewModel quizViewModel = new QuizViewModel();
         QuizPresenter quizPresenter = new QuizPresenter(viewManagerModel, quizViewModel);
         QuizInputBoundary quizInteractor = new QuizInteractor(quizDAO, quizPresenter, chatGptDAO);

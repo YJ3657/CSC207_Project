@@ -18,6 +18,13 @@ public class ChatbotViewModel extends ViewModel {
         super(Constants.CHATBOT_VIEWNAME);
     }
 
+    public ChatbotState getState(){
+        return this.state;
+    }
+
+    public void setState(ChatbotState chatbotState){
+        this.state  = chatbotState;
+    }
     @Override
     public void firePropertyChanged() {
         support.firePropertyChange(Constants.STATE_PROPNAME, null, this.state);

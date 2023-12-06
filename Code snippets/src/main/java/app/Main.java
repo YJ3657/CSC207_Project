@@ -10,6 +10,7 @@ import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.quiz.QuizViewModel;
 import main.java.interface_adapter.reminder.ReminderViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
+import main.java.interface_adapter.chatbot.ChatbotViewModel;
 import main.java.view.HomeView;
 import main.java.view.LoginView;
 import main.java.view.NotesView;
@@ -76,6 +77,7 @@ public class Main {
         QuizViewModel quizViewModel = new QuizViewModel();
         InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
         ReminderViewModel reminderViewModel = new ReminderViewModel();
+        ChatbotViewModel chatbotViewModel = new ChatbotViewModel();
 
         DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
@@ -116,7 +118,7 @@ public class Main {
         application.setVisible(true);
 
         HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
-                dbDataAccessObject, reminderViewModel, dbDataAccessObject);
+                dbDataAccessObject, reminderViewModel, dbDataAccessObject, chatbotViewModel);
         views.add(homeView, homeView.viewName);
         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();

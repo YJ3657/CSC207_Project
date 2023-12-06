@@ -12,8 +12,8 @@ public class QuizState {
     private ArrayList<String> answers;
 
     public QuizState(QuizState copy) {
-        questions = copy.questions;
-        answers = copy.answers;
+        questions = copy.getQuestions();
+        answers = copy.getAnswers();
     }
 
     public QuizState() {

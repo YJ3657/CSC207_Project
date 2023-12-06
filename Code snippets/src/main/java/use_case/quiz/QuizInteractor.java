@@ -1,6 +1,7 @@
 package main.java.use_case.quiz;
 
 import main.java.app.Constants;
+import main.java.use_case.chatbot.ChatbotDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.Random;
 public class QuizInteractor implements QuizInputBoundary{
     QuizDataAccessInterface quizDAO;
 
-    ChatGPTDataAccessInterface chatGPTDAO;
+    ChatbotDataAccessInterface chatGPTDAO;
     QuizOutputBoundary quizPresenter;
-    public QuizInteractor(QuizDataAccessInterface quizDAO, QuizOutputBoundary quizPresenter, ChatGPTDataAccessInterface chatGPTDAO) {
+    public QuizInteractor(QuizDataAccessInterface quizDAO, QuizOutputBoundary quizPresenter, ChatbotDataAccessInterface chatGPTDAO) {
         this.quizDAO = quizDAO;
         this.quizPresenter = quizPresenter;
         this.chatGPTDAO = chatGPTDAO;

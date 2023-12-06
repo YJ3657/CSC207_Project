@@ -17,7 +17,8 @@ public class ChatbotInteractor implements ChatbotInputBoundary{
     @Override
     public void execute(ChatbotInputData chatbotInputData) {
         String prompt = chatbotInputData.getPrompt();
-
-        chatbotPresenter.prepareSuccessView();
+        String response = chatbotDataAccessObject.execute(prompt);
+        ChatbotOutputData chatbotOutputData = new ChatbotOutputData(response);
+        chatbotPresenter.prepareSuccessView(chatbotOutputData);
     }
 }
