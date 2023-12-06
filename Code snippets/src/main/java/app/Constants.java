@@ -1,6 +1,5 @@
 package main.java.app;
 
-import main.java.data_access.DBDataAccessObject;
 import main.java.entity.User;
 
 import main.java.entity.Student;
@@ -26,9 +25,6 @@ public final class Constants {
 
     public static final String QUIZ_ERROR = "Quiz Cannot be setup. Please input course materials in notes.";
     public static final String QUIZ_STATE = "Quiz state";
-    public static final String USER_EXISTS_ERROR = "User already exists.";
-    public static final String PW_DONT_MATCH_ERROR = "Passwords don't match.";
-    public static final String ACCOUNT_DNE = ": Account does not exist.";
     public static Student CURRENT_STUDENT;
     public static String CURRENT_USER;
 
@@ -43,14 +39,13 @@ public final class Constants {
     public static final String REMINDER_ERROR = "Reminder cannot be shown. Please add course to the user.";
 
     // For testing:
-    public static DBDataAccessObject DAO;
     public static String LIMIT_DEF = "As x approaches some point, f(x) approaches some point";
     public static String LIMIT_TERM = "Limits";
 
     public static String CONTINUITY_TERM = "Continuity";
     public static String TEST_USERNAME = "User for Test";
     public static String TEST_USER_PW = "12345";
-
+ 
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
     public static String LIMIT_QUES = "What is the definition of limit?";
 

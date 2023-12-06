@@ -6,9 +6,9 @@ import java.io.File;
 
 public class InstructionsInteractor implements InstructionsInputBoundary{
 
-    private InstructionsUserDataAccessInterface fileInstructionsDataAccessObject;
+    private FileInstructionsDataAccessObject fileInstructionsDataAccessObject;
     private InstructionsOutputBoundary instructionsOutputBoundary;
-    public InstructionsInteractor(InstructionsUserDataAccessInterface dataAccessObject, InstructionsOutputBoundary outputBoundary) {
+    public InstructionsInteractor(FileInstructionsDataAccessObject dataAccessObject, InstructionsOutputBoundary outputBoundary) {
         this.instructionsOutputBoundary = outputBoundary;
         this.fileInstructionsDataAccessObject = dataAccessObject;
     }

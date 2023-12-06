@@ -32,11 +32,11 @@ public class QuizInteractor implements QuizInputBoundary{
             selectedQuestions.add(questions.get(i));
             selectedAnswers.add(answers.get(i));
         }
-        if (!selectedAnswers.isEmpty()) {
-            String[] lastQuestion = chatGPTQuestion(questions, answers);
-            selectedQuestions.add(lastQuestion[0]);
-            selectedAnswers.add(lastQuestion[1]);
-        }
+
+        String[] lastQuestion = chatGPTQuestion(questions, answers);
+        selectedQuestions.add(lastQuestion[0]);
+        selectedAnswers.add(lastQuestion[1]);
+
         QuizOutputData quizOutputData = new QuizOutputData(selectedQuestions, selectedAnswers);
 
         if (!quizOutputData.answers.isEmpty()) {
@@ -49,13 +49,13 @@ public class QuizInteractor implements QuizInputBoundary{
     private String[] chatGPTQuestion(ArrayList<String> questions, ArrayList<String> answers){
         String prompt = "Create ONLY ONE summary question under 30 words, along with an answer, based on the provided questions: ";
         // each definition can be thought as a question for chatgpt purposes
-        for (int i = 0; i < questions.size(); i++) {
+        for (int i = 0; i < questions.size(); i++){
             prompt += questions.get(i) + "?" + answers.get(i) + "  ";
         }
         String response = chatGPTDAO.execute(prompt);
         int breakIndex = response.indexOf("?");
-        String question = response.substring(0, breakIndex + 1);
-        String answer = response.substring(breakIndex + 3); // skips over the "\n" in the response
+        String question = response.substring(0,breakIndex+1);
+        String answer = response.substring(breakIndex+3); // skips over the "\n" in the response
         return new String[]{question, answer};
     }
 
