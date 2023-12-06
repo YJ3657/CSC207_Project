@@ -47,7 +47,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/user",
+                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -90,7 +90,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/user",
+                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -136,7 +136,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306",
+                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -245,7 +245,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
 
             for(User user : accounts.values()) {
                 conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/user",
+                        "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                         "remoteUser",
                         "thisismysql*"
                 );
@@ -275,7 +275,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
                             "VALUES (?, ?, ?, ?, ?);";
                     for(Notes notes : user.getNotes().get(courseId)) {
                         conn = DriverManager.getConnection(
-                                "jdbc:mysql://localhost:3306/user",
+                                "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                                 "remoteUser",
                                 "thisismysql*"
                         );
@@ -306,7 +306,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/",
+                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -425,7 +425,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/user",
+                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -458,7 +458,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/user",
+                    "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                     "remoteUser",
                     "thisismysql*"
             );
@@ -507,7 +507,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
             for(String courseId : user.getNotes().keySet()) {
                 for(Notes note: user.getNotes().get(courseId)) {
                     conn = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/user",
+                            "jdbc:mysql://" + Constants.GLOBAL_IP + ":3306/user",
                             "remoteUser",
                             "thisismysql*"
                     );
