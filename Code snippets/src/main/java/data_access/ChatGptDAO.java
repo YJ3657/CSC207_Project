@@ -1,5 +1,6 @@
 package main.java.data_access;
 
+import main.java.use_case.chatbot.ChatbotDataAccessInterface;
 import okhttp3.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-public class ChatGptDAO implements ChatGPTDataAccessInterface{
+public class ChatGptDAO implements ChatbotDataAccessInterface {
     private final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final String model = "gpt-3.5-turbo";
     private final String apiKey = "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";

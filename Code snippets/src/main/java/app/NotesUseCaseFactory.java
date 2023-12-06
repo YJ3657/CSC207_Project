@@ -1,7 +1,5 @@
 package main.java.app;
 
-import main.java.data_access.ChatGPTDataAccessInterface;
-import main.java.data_access.ChatGptDAO;
 import main.java.entity.CourseFactory;
 import main.java.entity.NotesFactory;
 import main.java.entity.StudentFactory;
