@@ -13,8 +13,6 @@ public class CreateNotesTest {
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
         CreateNotesInputData notesInputData = new CreateNotesInputData("MAT137",
                 "", "Functions", 1);
-        InMemAddCourseDAO addCourseRepo = new InMemAddCourseDAO();
-        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 );
 
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {

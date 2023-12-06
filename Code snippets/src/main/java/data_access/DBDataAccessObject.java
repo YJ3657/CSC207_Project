@@ -54,6 +54,8 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         newCourse.getQuestions().add(this.questionFactory.create(1, "What’s the structural induction?", "special type of induction"));
         accounts.put("sample", sampleUser);
         courses.put("CSC236", newCourse);
+        sampleUser.setNotes(this.notesFactory.create(Constants.CURRENT_USER,
+                "CSC236", "Sample", 1, "Math Stuff"), "CSC236");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -121,8 +123,14 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
                 int chapterNo = rs.getInt("chapterno");
                 String title = rs.getString("title");
                 Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);
-                if (accounts.get(userId).getCourseId().contains(courseId)) {
-                    accounts.get(userId).getNotes().get(courseId).add(note);
+                Map<String, List<Notes>> userNotes = accounts.get(userId).getNotes();
+                if (userNotes.containsKey(courseId)) {
+                    userNotes.get(courseId).add(note);
+                }
+                else {
+                    List<Notes> newList = new ArrayList<>();
+                    newList.add(note);
+                    userNotes.put(courseId, newList);
                 }
             }
             rs.close();

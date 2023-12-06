@@ -23,10 +23,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
-    private final JTextField notesTitle = new JTextField(15);
-
-    private final JTextField notesContent = new JTextField(15);
-
     private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
