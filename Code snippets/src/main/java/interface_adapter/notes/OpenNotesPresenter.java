@@ -18,6 +18,7 @@ public class OpenNotesPresenter implements OpenNotesOutputBoundary {
     public void presentNotes(OpenNotesOutputData data) {
         NotesState notesState = notesViewModel.getState();
         notesState.setAllNotes(data.getNotes());
+        notesState.setCourses(data.getCourses());
         notesViewModel.setState(notesState);
         notesViewModel.firePropertyChanged();
 

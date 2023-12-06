@@ -21,12 +21,8 @@ public class CreateNotesInteractor implements CreateNotesInputBoundary{
     public void execute(CreateNotesInputData createNotesInputData) {
         if (notesDataAccessObject.noteExists(createNotesInputData.getCourseId(), createNotesInputData.getTitle())) {
             if (createNotesInputData.getOverwrite()){
-                if (createNotesInputData.getTitle().isEmpty()){
-                    createNotesPresenter.prepareFailView("No note selected. Please select a note.");
-                }else{
-                    notesDataAccessObject.updateContent(createNotesInputData.getCourseId(),
-                            createNotesInputData.getTitle(), createNotesInputData.getContents());
-                }
+                notesDataAccessObject.updateContent(createNotesInputData.getCourseId(),
+                        createNotesInputData.getTitle(), createNotesInputData.getContents());
             } else {
                 createNotesPresenter.prepareFailView("Note already exists.");
             }
