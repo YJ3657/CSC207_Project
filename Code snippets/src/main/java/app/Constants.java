@@ -59,7 +59,7 @@ public final class Constants {
 
     public static String TEST_COURSE_ID = "MAT137";
 
-    public static String GLOBAL_IP = "100.70.198.226";
+    public static String GLOBAL_IP = "100.70.206.131";
 
     private Constants() {}
 

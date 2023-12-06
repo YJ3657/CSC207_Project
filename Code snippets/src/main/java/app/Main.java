@@ -39,7 +39,7 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
@@ -77,18 +77,11 @@ public class Main {
         InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
         ReminderViewModel reminderViewModel = new ReminderViewModel();
 
-
         DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
         FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject("./instructions.txt");
-
         ChatGptDAO chatGptDAO = new ChatGptDAO();
 
        // dbDataAccessObject.clear();
-
-
-        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
-                dbDataAccessObject, reminderViewModel, dbDataAccessObject);
-        views.add(homeView, homeView.viewName);
 
         NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,
                 notesViewModel,
@@ -116,9 +109,16 @@ public class Main {
         QuizView quizView = new QuizView(quizViewModel, viewManagerModel);
         views.add(quizView, quizView.viewName);
 
+
         viewManagerModel.setActiveView(loginView.viewName);  //set to loginView
         viewManagerModel.firePropertyChanged();
 
         application.setVisible(true);
+
+        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,
+                dbDataAccessObject, reminderViewModel, dbDataAccessObject);
+        views.add(homeView, homeView.viewName);
+        viewManagerModel.setActiveView(homeView.viewName);
+        viewManagerModel.firePropertyChanged();
     }
 }
