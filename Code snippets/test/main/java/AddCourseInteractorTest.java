@@ -1,3 +1,5 @@
+package main.java;
+
 import main.java.InMemAddCourseDAO;
 import main.java.app.Constants;
 import main.java.entity.*;

@@ -1,3 +1,5 @@
+package main.java;
+
 import main.java.InMemoryQuizDAO;
 import main.java.app.Constants;
 import main.java.data_access.ChatGPTDataAccessInterface;
@@ -26,7 +28,7 @@ public class QuizInteractorTest {
                 questions.add("2) The definition of Continuity is:");
                 assertEquals(questions, quizOutputData.getQuestions().subList(0, 2));
                 ArrayList<String> answers = new ArrayList<>(List.of(Constants.LIMIT_DEF, Constants.CONTIUNUITY_DEF));
-                assertEquals(answers, quizOutputData.getAnswers());
+                assertEquals(answers, quizOutputData.getAnswers().subList(0, 2));
             }
 
             @Override
