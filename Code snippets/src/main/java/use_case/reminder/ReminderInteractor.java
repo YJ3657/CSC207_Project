@@ -21,7 +21,7 @@ public class ReminderInteractor implements ReminderInputBoundary {
     @Override
     public Map<String, Reminder> execute(ReminderInputData reminderInputData) {
         String userid = reminderInputData.getUserid();
-        Map<String, Reminder> userReviewChapters =  reminderDAO.getUserReviewChapters(userid);
+        Map<String, Reminder> userReviewChapters =  reminderDAO.getUserReviewChapters(userid, new SubtractReminder());
         ReminderOutputData reminderOutputData = new ReminderOutputData(userReviewChapters);
         System.out.println(reminderOutputData.getReviewChapters());
         if(!reminderOutputData.getReviewChapters().isEmpty()) {
