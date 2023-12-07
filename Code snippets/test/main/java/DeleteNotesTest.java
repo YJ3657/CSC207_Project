@@ -22,6 +22,7 @@ public class DeleteNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
+        createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
         Notes addedNote = new Notes(Constants.CURRENT_USER, "MAT137", "", 1, "Functions");
         createNotesRepo.addNotes(addedNote, "MAT137");
         Notes tbdNote = new Notes(Constants.CURRENT_USER, "MAT137", "", 2, "Integrals");
@@ -44,6 +45,7 @@ public class DeleteNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
+        createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
         Notes addedNoteOne = new Notes(Constants.CURRENT_USER, "MAT137", "SAMPLE 1", 1, "Functions");
         createNotesRepo.addNotes(addedNoteOne, "MAT137");
         Notes addedNoteTwo = new Notes(Constants.CURRENT_USER, "MAT137", "SAMPLE 2", 2, "Integrals");
@@ -67,6 +69,7 @@ public class DeleteNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
+        createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
         Notes addedNoteOne = new Notes(Constants.CURRENT_USER, "MAT137", "SAMPLE 1", 1, "Functions");
         createNotesRepo.addNotes(addedNoteOne, addedNoteOne.getCourseId());
         Notes addedNoteTwo = new Notes(Constants.CURRENT_USER, "CSC207", "SAMPLE 2", 1, "SOlID");

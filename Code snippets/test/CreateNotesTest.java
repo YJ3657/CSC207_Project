@@ -10,6 +10,7 @@ import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateNotesTest {
+
     @Test
     public void SuccessTest() {
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
@@ -18,6 +19,7 @@ public class CreateNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
+        createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
 
 
         CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
@@ -53,6 +55,7 @@ public class CreateNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
+        createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
         Notes addedNote = new Notes(Constants.CURRENT_USER, "MAT137", "", 1, "Functions");
         createNotesRepo.addNotes(addedNote, "MAT137");
         CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
@@ -63,7 +66,7 @@ public class CreateNotesTest {
 
             @Override
             public void prepareFailView(String error) {
-                assertEquals(Constants.ADD_COURSE_ERROR, error);
+                assertEquals("Note already exists.", error);
 
             }
         };
@@ -79,6 +82,7 @@ public class CreateNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
+        createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
         Notes addedNote = new Notes(Constants.CURRENT_USER, "MAT137", "", 1, "Functions");
         createNotesRepo.addNotes(addedNote, "MAT137");
         CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
