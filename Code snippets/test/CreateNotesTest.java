@@ -1,6 +1,7 @@
+import main.java.InMemAddCourseDAO;
 import main.java.app.Constants;
 import main.java.data_access.DBDataAccessObject;
-import main.java.data_access.InMemAddCourseDAO;
+
 import main.java.entity.*;
 import main.java.use_case.notes.*;
 import org.junit.Test;
@@ -8,12 +9,14 @@ import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateNotesTest {
+
+    @Test
     public void SuccessTest() {
         AddCourseInputData inputData = new AddCourseInputData("MAT137");
+        InMemAddCourseDAO addCourseRepo = new InMemAddCourseDAO();
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
         CreateNotesInputData notesInputData = new CreateNotesInputData("MAT137",
                 "", "Functions", 1);
-                );
 
         AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
             @Override
@@ -65,5 +68,4 @@ public class CreateNotesTest {
         AddCourseInputBoundary interactor = new AddCourseInteractor(addCourseRepo, addCourseRepo, successPresenter, new CourseFactory(), new StudentFactory());
         interactor.execute(inputData);
     }
-}
 }
