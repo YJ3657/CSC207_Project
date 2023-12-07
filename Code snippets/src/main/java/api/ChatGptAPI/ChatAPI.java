@@ -1,4 +1,4 @@
-package main.java.api;
+package main.java.api.ChatGptAPI;
 
 
 import okhttp3.*;

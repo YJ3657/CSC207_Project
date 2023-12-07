@@ -49,8 +49,4 @@ public class Notes{
     public void setCourseId(String courseid) {
         this.courseid = courseid;
     }
-
-//    public void setReminder(Reminder reminder) {
-//        this.reminder = reminder;
-//    }
 }
