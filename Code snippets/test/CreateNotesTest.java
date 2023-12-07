@@ -21,7 +21,6 @@ public class CreateNotesTest {
                 new ReminderFactory());
         createNotesRepo.save(new User(Constants.TEST_USERNAME, Constants.TEST_USER_PW));
 
-
         CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
             @Override
             public void prepareSuccessView(CreateNotesOutputData resultNote) {
