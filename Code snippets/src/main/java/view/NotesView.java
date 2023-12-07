@@ -256,19 +256,24 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(deleteNotes)) {
-                    int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this note?",
+                    NotesState currentstate = notesViewModel.getState();
+                    if(currentstate.getNotesTitle() != null){
+                        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this note?",
                             "Warning", JOptionPane.OK_CANCEL_OPTION);
-                    if (result == JOptionPane.OK_OPTION) {
-                        NotesState currentstate = notesViewModel.getState();
-                        Notes tbd = null;
-                        for(Notes note : currentstate.getAllNotes().get(currentstate.getSelectedCourse())){
-                            if (currentstate.getNotesTitle().equals(note.getTitle())){
-                                tbd = note;
+                        if (result == JOptionPane.OK_OPTION) {
+                            Notes tbd = null;
+                            for(Notes note : currentstate.getAllNotes().get(currentstate.getSelectedCourse())){
+                                if (currentstate.getNotesTitle().equals(note.getTitle())){
+                                    tbd = note;
+                                }
                             }
+                            currentstate.getAllNotes().get(currentstate.getSelectedCourse()).remove(tbd);
+                            deleteNotesController.execute(currentstate.getNotesTitle(), currentstate.getSelectedCourse(), tbd);
+                            setNotesDisplay(currentstate);
                         }
-                        currentstate.getAllNotes().get(currentstate.getSelectedCourse()).remove(tbd);
-                        deleteNotesController.execute(currentstate.getNotesTitle(), currentstate.getSelectedCourse(), tbd);
-                        setNotesDisplay(currentstate);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select a note.",
+                                "Warning", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
