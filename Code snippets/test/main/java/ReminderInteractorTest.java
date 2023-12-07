@@ -30,15 +30,18 @@ public class ReminderInteractorTest {
             }
         };
         ReminderInputBoundary interactor = new ReminderInteractor(dbDataAccessObject, successPresenter);
-        ReminderInputData reminderInputData = new ReminderInputData("sample");
+        ReminderInputData reminderInputData = new ReminderInputData("sample1");
         interactor.execute(reminderInputData);
     }
 
     @Test
     public void FailTest() {
-        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
+        UserFactory userFactory = new DefaultUserFactory();
+        User testUser = userFactory.create(Constants.TEST_USERNAME, Constants.TEST_USER_PW);
+        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(userFactory, new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());
-        ReminderInputData reminderInputData = new ReminderInputData("sample1");
+        dbDataAccessObject.save(testUser);
+        ReminderInputData reminderInputData = new ReminderInputData(Constants.TEST_USERNAME);
         ReminderOutputBoundary failPresenter = new ReminderOutputBoundary() {
             @Override
             public void prepareSuccessView(ReminderOutputData reminderOutputData) {
