@@ -9,6 +9,7 @@ import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
 import main.java.use_case.login.LoginUserDataAccessInterface;
 import main.java.use_case.notes.NotesDataAccessInterface;
 import main.java.use_case.quiz.QuizDataAccessInterface;
+import main.java.use_case.reminder.ReminderAlgorithm;
 import main.java.use_case.reminder.ReminderDataAccessInterface;
 import main.java.use_case.signup.SignupUserDataAccessInterface;
 import main.java.use_case.update_users.UpdateUserDataAccessInterface;
@@ -66,6 +67,8 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         newCourse2.getQuestions().add(this.questionFactory.create(1, "What’s the Java?", "language"));
         accounts.put("sample2", sampleUser2);
         courses.put("CSC207", newCourse2);
+
+        this.courseReminders = new HashMap<String, Reminder>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -744,52 +747,13 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
         return quizAnswers;
     }
 
-    public Map<String, Reminder> getUserReviewChapters(String userid) {
+    public Map<String, Reminder> getUserReviewChapters(String userid, ReminderAlgorithm reminderAlgorithm) {
         this.courseReminders = new HashMap<>();
-        List<String> userCourses = this.getUserCourses(userid);
-        Map<String, Integer> courseDays = new HashMap<String, Integer>();
-        LocalDate today = LocalDate.now();
-        for(String courseid : userCourses) {
-            if(courseid.equals("NONE")) continue;
-            List<Student> students = this.getStudents(courseid);
-            for(Student student : students) {
-                if(!student.getStudentid().equals(userid)) {
-                    continue;
-                }
-                try {
-                    LocalDate date = LocalDate.parse(student.getTimeEnrolled());
-                    courseDays.put(courseid, today.getDayOfYear() - date.getDayOfYear() + 1);
-                    break;
-                }
-                catch(Exception e) {
-                    System.out.println("Please provide proper date in string");
-                }
-            }
-        }
-        for(String courseid : courseDays.keySet()) {
-            Reminder courseReminder = this.reminderFactory.create(courseid, new HashMap<Integer, String>());
-            this.courseReminders.put(courseid, courseReminder);
-            Course course = this.getCourse(courseid);
-            Map<Integer, String> contents = course.getContents();
-            System.out.println(courseid + courseDays.get(courseid));
-            if(courseDays.get(courseid) > 1) {
-                String content = course.getContents().get(courseDays.get(courseid) - 1);
-                this.courseReminders.get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 1, content);
-            }
-            if(courseDays.get(courseid) > 3) {
-                String content = course.getContents().get(courseDays.get(courseid) - 3);
-                this.courseReminders.get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 3, content);
-            }
-
-            if(courseDays.get(courseid) > 6) {
-                String content = course.getContents().get(courseDays.get(courseid) - 6);
-                this.courseReminders.get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 6, content);
-            }
-            if(courseDays.get(courseid) > 13) {
-                String content = course.getContents().get(courseDays.get(courseid) -13);
-                this.courseReminders.get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 13, content);
-            }
-        }
+        reminderAlgorithm.getReminders(this, userid);
         return this.courseReminders;
+    }
+
+    public Map<String, Reminder> getCourseReminders() {
+        return courseReminders;
     }
 }

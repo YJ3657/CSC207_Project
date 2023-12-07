@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.app.Constants;
+import main.java.data_access.ChatGptDAO;
 import main.java.entity.Notes;
 import main.java.entity.Reminder;
 import main.java.interface_adapter.instructions.InstructionsController;
@@ -77,6 +78,16 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 //        this.add(title);
 
         notes.addActionListener(this);
+
+        chatbotButton.addActionListener( new ActionListener() {
+              @Override public void actionPerformed(ActionEvent e) {
+                  if (e.getSource().equals(chatbotButton)) {
+                      new ChatbotView(new ChatGptDAO()).setVisible(true);
+                  }
+              }
+          }
+        );
+
         logout.addActionListener( new ActionListener() {
             @Override public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(logout)) {
