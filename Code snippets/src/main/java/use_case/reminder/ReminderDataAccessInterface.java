@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface ReminderDataAccessInterface {
-    public Map<String, Reminder> getUserReviewChapters(String userid);
+    public Map<String, Reminder> getUserReviewChapters(String userid, ReminderAlgorithm algorithm);
 }
