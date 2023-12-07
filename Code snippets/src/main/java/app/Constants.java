@@ -43,6 +43,8 @@ public final class Constants {
     public static String LIMIT_TERM = "Limits";
 
     public static String CONTINUITY_TERM = "Continuity";
+    public static final String USER_EXISTS_ERROR = "User already exists.";
+    public static final String PW_DONT_MATCH_ERROR = "Passwords don't match.";
     public static String TEST_USERNAME = "User for Test";
 
     public static final String USER_EXISTS_ERROR = "User already exists.";
