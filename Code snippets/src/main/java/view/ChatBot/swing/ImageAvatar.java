@@ -112,7 +112,7 @@ public class ImageAvatar extends JComponent {
         Area area = new Area(new Ellipse2D.Double(x, y, diameter, diameter));
         int s = diameter -= (borderSize * 2);
         area.subtract(new Area(new Ellipse2D.Double(x + borderSize, y + borderSize, s, s)));
-        g2.setPaint(new GradientPaint(0, 0, gradientColor1, width, height, gradientColor2));
+        g2.setPaint(new GradientPaint(0, 0, new Color(0,0,0), width, height, new Color(0, 0, 0)));
         g2.fill(area);
     }
 

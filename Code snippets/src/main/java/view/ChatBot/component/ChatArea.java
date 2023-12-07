@@ -121,7 +121,7 @@ public class ChatArea extends JPanel {
         cmdFile.setIcon(iconFile.toIcon());
         cmdSend.setIcon(iconSend.toIcon());
         textMessage = new TextField();
-        textMessage.setHint("Write a message here ...");
+        textMessage.setHint("Type a question");
         textMessage.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

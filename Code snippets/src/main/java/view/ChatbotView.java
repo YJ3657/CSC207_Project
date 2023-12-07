@@ -1,7 +1,9 @@
 package main.java.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +15,7 @@ import main.java.view.ChatBot.component.*;
 import main.java.view.ChatBot.model.*;
 import main.java.view.ChatBot.swing.scroll.*;
 import main.java.view.ChatBot.swing.*;
-public class ChatbotView extends javax.swing.JFrame {
+public class ChatbotView extends JFrame {
     private Background background1;
     private ChatArea chatArea;
     private ChatbotDataAccessInterface chatbotDataAccessInterface;
@@ -21,7 +23,8 @@ public class ChatbotView extends javax.swing.JFrame {
     public ChatbotView(ChatbotDataAccessInterface chatbotDataAccessInterface) {
         this.chatbotDataAccessInterface = chatbotDataAccessInterface;
         initComponents();
-        chatArea.setTitle("Java Swing Chat");
+
+        chatArea.setTitle("ChatBot: Ask Me Anything!");
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy, hh:mmaa");
         chatArea.addChatEvent(new ChatEvent() {
             @Override
@@ -58,10 +61,14 @@ public class ChatbotView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        JButton exitButton = new JButton("Exit");
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(0,0,0));
+        panel.add(exitButton);
 
         background1 = new Background();
         chatArea = new ChatArea();
-
+        chatArea.add(panel);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
@@ -95,6 +102,12 @@ public class ChatbotView extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                dispose();
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
 
     /**

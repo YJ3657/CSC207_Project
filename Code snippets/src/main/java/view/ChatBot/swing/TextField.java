@@ -34,7 +34,7 @@ public class TextField extends JTextPane {
         setOpaque(false);
         setBorder(new EmptyBorder(9, 1, 9, 1));
         setBackground(new Color(0, 0, 0, 0));
-        setForeground(new Color(255, 255, 255));
+        setForeground(new Color(0, 0, 0));
         setSelectionColor(new Color(200, 200, 200, 100));
         autoWrapText();
         animator = new Animator(350, new TimingTargetAdapter() {
