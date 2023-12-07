@@ -1,33 +1,37 @@
 import main.java.app.Constants;
-import main.java.data_access.InMemAddCourseDAO;
+import main.java.data_access.DBDataAccessObject;
 import main.java.entity.*;
-import main.java.use_case.courses.add_course.*;
-import main.java.use_case.notes.add_course.*;
 import main.java.use_case.notes.create_notes.CreateNotesInputData;
+import main.java.use_case.notes.create_notes.CreateNotesInteractor;
+import main.java.use_case.notes.create_notes.CreateNotesOutputBoundary;
+import main.java.use_case.notes.create_notes.CreateNotesOutputData;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateNotesTest {
+    @Test
     public void SuccessTest() {
-        AddCourseInputData inputData = new AddCourseInputData("MAT137");
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
-        CreateNotesInputData notesInputData = new CreateNotesInputData("MAT137",
-                "", "Functions", 1);
-                );
+        CreateNotesInputData notesInputData = new CreateNotesInputData("Functions",
+                "", "MAT137", 1);
+        DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
+                new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
+                new ReminderFactory());
 
-        AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
+
+        CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
             @Override
-            public void prepareSuccessView(AddCourseOutputData courseData) {
-                assertEquals("MAT137", courseData.getCourseID());
-                String courseName = courseData.getCourseID();
-                assertNotNull(courseData.getCreationTime());
-                assertTrue(addCourseRepo.existsByID(courseName));
-                Course courseAdded = addCourseRepo.getCourse(courseName);
-                User userObj = addCourseRepo.accounts.get(Constants.CURRENT_USER);
-                assertTrue(userObj.getCourseId().contains(courseName)); // Test if user has MAT137 as a course
-                assertTrue(userObj.getNotes().containsKey(courseName)); // Test if user has MAT137 as a note
-                assertTrue(courseAdded.getStudents().contains(courseData.getStudentAdded()));// Test if MAT137 Course has Current User as a Student
+            public void prepareSuccessView(CreateNotesOutputData resultNote) {
+                assertEquals("Functions", resultNote.getNotes().getTitle());
+                String noteCourse = resultNote.getNotes().getCourseId();
+                Notes note = resultNote.getNotes();
+                assertNotNull(resultNote.getAllNotes());
+                assertTrue(resultNote.getAllNotes().containsKey(noteCourse));
+                assertTrue(resultNote.getAllNotes().get(noteCourse).contains(note));
+                User userObj = createNotesRepo.get(Constants.CURRENT_USER);
+                assertTrue(userObj.getNotes().containsKey(noteCourse)); // Test if user has MAT137 as a course in notes HashMap
+                assertTrue(userObj.getNotes().get(noteCourse).contains(note)); // Test if user has added note object
             }
 
             @Override
@@ -36,24 +40,24 @@ public class CreateNotesTest {
 
             }
         };
-        AddCourseInputBoundary interactor = new AddCourseInteractor(addCourseRepo, addCourseRepo, successPresenter, new CourseFactory(), new StudentFactory());
-        interactor.execute(inputData);
+        CreateNotesInteractor interactor = new CreateNotesInteractor(createNotesRepo, successPresenter, new NotesFactory());
+        interactor.execute(notesInputData);
     }
 
 
     @Test
     public void FailTest() {
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
-        AddCourseInputData inputData = new AddCourseInputData("MAT137");
-        InMemAddCourseDAO addCourseRepo = new InMemAddCourseDAO();
-        Course addedCourse = new Course("MAT137");
-        Student studentToAdd = new Student(Constants.CURRENT_USER, "PLACEHOLDER");
-        addedCourse.addStudent(studentToAdd);
-        addCourseRepo.save(addedCourse);
-        addCourseRepo.addCourse("MAT137");
-        AddCourseOutputBoundary successPresenter = new AddCourseOutputBoundary() {
+        CreateNotesInputData notesInputData = new CreateNotesInputData("Functions",
+                "", "MAT137", 1);
+        DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
+                new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
+                new ReminderFactory());
+        Notes addedNote = new Notes(Constants.CURRENT_USER, "MAT137", "", 1, "Functions");
+        createNotesRepo.addNotes(addedNote, "MAT137");
+        CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
             @Override
-            public void prepareSuccessView(AddCourseOutputData courseData) {
+            public void prepareSuccessView(CreateNotesOutputData resultNote) {
                 fail("SuccessView not expected");
             }
 
@@ -63,8 +67,43 @@ public class CreateNotesTest {
 
             }
         };
-        AddCourseInputBoundary interactor = new AddCourseInteractor(addCourseRepo, addCourseRepo, successPresenter, new CourseFactory(), new StudentFactory());
-        interactor.execute(inputData);
+        CreateNotesInteractor interactor = new CreateNotesInteractor(createNotesRepo, successPresenter, new NotesFactory());
+        interactor.execute(notesInputData);
     }
-}
+
+    @Test
+    public void UpdateTest() {
+        Constants.CURRENT_USER = Constants.TEST_USERNAME;
+        CreateNotesInputData notesInputData = new CreateNotesInputData(Constants.CURRENT_USER,
+                "MAT137", "New text", "Functions", true);
+        DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
+                new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
+                new ReminderFactory());
+        Notes addedNote = new Notes(Constants.CURRENT_USER, "MAT137", "", 1, "Functions");
+        createNotesRepo.addNotes(addedNote, "MAT137");
+        CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateNotesOutputData resultNote) {
+                String updatedText = "New text";
+                assertEquals("Functions", resultNote.getNotes().getTitle());
+                String noteCourse = resultNote.getNotes().getCourseId();
+                Notes note = resultNote.getNotes();
+                assertNotNull(resultNote.getAllNotes());
+                assertTrue(resultNote.getAllNotes().containsKey(noteCourse));
+                assertTrue(resultNote.getAllNotes().get(noteCourse).contains(note));
+                User userObj = createNotesRepo.get(Constants.CURRENT_USER);
+                assertTrue(userObj.getNotes().containsKey(noteCourse)); // Test if user has MAT137 as a course in notes HashMap
+                assertTrue(userObj.getNotes().get(noteCourse).contains(note)); // Test if user has added note object
+                assertEquals(userObj.getNotes().get(noteCourse).get(0).getContents(), updatedText);
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("FailView not expected");
+
+            }
+        };
+        CreateNotesInteractor interactor = new CreateNotesInteractor(createNotesRepo, successPresenter, new NotesFactory());
+        interactor.execute(notesInputData);
+    }
 }
