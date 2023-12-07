@@ -33,9 +33,11 @@ public class QuizInteractor implements QuizInputBoundary{
             selectedAnswers.add(answers.get(i));
         }
 
-        String[] lastQuestion = chatGPTQuestion(questions, answers);
-        selectedQuestions.add(lastQuestion[0]);
-        selectedAnswers.add(lastQuestion[1]);
+        if (!selectedAnswers.isEmpty()) {
+            String[] lastQuestion = chatGPTQuestion(questions, answers);
+            selectedQuestions.add(lastQuestion[0]);
+            selectedAnswers.add(lastQuestion[1]);
+        }
 
         QuizOutputData quizOutputData = new QuizOutputData(selectedQuestions, selectedAnswers);
 

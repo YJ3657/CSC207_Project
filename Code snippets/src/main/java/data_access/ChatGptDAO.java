@@ -11,7 +11,8 @@ import java.net.URL;
 public class ChatGptDAO implements ChatGPTDataAccessInterface, ChatbotDataAccessInterface {
     private final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final String model = "gpt-3.5-turbo";
-    private final String apiKey = "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";
+    private final String apiKey = System.getenv("KEY");
+
     public ChatGptDAO(){
     }
 

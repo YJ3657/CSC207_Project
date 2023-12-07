@@ -1,3 +1,5 @@
+package main.java;
+
 import main.java.app.Constants;
 import main.java.data_access.DBDataAccessObject;
 import main.java.entity.*;

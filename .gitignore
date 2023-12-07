@@ -3,3 +3,4 @@ target/
 *.iml
 *.xml
 your-artifact-id.iml
+htmlReport
