@@ -45,9 +45,9 @@ public final class Constants {
     public static String CONTINUITY_TERM = "Continuity";
     public static final String USER_EXISTS_ERROR = "User already exists.";
     public static final String PW_DONT_MATCH_ERROR = "Passwords don't match.";
+    public static final String ACCOUNT_DNE = ": Account does not exist.";
     public static String TEST_USERNAME = "User for Test";
 
-    public static final String USER_EXISTS_ERROR = "User already exists.";
     public static String TEST_USER_PW = "12345";
  
     public static String CONTIUNUITY_DEF = "f(x) is continuous at a if lim x -> a f(x) = f(a)";
