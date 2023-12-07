@@ -1,9 +1,12 @@
 package main.java.use_case.notes;
 
-import main.java.InMemAddCourseDAO;
 import main.java.app.Constants;
 import main.java.entity.Notes;
 import main.java.entity.User;
+import main.java.use_case.notes.open_notes.OpenNotesInputBoundary;
+import main.java.use_case.notes.open_notes.OpenNotesInteractor;
+import main.java.use_case.notes.open_notes.OpenNotesOutputBoundary;
+import main.java.use_case.notes.open_notes.OpenNotesOutputData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

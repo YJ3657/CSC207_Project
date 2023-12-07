@@ -1,8 +1,8 @@
 package main.java.interface_adapter.notes;
 
 import main.java.app.Constants;
-import main.java.use_case.notes.CreateNotesInputBoundary;
-import main.java.use_case.notes.CreateNotesInputData;
+import main.java.use_case.notes.create_notes.CreateNotesInputBoundary;
+import main.java.use_case.notes.create_notes.CreateNotesInputData;
 
 public class CreateNotesController {
     final CreateNotesInputBoundary createNotesInteractor;

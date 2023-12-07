@@ -1,8 +1,8 @@
 package main.java.interface_adapter.notes;
 
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.use_case.notes.CreateNotesOutputBoundary;
-import main.java.use_case.notes.CreateNotesOutputData;
+import main.java.use_case.notes.create_notes.CreateNotesOutputBoundary;
+import main.java.use_case.notes.create_notes.CreateNotesOutputData;
 
 import javax.swing.*;
 
