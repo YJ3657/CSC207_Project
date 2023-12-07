@@ -10,6 +10,7 @@ import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateNotesTest {
+
     @Test
     public void SuccessTest() {
         Constants.CURRENT_USER = Constants.TEST_USERNAME;
@@ -18,7 +19,6 @@ public class CreateNotesTest {
         DBDataAccessObject createNotesRepo = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(),
                 new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(),
                 new ReminderFactory());
-
 
         CreateNotesOutputBoundary successPresenter = new CreateNotesOutputBoundary() {
             @Override
