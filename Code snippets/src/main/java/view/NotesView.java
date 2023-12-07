@@ -23,10 +23,6 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
     private final ViewManagerModel viewManagerModel;
     private final JLabel notesDisplay;
 
-    private final JTextField notesTitle = new JTextField(15);
-
-    private final JTextField notesContent = new JTextField(15);
-
     private final JTabbedPane coursesDisplay;
     private final AddCourseController addCourseController;
     private final CreateNotesController createNotesController;
@@ -220,12 +216,26 @@ public class NotesView extends JPanel implements ActionListener, PropertyChangeL
                             JOptionPane.OK_CANCEL_OPTION);
                     if (result == JOptionPane.OK_OPTION){
                         NotesState currentstate = notesViewModel.getState();
-                        if (currentstate.getNotesContent().isEmpty()){
-                            currentstate.setNotesContent(" ");
+                        int errorResult = 0;
+                        for (String course : currentstate.getCourses()){
+                            for(Notes notes : currentstate.getAllNotes().get(course)){
+                                if (notes.getTitle().equals(currentstate.getNotesTitle())){
+                                    errorResult += 1;
+                                }
+                            }
                         }
-                        createNotesController.execute(currentstate.getNotesTitle(), "",
-                                currentstate.getSelectedCourse(), Integer.parseInt(currentstate.getChapterNo()));
-                        setNotesDisplay(currentstate);
+                        if (errorResult > 0){
+                            JOptionPane.showMessageDialog(null,
+                                    "Note already exists. Please enter different title."
+                                    , "Warning", JOptionPane.ERROR_MESSAGE);
+                        }else {
+                            if (currentstate.getNotesContent().isEmpty()) {
+                                currentstate.setNotesContent(" ");
+                            }
+                            createNotesController.execute(currentstate.getNotesTitle(), "",
+                                    currentstate.getSelectedCourse(), Integer.parseInt(currentstate.getChapterNo()));
+                            setNotesDisplay(currentstate);
+                        }
                     }
                 }
 
