@@ -35,7 +35,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
     private Map<String, Reminder> courseReminders;
 
     public DBDataAccessObject(UserFactory userFactory, NotesFactory notesFactory, CourseFactory courseFactory,
-                                   StudentFactory studentFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory, ReminderFactory reminderFactory) {
+                              StudentFactory studentFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory, ReminderFactory reminderFactory) {
         this.userFactory = userFactory;
         this.notesFactory = notesFactory;
         this.courseFactory = courseFactory;
