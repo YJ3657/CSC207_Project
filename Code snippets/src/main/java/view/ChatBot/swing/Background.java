@@ -17,7 +17,7 @@ public class Background extends JPanel {
         Graphics2D g2 = (Graphics2D) grphcs.create();
         int width = getWidth();
         int height = getHeight();
-        g2.setPaint(new GradientPaint(0, 0, new Color(0, 0, 0), width, 0, new Color(0, 0, 0)));
+        g2.setColor(new Color(0,0,0));
         //g2.setPaint(new GradientPaint(0, 0, new Color(37, 81, 149), width, 0, new Color(9, 35, 75)));
         g2.fillRect(0, 0, width, height);
         g2.dispose();
