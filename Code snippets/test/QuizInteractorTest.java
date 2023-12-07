@@ -1,10 +1,7 @@
 import main.java.app.Constants;
-import main.java.use_case.notes.AddCourseInputData;
-import main.java.use_case.notes.AddCourseOutputBoundary;
 import main.java.use_case.quiz.*;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

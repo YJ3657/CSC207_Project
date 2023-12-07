@@ -1,11 +1,7 @@
 package main.java.view;
 
 import main.java.app.Constants;
-import main.java.entity.Course;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.notes.AddCourseController;
-import main.java.interface_adapter.notes.NotesState;
-import main.java.interface_adapter.notes.NotesViewModel;
 import main.java.interface_adapter.quiz.QuizState;
 import main.java.interface_adapter.quiz.QuizViewModel;
 
@@ -16,8 +12,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
 public class QuizView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Quiz";

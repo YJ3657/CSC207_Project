@@ -136,14 +136,12 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
                 int chapterNo = rs.getInt("chapterno");
                 String title = rs.getString("title");
                 Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);
-                Map<String, List<Notes>> userNotes = accounts.get(userId).getNotes();
-                if (userNotes.containsKey(courseId)) {
-                    userNotes.get(courseId).add(note);
+                if (accounts.get(userId).getNotes().containsKey(courseId)) {
+                    accounts.get(userId).setNotes(note,courseId);
                 }
                 else {
-                    List<Notes> newList = new ArrayList<>();
-                    newList.add(note);
-                    userNotes.put(courseId, newList);
+                    accounts.get(userId).setNotes(courseId);
+                    accounts.get(userId).setNotes(note, courseId);
                 }
             }
             rs.close();
@@ -574,7 +572,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
     // Shouldn't we have userId parameter instead?
 
     public void addNotes(Notes note, String courseId){
-        accounts.get(Constants.CURRENT_USER).setNotes(note, courseId.toUpperCase());
+        accounts.get(Constants.CURRENT_USER).setNotes(note, courseId);
         if(!courses.containsKey(courseId)) {
             courses.put(courseId, new Course(courseId.toUpperCase()));
         }
