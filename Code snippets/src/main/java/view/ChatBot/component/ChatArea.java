@@ -91,7 +91,7 @@ public class ChatArea extends JPanel {
     private JPanel createHeader() {
         RoundPanel panel = new RoundPanel();
         panel.setLayout(new MigLayout("fill, inset 2"));
-        panel.setBackground(new Color(255, 255, 255, 20));
+        panel.setBackground(new Color(0, 0, 0, 20));
         labelTitle = new JLabel();
         labelTitle.setFont(labelTitle.getFont().deriveFont(14f));
         labelTitle.setBorder(new EmptyBorder(2, 10, 2, 2));
@@ -109,7 +109,7 @@ public class ChatArea extends JPanel {
 
     private JPanel createBottom() {
         RoundPanel panel = new RoundPanel();
-        panel.setBackground(new Color(255, 255, 255, 20));
+        panel.setBackground(new Color(0, 0, 0, 20));
         panel.setLayout(new MigLayout("fill, inset 2", "[fill,34!]2[fill]2[fill,34!]", "[bottom]"));
         GoogleMaterialIcon iconFile = new GoogleMaterialIcon(GoogleMaterialDesignIcon.ATTACH_FILE, GradientType.VERTICAL, new Color(210, 210, 210), new Color(255, 255, 255), 20);
         GoogleMaterialIcon iconSend = new GoogleMaterialIcon(GoogleMaterialDesignIcon.SEND, GradientType.VERTICAL, new Color(0, 133, 237), new Color(90, 182, 255), 20);
