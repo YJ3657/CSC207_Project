@@ -16,12 +16,8 @@ class DBDataAccessObjectTest {
     }
 
     @Test
-    void save(){
-
-    }
-
-    @Test
     void clear(){
+        dbDataAccessObject.clear();
 
     }
 }
