@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ReminderPresenter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.interface_adapter.reminder</a>
+</div>
+
+<h1>Coverage Summary for Class: ReminderPresenter (main.java.interface_adapter.reminder)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReminderPresenter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.interface_adapter.reminder;
+&nbsp;
+&nbsp;import main.java.entity.Reminder;
+&nbsp;import main.java.interface_adapter.ViewManagerModel;
+&nbsp;import main.java.interface_adapter.home.HomeState;
+&nbsp;import main.java.interface_adapter.home.HomeViewModel;
+&nbsp;import main.java.interface_adapter.notes.NotesState;
+&nbsp;import main.java.interface_adapter.signup.SignupState;
+&nbsp;import main.java.interface_adapter.signup.SignupViewModel;
+&nbsp;import main.java.use_case.reminder.ReminderOutputBoundary;
+&nbsp;import main.java.use_case.reminder.ReminderOutputData;
+&nbsp;import main.java.use_case.signup.SignupOutputData;
+&nbsp;import main.java.view.ReminderView;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public class ReminderPresenter implements ReminderOutputBoundary{
+&nbsp;    private final ReminderViewModel reminderViewModel;
+&nbsp;    private ViewManagerModel viewManagerModel;
+&nbsp;
+&nbsp;    public ReminderPresenter(ViewManagerModel viewManagerModel,
+<b class="fc">&nbsp;                             ReminderViewModel reminderViewModel) {</b>
+<b class="fc">&nbsp;        this.viewManagerModel = viewManagerModel;</b>
+<b class="fc">&nbsp;        this.reminderViewModel = reminderViewModel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void prepareSuccessView(ReminderOutputData response) {
+<b class="fc">&nbsp;        ReminderState reminderState = reminderViewModel.getState();</b>
+<b class="fc">&nbsp;        Map&lt;String, Reminder&gt; reviewContents = response.getReviewChapters();</b>
+&nbsp;        //Saving reminder object in state
+<b class="fc">&nbsp;        reminderState.setReminder(reviewContents);</b>
+<b class="fc">&nbsp;        List&lt;String&gt; userCourses = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        Map&lt;Integer, String&gt; reviewMaterials = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Map.Entry&lt;String, Reminder&gt; entry : reviewContents.entrySet()) {</b>
+<b class="fc">&nbsp;            String key = entry.getKey();</b>
+<b class="fc">&nbsp;            userCourses.add(key);</b>
+<b class="fc">&nbsp;            Reminder value = entry.getValue();</b>
+<b class="fc">&nbsp;            reviewMaterials = value.getReviewMaterials();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;        //Saving user enrolled courses in state to read in view
+<b class="fc">&nbsp;        reminderState.setCourseNames(userCourses);</b>
+<b class="fc">&nbsp;        this.reminderViewModel.setState(reminderState);</b>
+<b class="fc">&nbsp;        this.reminderViewModel.firePropertyChanged();</b>
+<b class="fc">&nbsp;        this.viewManagerModel.setActiveView(reminderViewModel.getViewName());</b>
+<b class="fc">&nbsp;        this.viewManagerModel.firePropertyChanged();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void prepareFailView(String error) {
+<b class="fc">&nbsp;        JOptionPane.showMessageDialog(null, error, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);</b>
+<b class="fc">&nbsp;        this.viewManagerModel.firePropertyChanged();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

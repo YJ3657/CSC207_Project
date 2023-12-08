@@ -26,6 +26,5 @@ generating random tests based on the questions and definitions that the user has
 ![alt text](screenshots/jframe.png)
 3. JLabel
 ![alt text](Code%20snippets/src/img/jlabel.png)
-## List of any technical problems blocking progress: ##
-1. DB connection was not stable at first due to using MySQL versions that had some errors. So, we are looking for ways
-to use consistent versions of each tool. We are also seeking for ways to use remote Database other than local.
+
+##Requirements to Run##

@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Course</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.entity</a>
+</div>
+
+<h1>Coverage Summary for Class: Course (main.java.entity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Course</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (27/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.entity;
+&nbsp;
+&nbsp;import main.java.entity.Notes;
+&nbsp;import main.java.entity.Student;
+&nbsp;import java.lang.reflect.Array;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;
+&nbsp;//DONE FOR NOW
+&nbsp;public class Course {
+&nbsp;    private String courseId;
+&nbsp;    private List&lt;Student&gt; students;
+&nbsp;    private List&lt;Question&gt; questions;
+&nbsp;    private List&lt;Definition&gt; definitions;
+&nbsp;
+&nbsp;    private Map&lt;Integer, String&gt; contents;
+&nbsp;
+<b class="fc">&nbsp;    public Course(String courseId){</b>
+<b class="fc">&nbsp;        this.courseId = courseId;</b>
+<b class="fc">&nbsp;        this.students = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        this.questions = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        this.definitions = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        this.contents = new HashMap&lt;Integer, String&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;//    public void setId(String courseId) {
+&nbsp;//        this.courseId = courseId;
+&nbsp;//    }
+&nbsp;
+&nbsp;    public String getId() {
+<b class="fc">&nbsp;        return courseId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Student&gt; getStudents() {
+<b class="fc">&nbsp;        return this.students;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addStudent(Student student){
+<b class="fc">&nbsp;        students.add(student);</b>
+&nbsp;    }
+&nbsp;//    public void setStudents(List&lt;Student&gt; students) {
+&nbsp;//        this.students = students;
+&nbsp;//        return;
+&nbsp;//    }
+&nbsp;    public List&lt;Question&gt; getQuestions() {
+<b class="fc">&nbsp;        return this.questions;</b>
+&nbsp;    }
+&nbsp;    public void setQuestions(List&lt;Question&gt; questions) {
+<b class="fc">&nbsp;        this.questions = questions;</b>
+&nbsp;        return;
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setQuestion(Question question){
+<b class="fc">&nbsp;        questions.add(question);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; getQuestionQuestions(){
+<b class="fc">&nbsp;        List&lt;String&gt; questionQuestions = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Question ques: this.questions){</b>
+<b class="fc">&nbsp;            questionQuestions.add(ques.getQuestion());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return questionQuestions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Definition&gt; getDefinitions() {
+<b class="fc">&nbsp;        return this.definitions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; getDefinitionTerms(){
+<b class="fc">&nbsp;        List&lt;String&gt; definitionTerms = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Definition def: this.definitions){</b>
+<b class="fc">&nbsp;            definitionTerms.add(def.getWord());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return definitionTerms;</b>
+&nbsp;    }
+&nbsp;    public void setDefinitions(List&lt;Definition&gt; definitions) {
+<b class="fc">&nbsp;        this.definitions = definitions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDefinition(Definition definition) {
+<b class="fc">&nbsp;        definitions.add(definition);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setContents(Map&lt;Integer, String&gt; contents) {
+<b class="fc">&nbsp;        this.contents = contents;</b>
+&nbsp;        return;
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;Integer, String&gt; getContents() {
+<b class="fc">&nbsp;        return this.contents;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

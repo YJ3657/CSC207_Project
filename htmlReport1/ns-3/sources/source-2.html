@@ -1,0 +1,863 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DBDataAccessObject</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.data_access</a>
+</div>
+
+<h1>Coverage Summary for Class: DBDataAccessObject (main.java.data_access)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DBDataAccessObject</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.4%
+  </span>
+  <span class="absValue">
+    (24/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    31.8%
+  </span>
+  <span class="absValue">
+    (139/437)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.data_access;
+&nbsp;
+&nbsp;import main.java.app.Constants;
+&nbsp;import main.java.entity.*;
+&nbsp;import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
+&nbsp;import main.java.use_case.clear_users.ClearUserDataAccessInterface;
+&nbsp;import main.java.use_case.courses.AddCourseDataAccessInterface;
+&nbsp;import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
+&nbsp;import main.java.use_case.login.LoginUserDataAccessInterface;
+&nbsp;import main.java.use_case.notes.NotesDataAccessInterface;
+&nbsp;import main.java.use_case.quiz.QuizDataAccessInterface;
+&nbsp;import main.java.use_case.reminder.ReminderAlgorithm;
+&nbsp;import main.java.use_case.reminder.ReminderDataAccessInterface;
+&nbsp;import main.java.use_case.signup.SignupUserDataAccessInterface;
+&nbsp;import main.java.use_case.update_users.UpdateUserDataAccessInterface;
+&nbsp;
+&nbsp;import java.sql.*;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.*;
+&nbsp;import java.util.regex.Pattern;
+&nbsp;
+&nbsp;public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDataAccessInterface, DefQuesDataAccessInterface, QuizDataAccessInterface,
+&nbsp;        SignupUserDataAccessInterface, LoginUserDataAccessInterface, ClearUserDataAccessInterface,
+&nbsp;        UpdateUserDataAccessInterface, FindUserCourseDataAccessInterface, ReminderDataAccessInterface {
+<b class="fc">&nbsp;    private Connection conn = null;</b>
+<b class="fc">&nbsp;    private final Map&lt;String, User&gt; accounts = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;    private final Map&lt;String, Course&gt; courses = new HashMap&lt;&gt;();</b>
+&nbsp;    private UserFactory userFactory;
+&nbsp;    private NotesFactory notesFactory;
+&nbsp;    private CourseFactory courseFactory;
+&nbsp;    private StudentFactory studentFactory;
+&nbsp;    private QuestionFactory questionFactory;
+&nbsp;    private DefinitionFactory definitionFactory;
+&nbsp;    private final ReminderFactory reminderFactory;
+&nbsp;    private Map&lt;String, Reminder&gt; courseReminders;
+&nbsp;
+&nbsp;    public DBDataAccessObject(UserFactory userFactory, NotesFactory notesFactory, CourseFactory courseFactory,
+<b class="fc">&nbsp;                              StudentFactory studentFactory, QuestionFactory questionFactory, DefinitionFactory definitionFactory, ReminderFactory reminderFactory) {</b>
+<b class="fc">&nbsp;        this.userFactory = userFactory;</b>
+<b class="fc">&nbsp;        this.notesFactory = notesFactory;</b>
+<b class="fc">&nbsp;        this.courseFactory = courseFactory;</b>
+<b class="fc">&nbsp;        this.questionFactory = questionFactory;</b>
+<b class="fc">&nbsp;        this.definitionFactory = definitionFactory;</b>
+<b class="fc">&nbsp;        this.studentFactory = studentFactory;</b>
+<b class="fc">&nbsp;        this.reminderFactory = reminderFactory;</b>
+&nbsp;
+<b class="fc">&nbsp;        LocalDate date = LocalDate.of(2023, 12, 5);</b>
+<b class="fc">&nbsp;        User sampleUser1 = this.userFactory.create(&quot;sample1&quot;, &quot;password&quot;);</b>
+<b class="fc">&nbsp;        sampleUser1.addCourse(&quot;CSC236&quot;);</b>
+<b class="fc">&nbsp;        Course newCourse1 = this.courseFactory.create(&quot;CSC236&quot;);</b>
+<b class="fc">&nbsp;        Student newStudent1 = this.studentFactory.create(&quot;sample1&quot;, date.toString());</b>
+<b class="fc">&nbsp;        newCourse1.addStudent(newStudent1);</b>
+<b class="fc">&nbsp;        newCourse1.getContents().put(1, &quot;Induction&quot;);</b>
+<b class="fc">&nbsp;        newCourse1.getDefinitions().add(this.definitionFactory.create(1, &quot;Induction&quot;, &quot;Induction&quot;));</b>
+<b class="fc">&nbsp;        newCourse1.getQuestions().add(this.questionFactory.create(1, &quot;What’s the structural induction?&quot;, &quot;special type of induction&quot;));</b>
+<b class="fc">&nbsp;        accounts.put(&quot;sample1&quot;, sampleUser1);</b>
+<b class="fc">&nbsp;        courses.put(&quot;CSC236&quot;, newCourse1);</b>
+&nbsp;
+<b class="fc">&nbsp;        date = LocalDate.of(2023, 12, 5);</b>
+<b class="fc">&nbsp;        User sampleUser2 = this.userFactory.create(&quot;sample2&quot;, &quot;password&quot;);</b>
+<b class="fc">&nbsp;        sampleUser2.addCourse(&quot;CSC207&quot;);</b>
+<b class="fc">&nbsp;        Course newCourse2 = this.courseFactory.create(&quot;CSC207&quot;);</b>
+<b class="fc">&nbsp;        Student newStudent2 = this.studentFactory.create(&quot;sample2&quot;, date.toString());</b>
+<b class="fc">&nbsp;        newCourse2.addStudent(newStudent2);</b>
+<b class="fc">&nbsp;        newCourse2.getContents().put(1, &quot;Java&quot;);</b>
+<b class="fc">&nbsp;        newCourse2.getDefinitions().add(this.definitionFactory.create(1, &quot;Java&quot;, &quot;Java&quot;));</b>
+<b class="fc">&nbsp;        newCourse2.getQuestions().add(this.questionFactory.create(1, &quot;What’s the Java?&quot;, &quot;language&quot;));</b>
+<b class="fc">&nbsp;        accounts.put(&quot;sample2&quot;, sampleUser2);</b>
+<b class="fc">&nbsp;        courses.put(&quot;CSC207&quot;, newCourse2);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.courseReminders = new HashMap&lt;String, Reminder&gt;();</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            conn = DriverManager.getConnection(</b>
+&nbsp;                    &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;                    &quot;remoteUser&quot;,
+&nbsp;                    &quot;thisismysql*&quot;
+&nbsp;            );
+<b class="nc">&nbsp;            System.out.println(&quot;no error till here&quot;);</b>
+<b class="nc">&nbsp;            String sqlOrder = &quot;SELECT userid, password, groupid1, groupid2, groupid3, groupid4, groupid5, groupid6,&quot; +</b>
+&nbsp;                    &quot; groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, courseid6, courseid7, courseid8 FROM users&quot;;
+&nbsp;
+<b class="nc">&nbsp;            PreparedStatement statement = conn.prepareStatement(sqlOrder);</b>
+&nbsp;
+<b class="nc">&nbsp;            ResultSet rs = statement.executeQuery();</b>
+&nbsp;
+<b class="nc">&nbsp;            while(rs.next()) {</b>
+<b class="nc">&nbsp;                String userId = rs.getString(&quot;userid&quot;);</b>
+<b class="nc">&nbsp;                String userPw = rs.getString(&quot;password&quot;);</b>
+<b class="nc">&nbsp;                User user = this.userFactory.create(userId, userPw);</b>
+<b class="nc">&nbsp;                for(int i = 1; i &lt;= 8; i++) {</b>
+<b class="nc">&nbsp;                    user.getGroupId().add(rs.getString(&quot;groupid&quot; + i));</b>
+&nbsp;                }
+<b class="nc">&nbsp;                for(int i = 1; i &lt;= 8; i++) {</b>
+<b class="nc">&nbsp;                    user.getCourseId().add(rs.getString(&quot;courseid&quot; + i));</b>
+&nbsp;                }
+<b class="nc">&nbsp;                accounts.put(userId, user);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            rs.close();</b>
+<b class="nc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error1&quot;);</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;            if(conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) {}</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            conn = DriverManager.getConnection(</b>
+&nbsp;                    &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;
+&nbsp;                    &quot;remoteUser&quot;,
+&nbsp;                    &quot;thisismysql*&quot;
+&nbsp;            );
+&nbsp;
+<b class="nc">&nbsp;            String sqlOrder = &quot;SELECT userid, courseid, contents, chapterno, title FROM notes&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;            PreparedStatement statement = conn.prepareStatement(sqlOrder);</b>
+&nbsp;
+<b class="nc">&nbsp;            ResultSet rs = statement.executeQuery();</b>
+&nbsp;
+<b class="nc">&nbsp;            while(rs.next()) {</b>
+<b class="nc">&nbsp;                String userId = rs.getString(&quot;userid&quot;);</b>
+<b class="nc">&nbsp;                String courseId = rs.getString(&quot;courseid&quot;);</b>
+<b class="nc">&nbsp;                String contents = rs.getString(&quot;contents&quot;); // TODO: Yeong jae check this over, I&#39;m assuming this is how it would work if change contents to string</b>
+<b class="nc">&nbsp;                int chapterNo = rs.getInt(&quot;chapterno&quot;);</b>
+<b class="nc">&nbsp;                String title = rs.getString(&quot;title&quot;);</b>
+<b class="nc">&nbsp;                Notes note = this.notesFactory.create(userId, courseId, contents, chapterNo, title);</b>
+<b class="nc">&nbsp;                if (accounts.get(userId).getNotes().containsKey(courseId)) {</b>
+<b class="nc">&nbsp;                    accounts.get(userId).setNotes(note,courseId);</b>
+&nbsp;                }
+&nbsp;                else {
+<b class="nc">&nbsp;                    accounts.get(userId).setNotes(courseId);</b>
+<b class="nc">&nbsp;                    accounts.get(userId).setNotes(note, courseId);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            rs.close();</b>
+<b class="nc">&nbsp;            statement.close();</b>
+<b class="fc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error 2&quot;);</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;            if(conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) {}</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            conn = DriverManager.getConnection(</b>
+&nbsp;                    &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306&quot;,
+&nbsp;                    &quot;remoteUser&quot;,
+&nbsp;                    &quot;thisismysql*&quot;
+&nbsp;            );
+&nbsp;
+<b class="nc">&nbsp;            ResultSet databases = conn.getMetaData().getCatalogs();</b>
+<b class="nc">&nbsp;            while (databases.next()) {</b>
+<b class="nc">&nbsp;                String databaseName = databases.getString(1);</b>
+<b class="nc">&nbsp;                if(!Pattern.matches(&quot;[A-Z][A-Z][A-Z]\\d\\d\\d&quot;, databaseName)) {</b>
+<b class="nc">&nbsp;                    continue;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                Course course = this.courseFactory.create(databaseName);</b>
+&nbsp;
+<b class="nc">&nbsp;                String sqlOrder = &quot;SELECT chapterno, question, answer FROM &quot; + databaseName + &quot;.questions&quot;;</b>
+<b class="nc">&nbsp;                PreparedStatement statement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                ResultSet rs = statement.executeQuery();</b>
+<b class="nc">&nbsp;                while(rs.next()) {</b>
+<b class="nc">&nbsp;                    int chapterNo = rs.getInt(&quot;chapterno&quot;);</b>
+<b class="nc">&nbsp;                    String question = rs.getString(&quot;question&quot;);</b>
+<b class="nc">&nbsp;                    String answer = rs.getString(&quot;answer&quot;);</b>
+<b class="nc">&nbsp;                    course.setQuestion(this.questionFactory.create(chapterNo, question, answer));</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;SELECT chapterno, word, definition FROM &quot; + databaseName + &quot;.definitions&quot;;</b>
+<b class="nc">&nbsp;                statement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                rs = statement.executeQuery();</b>
+<b class="nc">&nbsp;                while(rs.next()) {</b>
+<b class="nc">&nbsp;                    int chapterNo = rs.getInt(&quot;chapterno&quot;);</b>
+<b class="nc">&nbsp;                    String word = rs.getString(&quot;word&quot;);</b>
+<b class="nc">&nbsp;                    String definition = rs.getString(&quot;definition&quot;);</b>
+<b class="nc">&nbsp;                    course.setDefinition(this.definitionFactory.create(chapterNo, word, definition));</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;SELECT chapterno, content FROM &quot; + databaseName + &quot;.contents&quot;;</b>
+<b class="nc">&nbsp;                statement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                rs = statement.executeQuery();</b>
+<b class="nc">&nbsp;                while(rs.next()) {</b>
+<b class="nc">&nbsp;                    int chapterNo = rs.getInt(&quot;chapterno&quot;);</b>
+<b class="nc">&nbsp;                    String content = rs.getString(&quot;content&quot;);</b>
+<b class="nc">&nbsp;                    Map&lt;Integer, String&gt; contents = course.getContents();</b>
+<b class="nc">&nbsp;                    if(contents.containsKey(chapterNo)) {</b>
+<b class="nc">&nbsp;                        continue;</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    contents.put(chapterNo, content);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;SELECT studentid, time_enrolled FROM &quot; + databaseName + &quot;.students&quot;;</b>
+<b class="nc">&nbsp;                statement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                rs = statement.executeQuery();</b>
+<b class="nc">&nbsp;                while(rs.next()) {</b>
+<b class="nc">&nbsp;                    String studentId = rs.getString(&quot;studentid&quot;);</b>
+<b class="nc">&nbsp;                    String timeEnrolled = rs.getString(&quot;time_enrolled&quot;);</b>
+<b class="nc">&nbsp;                    course.getStudents().add(this.studentFactory.create(studentId, timeEnrolled));</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                courses.put(databaseName, course);</b>
+<b class="nc">&nbsp;                rs.close();</b>
+<b class="nc">&nbsp;                statement.close();</b>
+&nbsp;
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            databases.close();</b>
+<b class="fc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error 3&quot;);</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;            if (conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) {</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void save(User user) {
+<b class="fc">&nbsp;        accounts.put(user.getId(), user);</b>
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void save(User user, Course course) {
+<b class="nc">&nbsp;        accounts.put(user.getId(), user);</b>
+<b class="nc">&nbsp;        courses.put(course.getId(), course);</b>
+<b class="nc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void save(Course course) {
+<b class="fc">&nbsp;        courses.put(course.getId(), course);</b>
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User get(String username) {
+<b class="fc">&nbsp;        return accounts.get(username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void save() {
+&nbsp;        try {
+<b class="fc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            String sqlOrder = &quot;INSERT IGNORE INTO users (userid, password, groupid1, groupid2, groupid3, groupid4,&quot; +</b>
+&nbsp;                    &quot; groupid5, groupid6, groupid7, groupid8, courseid1, courseid2, courseid3, courseid4, courseid5, &quot; +
+&nbsp;                    &quot;courseid6, courseid7, courseid8) &quot; +
+&nbsp;                    &quot;VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);&quot;;
+&nbsp;
+<b class="nc">&nbsp;            for(User user : accounts.values()) {</b>
+<b class="nc">&nbsp;                conn = DriverManager.getConnection(</b>
+&nbsp;                        &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;                        &quot;remoteUser&quot;,
+&nbsp;                        &quot;thisismysql*&quot;
+&nbsp;                );
+<b class="nc">&nbsp;                PreparedStatement statement = conn.prepareStatement(sqlOrder);</b>
+&nbsp;
+<b class="nc">&nbsp;                statement.setString(1, user.getId());</b>
+<b class="nc">&nbsp;                statement.setString(2, user.getPassword());</b>
+<b class="nc">&nbsp;                for(int i = 3; i &lt;= 10; i++) {</b>
+<b class="nc">&nbsp;                    if((i - 2) &gt; user.getGroupId().size()) {</b>
+<b class="nc">&nbsp;                        statement.setString(i, &quot;NONE&quot;);</b>
+<b class="nc">&nbsp;                        continue;</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    statement.setString(i, user.getGroupId().get(i - 3));</b>
+&nbsp;                }
+<b class="nc">&nbsp;                for(int i = 11; i &lt;= 18; i++) {</b>
+<b class="nc">&nbsp;                    if((i - 10) &gt; user.getCourseId().size()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                        statement.setString(i, &quot;NONE&quot;);</b>
+<b class="nc">&nbsp;                        continue;</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    statement.setString(i, user.getCourseId().get(i - 11));</b>
+&nbsp;                }
+<b class="nc">&nbsp;                statement.executeUpdate();</b>
+<b class="nc">&nbsp;                this.update(user);</b>
+<b class="nc">&nbsp;                for(String courseId : user.getNotes().keySet()) {</b>
+<b class="nc">&nbsp;                    String newsqlOrder = &quot;INSERT IGNORE INTO notes (userid, courseid, contents, chapterno, title) &quot; +</b>
+&nbsp;                            &quot;VALUES (?, ?, ?, ?, ?);&quot;;
+<b class="nc">&nbsp;                    for(Notes notes : user.getNotes().get(courseId)) {</b>
+<b class="nc">&nbsp;                        conn = DriverManager.getConnection(</b>
+&nbsp;                                &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;                                &quot;remoteUser&quot;,
+&nbsp;                                &quot;thisismysql*&quot;
+&nbsp;                        );
+<b class="nc">&nbsp;                        PreparedStatement newStatement = conn.prepareStatement(newsqlOrder);</b>
+<b class="nc">&nbsp;                        newStatement.setString(1, user.getId());</b>
+<b class="nc">&nbsp;                        newStatement.setString(2, courseId);</b>
+<b class="nc">&nbsp;                        newStatement.setString(3, notes.getContents());</b>
+<b class="nc">&nbsp;                        newStatement.setInt(4, notes.getChapterno());</b>
+<b class="nc">&nbsp;                        newStatement.setString(5, notes.getTitle());</b>
+<b class="nc">&nbsp;                        newStatement.executeUpdate();</b>
+<b class="nc">&nbsp;                        newStatement.close();</b>
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                statement.close();</b>
+<b class="nc">&nbsp;            }</b>
+<b class="fc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error 4&quot;);</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;            if(conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) {}</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        try{
+<b class="fc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+<b class="nc">&nbsp;            conn = DriverManager.getConnection(</b>
+&nbsp;                    &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/&quot;,
+&nbsp;                    &quot;remoteUser&quot;,
+&nbsp;                    &quot;thisismysql*&quot;
+&nbsp;            );
+&nbsp;
+<b class="nc">&nbsp;            for(String courseId : this.courses.keySet()) {</b>
+<b class="nc">&nbsp;                Course course = courses.get(courseId);</b>
+<b class="nc">&nbsp;                Statement statement = conn.createStatement();</b>
+<b class="nc">&nbsp;                statement.executeUpdate(&quot;CREATE DATABASE IF NOT EXISTS &quot; + course.getId().toUpperCase());</b>
+<b class="nc">&nbsp;                String sqlOrder = &quot;USE &quot; + course.getId().toUpperCase();</b>
+<b class="nc">&nbsp;                PreparedStatement prestatement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                prestatement.executeQuery();</b>
+<b class="nc">&nbsp;                statement.executeUpdate(&quot;CREATE TABLE IF NOT EXISTS questions (chapterno INT(3), question varchar(50) UNIQUE, answer varchar(50))&quot;);</b>
+<b class="nc">&nbsp;                statement.executeUpdate(&quot;CREATE TABLE IF NOT EXISTS definitions (chapterno INT(3), word varchar(50) UNIQUE, definition varchar(50))&quot;);</b>
+<b class="nc">&nbsp;                statement.executeUpdate(&quot;CREATE TABLE IF NOT EXISTS contents (chapterno INT(3) UNIQUE, content varchar(50))&quot;);</b>
+<b class="nc">&nbsp;                statement.executeUpdate(&quot;CREATE TABLE IF NOT EXISTS students (studentid varchar(50) UNIQUE, time_enrolled varchar(50))&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;INSERT IGNORE INTO questions (chapterno, question, answer)&quot; +</b>
+&nbsp;                        &quot;VALUES (?, ?, ?)&quot;;
+&nbsp;
+<b class="nc">&nbsp;                for (Question question : course.getQuestions()) {</b>
+<b class="nc">&nbsp;                    prestatement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                    prestatement.setInt(1, question.getChapterno());</b>
+<b class="nc">&nbsp;                    prestatement.setString(2, question.getQuestion());</b>
+<b class="nc">&nbsp;                    prestatement.setString(3, question.getAnswer());</b>
+<b class="nc">&nbsp;                    prestatement.executeUpdate();</b>
+<b class="nc">&nbsp;                    prestatement.close();</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;INSERT IGNORE INTO definitions (chapterno, word, definition)&quot; +</b>
+&nbsp;                        &quot;VALUES (?, ?, ?)&quot;;
+&nbsp;
+<b class="nc">&nbsp;                for (Definition definition : course.getDefinitions()) {</b>
+<b class="nc">&nbsp;                    prestatement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                    prestatement.setInt(1, definition.getChapterno());</b>
+<b class="nc">&nbsp;                    prestatement.setString(2, definition.getWord());</b>
+<b class="nc">&nbsp;                    prestatement.setString(3, definition.getDefinition());</b>
+<b class="nc">&nbsp;                    prestatement.executeUpdate();</b>
+<b class="nc">&nbsp;                    prestatement.close();</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;INSERT IGNORE INTO contents (chapterno, content)&quot; +</b>
+&nbsp;                        &quot;VALUES (?, ?)&quot;;
+&nbsp;
+<b class="nc">&nbsp;                for (int chapterno : course.getContents().keySet()) {</b>
+<b class="nc">&nbsp;                    prestatement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                    prestatement.setInt(1, chapterno);</b>
+<b class="nc">&nbsp;                    prestatement.setString(2, course.getContents().get(chapterno));</b>
+<b class="nc">&nbsp;                    prestatement.executeUpdate();</b>
+<b class="nc">&nbsp;                    prestatement.close();</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                sqlOrder = &quot;INSERT IGNORE INTO students (studentid, time_enrolled)&quot; +</b>
+&nbsp;                        &quot;VALUES (?, ?)&quot;;
+&nbsp;
+<b class="nc">&nbsp;                for (Student student : course.getStudents()) {</b>
+<b class="nc">&nbsp;                    prestatement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;                    prestatement.setString(1, student.getStudentid());</b>
+<b class="nc">&nbsp;                    prestatement.setString(2, student.getTimeEnrolled());</b>
+<b class="nc">&nbsp;                    prestatement.executeUpdate();</b>
+<b class="nc">&nbsp;                    prestatement.close();</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }</b>
+<b class="fc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error 5&quot;);</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;            if(conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) {}</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean existsByName(String identifier) {
+<b class="fc">&nbsp;        return accounts.containsKey(identifier);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean noteExists(String courseId, String notesTitle){
+<b class="fc">&nbsp;        if (!(accounts.get(Constants.CURRENT_USER).getNotes().isEmpty())) {</b>
+<b class="fc">&nbsp;            if (accounts.get(Constants.CURRENT_USER).getNotes().containsKey(courseId.toUpperCase())) {</b>
+<b class="fc">&nbsp;                List&lt;String&gt; titles = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;                for (Notes i : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId.toUpperCase())) {</b>
+<b class="fc">&nbsp;                    titles.add(i.getTitle());</b>
+<b class="fc">&nbsp;                }</b>
+<b class="fc">&nbsp;                return titles.contains(notesTitle);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void updateContent(String courseId, String notesTitle, String notesContent){
+<b class="fc">&nbsp;        for (Notes note : accounts.get(Constants.CURRENT_USER).getNotes().get(courseId)) {</b>
+<b class="fc">&nbsp;            if (note.getTitle().equals(notesTitle)){</b>
+<b class="fc">&nbsp;                note.setContents(notesContent);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void deleteNotes(Notes tbd, String courseId) {
+<b class="fc">&nbsp;        if (Constants.CURRENT_USER_OBJ.getNotes().get(courseId).size() == 1){</b>
+<b class="fc">&nbsp;            Constants.CURRENT_USER_OBJ.getNotes().get(courseId).clear();</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            Constants.CURRENT_USER_OBJ.getNotes().get(courseId).</b>
+<b class="fc">&nbsp;                    remove(tbd);</b>
+<b class="fc">&nbsp;            this.save();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void clear() {
+&nbsp;        try {
+<b class="fc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+<b class="nc">&nbsp;            conn = DriverManager.getConnection(</b>
+&nbsp;                    &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;                    &quot;remoteUser&quot;,
+&nbsp;                    &quot;thisismysql*&quot;
+&nbsp;            );
+<b class="nc">&nbsp;            String sqlOrder = &quot;DELETE FROM user.users&quot;;</b>
+<b class="nc">&nbsp;            PreparedStatement statement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;            statement.executeUpdate();</b>
+&nbsp;
+<b class="nc">&nbsp;            sqlOrder = &quot;DELETE FROM user.notes&quot;;</b>
+<b class="nc">&nbsp;            statement = conn.prepareStatement(sqlOrder);</b>
+<b class="nc">&nbsp;            statement.executeUpdate();</b>
+&nbsp;
+<b class="nc">&nbsp;            statement.close();</b>
+&nbsp;
+<b class="fc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error 6&quot;);</b>
+&nbsp;        } finally {
+<b class="fc">&nbsp;            if(conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) {}</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void update(User user) {
+<b class="nc">&nbsp;        if(user.getCourseId().isEmpty()) return;</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</b>
+<b class="nc">&nbsp;            conn = DriverManager.getConnection(</b>
+&nbsp;                    &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;                    &quot;remoteUser&quot;,
+&nbsp;                    &quot;thisismysql*&quot;
+&nbsp;            );
+<b class="nc">&nbsp;            StringBuilder sqlOrder = new StringBuilder()</b>
+<b class="nc">&nbsp;                    .append(&quot;UPDATE IGNORE users SET &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;userid=?, &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;password=?, &quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            for(int i = 1; i &lt;= user.getGroupId().size(); i++) {</b>
+<b class="nc">&nbsp;                sqlOrder.append(&quot;groupid&quot;).append(i).append(&quot;=?, &quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            for(int i = 1; i &lt;= user.getCourseId().size(); i++) {</b>
+<b class="nc">&nbsp;                if (i == user.getCourseId().size()) {</b>
+<b class="nc">&nbsp;                    sqlOrder.append(&quot;courseid&quot;).append(i).append(&quot;=?;&quot;);</b>
+&nbsp;                }
+&nbsp;                else {
+<b class="nc">&nbsp;                    sqlOrder.append(&quot;courseid&quot;).append(i).append(&quot;=?, &quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            PreparedStatement statement = conn.prepareStatement(sqlOrder.toString());</b>
+&nbsp;
+<b class="nc">&nbsp;            statement.setString(1, user.getId());</b>
+<b class="nc">&nbsp;            statement.setString(2, user.getPassword());</b>
+&nbsp;
+<b class="nc">&nbsp;            for(int i = 0; i &lt; user.getGroupId().size(); i++) {</b>
+&nbsp;
+<b class="nc">&nbsp;                statement.setString(i + 3, user.getGroupId().get(i));</b>
+&nbsp;            }
+<b class="nc">&nbsp;            for(int i = 0; i &lt; user.getCourseId().size(); i++) {</b>
+&nbsp;
+<b class="nc">&nbsp;                statement.setString(i + 3 + user.getGroupId().size(), user.getCourseId().get(i));</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            statement.executeUpdate();</b>
+<b class="nc">&nbsp;            statement.close();</b>
+<b class="nc">&nbsp;            sqlOrder = new StringBuilder()</b>
+<b class="nc">&nbsp;                    .append(&quot;UPDATE IGNORE user.notes SET &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;userid=?, &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;courseid=?, &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;contents=?, &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;chapterno=?, &quot;)</b>
+<b class="nc">&nbsp;                    .append(&quot;title=?&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            for(String courseId : user.getNotes().keySet()) {</b>
+<b class="nc">&nbsp;                for(Notes note: user.getNotes().get(courseId)) {</b>
+<b class="nc">&nbsp;                    conn = DriverManager.getConnection(</b>
+&nbsp;                            &quot;jdbc:mysql://&quot; + Constants.GLOBAL_IP + &quot;:3306/user&quot;,
+&nbsp;                            &quot;remoteUser&quot;,
+&nbsp;                            &quot;thisismysql*&quot;
+&nbsp;                    );
+<b class="nc">&nbsp;                    PreparedStatement newstatement = conn.prepareStatement(sqlOrder.toString());</b>
+<b class="nc">&nbsp;                    newstatement.setString(1, user.getId());</b>
+<b class="nc">&nbsp;                    newstatement.setString(2, courseId);</b>
+<b class="nc">&nbsp;                    newstatement.setString(3, note.getContents());</b>
+<b class="nc">&nbsp;                    newstatement.setInt(4, note.getChapterno());</b>
+<b class="nc">&nbsp;                    newstatement.setString(5, note.getTitle());</b>
+<b class="nc">&nbsp;                    newstatement.executeUpdate();</b>
+<b class="nc">&nbsp;                    newstatement.close();</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            statement.close();</b>
+<b class="nc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Class Not Found&quot;);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error 7&quot;);</b>
+<b class="nc">&nbsp;            System.out.println(user.getId());</b>
+&nbsp;        } finally {
+<b class="nc">&nbsp;            if (conn != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    conn.close();</b>
+<b class="nc">&nbsp;                } catch (SQLException e) { }</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; getUserCourses(String userid) {
+<b class="fc">&nbsp;        return accounts.get(userid).getCourseId();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, List&lt;Notes&gt;&gt; getUserNotes(String userId){
+<b class="fc">&nbsp;        return accounts.get(userId).getNotes();</b>
+&nbsp;    }
+&nbsp;    // Shouldn&#39;t we have userId parameter instead?
+&nbsp;
+&nbsp;    public void addNotes(Notes note, String courseId){
+<b class="fc">&nbsp;        accounts.get(Constants.CURRENT_USER).setNotes(note, courseId);</b>
+<b class="fc">&nbsp;        if(!courses.containsKey(courseId)) {</b>
+<b class="fc">&nbsp;            courses.put(courseId, new Course(courseId.toUpperCase()));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        courses.get(courseId).getContents().put(note.getChapterno(), note.getTitle());</b>
+<b class="fc">&nbsp;        Constants.CURRENT_USER_OBJ = accounts.get(Constants.CURRENT_USER);</b>
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;    public void addCourse(String courseId){
+<b class="fc">&nbsp;        User currentUserObj = accounts.get(Constants.CURRENT_USER);</b>
+<b class="fc">&nbsp;        currentUserObj.setNotes(courseId); //TODO: Question: User vs Student</b>
+<b class="fc">&nbsp;        currentUserObj.addCourse(courseId);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(!accounts.get(Constants.CURRENT_USER).getCourseId().contains(courseId.toUpperCase())) {</b>
+<b class="nc">&nbsp;            accounts.get(Constants.CURRENT_USER).addCourse(courseId.toUpperCase());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean existsByID(String courseId) {
+<b class="nc">&nbsp;        return courses.containsKey(courseId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Course getCourse(String courseId) {
+<b class="fc">&nbsp;        return courses.get(courseId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Definition&gt; getDefinitions(String courseId) {
+<b class="nc">&nbsp;        return courses.get(courseId).getDefinitions();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;//    public List&lt;Question&gt; getQuestions(String courseId) { //TODO: Jerry, talk to YJ about this.
+&nbsp;//        return courses.get(courseId).getQuestions();
+&nbsp;//    }
+&nbsp;
+&nbsp;    public List&lt;Student&gt; getStudents(String courseId) {
+<b class="fc">&nbsp;        return courses.get(courseId).getStudents();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addStudentToCourse(Student student, String courseId) {
+<b class="nc">&nbsp;        Course course = courses.get(courseId);</b>
+&nbsp;        // The case when the student already exists
+<b class="nc">&nbsp;        if(course.getStudents().stream().anyMatch(person -&gt; student.getStudentid().equals(person.getStudentid()))) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            course.getStudents().add(student);</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Set&lt;String&gt; getDefinitionTerms(int chapterNumber, String courseId) {
+<b class="fc">&nbsp;        List&lt;Definition&gt; currentDefinitions = courses.get(courseId).getDefinitions();</b>
+<b class="fc">&nbsp;        Set&lt;String&gt; terms = new HashSet&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Definition def: currentDefinitions){</b>
+<b class="fc">&nbsp;            terms.add(def.getWord());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return terms;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void saveDefinition(String term, String definition, int chapterNumber, String courseId) {
+<b class="fc">&nbsp;        Course currentCourse = courses.get(courseId);</b>
+<b class="fc">&nbsp;        List&lt;String&gt; terms = currentCourse.getDefinitionTerms();</b>
+<b class="fc">&nbsp;        if (terms.contains(term)){</b>
+<b class="fc">&nbsp;            for (int i = 0; i &lt; terms.size(); i++){</b>
+<b class="fc">&nbsp;                if (terms.get(i).equals(term)){</b>
+<b class="fc">&nbsp;                    currentCourse.getDefinitions().get(i).setDefinition(definition);</b>
+<b class="fc">&nbsp;                    break;</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        } else {
+<b class="fc">&nbsp;            currentCourse.setDefinition(definitionFactory.create(chapterNumber, term, definition));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * getDefinition for term in given class. Up to caller to ensure term actually in definitions
+&nbsp;     * @param term
+&nbsp;     * @param courseId
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getDefinitionOnly(String term, String courseId) {
+<b class="fc">&nbsp;        List&lt;Definition&gt; courseDefinitions = courses.get(courseId).getDefinitions();</b>
+<b class="fc">&nbsp;        for (Definition def: courseDefinitions){</b>
+<b class="fc">&nbsp;            if (def.getWord().equals(term)){</b>
+<b class="fc">&nbsp;                return def.getDefinition();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        throw new NoSuchElementException();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Set&lt;String&gt; getQuestionQuestions(int chapterNumber, String courseId) {
+<b class="fc">&nbsp;        List&lt;Question&gt; currentQuestions = courses.get(courseId).getQuestions();</b>
+<b class="fc">&nbsp;        Set&lt;String&gt; questionsOnly = new HashSet&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Question question: currentQuestions){</b>
+<b class="fc">&nbsp;            questionsOnly.add(question.getQuestion());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return questionsOnly;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void saveQuestion(String question, String answer, int chapterNumber, String courseId) {
+<b class="fc">&nbsp;        Course currentCourse = courses.get(courseId);</b>
+<b class="fc">&nbsp;        List&lt;String&gt; questions = currentCourse.getQuestionQuestions();</b>
+<b class="fc">&nbsp;        if (questions.contains(question)){</b>
+<b class="fc">&nbsp;            for (int i = 0; i &lt; questions.size(); i++){</b>
+<b class="fc">&nbsp;                if (questions.get(i).equals(question)){</b>
+<b class="fc">&nbsp;                    currentCourse.getQuestions().get(i).setAnswer(answer);</b>
+<b class="fc">&nbsp;                    break;</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        } else {
+<b class="fc">&nbsp;            currentCourse.setQuestion(questionFactory.create(chapterNumber, question, answer));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.save();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String getAnswerOnly(String question, String courseId) {
+<b class="fc">&nbsp;        List&lt;Question&gt; courseQuestions = courses.get(courseId).getQuestions();</b>
+<b class="fc">&nbsp;        for (Question ques: courseQuestions){</b>
+<b class="fc">&nbsp;            if (ques.getQuestion().equals(question)){</b>
+<b class="fc">&nbsp;                return ques.getAnswer();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        throw new NoSuchElementException();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;String&gt; getQuizQuestions(String courseId) {
+<b class="nc">&nbsp;        List&lt;Definition&gt; definitions = courses.get(courseId).getDefinitions();</b>
+<b class="nc">&nbsp;        List&lt;Question&gt; questions = courses.get(courseId).getQuestions();</b>
+<b class="nc">&nbsp;        ArrayList&lt;String&gt; quizQuestions = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        int i = 1;</b>
+<b class="nc">&nbsp;        for (Definition definition: definitions) {</b>
+<b class="nc">&nbsp;            quizQuestions.add(String.format(&quot;%1d) The definition of %2s is:&quot;, i, definition.getWord()));</b>
+<b class="nc">&nbsp;            i++;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Question ques: questions){</b>
+<b class="nc">&nbsp;            quizQuestions.add(String.format(&quot;%1d) %2s?&quot;, i, ques.getQuestion()));</b>
+<b class="nc">&nbsp;            i++;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return quizQuestions;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;String&gt; getAnswers(String courseId) {
+<b class="nc">&nbsp;        List&lt;Definition&gt; definitions = courses.get(courseId).getDefinitions();</b>
+<b class="nc">&nbsp;        List&lt;Question&gt; questions = courses.get(courseId).getQuestions();</b>
+<b class="nc">&nbsp;        ArrayList&lt;String&gt; quizAnswers = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        int i = 1;</b>
+<b class="nc">&nbsp;        for (Definition definition: definitions) {</b>
+<b class="nc">&nbsp;            quizAnswers.add(String.format(definition.getDefinition()));</b>
+<b class="nc">&nbsp;            i++;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Question ques: questions){</b>
+<b class="nc">&nbsp;            quizAnswers.add(String.format(ques.getAnswer()));</b>
+<b class="nc">&nbsp;            i++;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return quizAnswers;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, Reminder&gt; getUserReviewChapters(String userid, ReminderAlgorithm reminderAlgorithm) {
+<b class="fc">&nbsp;        this.courseReminders = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        reminderAlgorithm.getReminders(this, userid);</b>
+<b class="fc">&nbsp;        return this.courseReminders;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, Reminder&gt; getCourseReminders() {
+<b class="fc">&nbsp;        return courseReminders;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

@@ -438,7 +438,7 @@ public class DBDataAccessObject implements NotesDataAccessInterface, AddCourseDa
 
     @Override
     public void deleteNotes(Notes tbd, String courseId) {
-        if(Constants.CURRENT_USER_OBJ.getNotes().get(courseId).size() == 1){
+        if (Constants.CURRENT_USER_OBJ.getNotes().get(courseId).size() == 1){
             Constants.CURRENT_USER_OBJ.getNotes().get(courseId).clear();
         } else {
             Constants.CURRENT_USER_OBJ.getNotes().get(courseId).

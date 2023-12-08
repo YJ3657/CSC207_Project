@@ -1,0 +1,499 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ChatArea</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view.ChatBot.component</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatArea (main.java.view.ChatBot.component)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChatArea</td>
+<td class="coverageStat">
+  <span class="percent">
+    52.2%
+  </span>
+  <span class="absValue">
+    (12/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75.2%
+  </span>
+  <span class="absValue">
+    (85/113)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ChatArea$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (5/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChatArea$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChatArea$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChatArea$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChatArea$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChatArea$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (18/36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70.1%
+  </span>
+  <span class="absValue">
+    (94/134)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view.ChatBot.component;
+&nbsp;
+&nbsp;import java.awt.Color;
+&nbsp;import java.awt.Dimension;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.awt.event.AdjustmentEvent;
+&nbsp;import java.awt.event.AdjustmentListener;
+&nbsp;import java.awt.event.KeyAdapter;
+&nbsp;import java.awt.event.KeyEvent;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import javaswingdev.FontAwesome;
+&nbsp;import javaswingdev.FontAwesomeIcon;
+&nbsp;import javaswingdev.GoogleMaterialDesignIcon;
+&nbsp;import javaswingdev.GoogleMaterialIcon;
+&nbsp;import javaswingdev.GradientType;
+&nbsp;import javax.swing.JLabel;
+&nbsp;import main.java.view.ChatBot.animation.*;
+&nbsp;import main.java.view.ChatBot.component.*;
+&nbsp;import main.java.view.ChatBot.model.*;
+&nbsp;import main.java.view.ChatBot.swing.scroll.*;
+&nbsp;import main.java.view.ChatBot.swing.*;
+&nbsp;import javax.swing.JLayeredPane;
+&nbsp;import javax.swing.JPanel;
+&nbsp;import javax.swing.JScrollPane;
+&nbsp;import javax.swing.SwingUtilities;
+&nbsp;import javax.swing.border.EmptyBorder;
+&nbsp;import net.miginfocom.swing.MigLayout;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;public class ChatArea extends JPanel {</b>
+&nbsp;
+&nbsp;    private AnimationScroll animationScroll;
+&nbsp;    private AnimationFloatingButton animationFloatingButton;
+<b class="fc">&nbsp;    private List&lt;ChatEvent&gt; events = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    public void addChatEvent(ChatEvent event) {
+<b class="fc">&nbsp;        events.add(event);</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public ChatArea() {</b>
+<b class="fc">&nbsp;        init();</b>
+<b class="fc">&nbsp;        initAnimator();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void init() {
+<b class="fc">&nbsp;        setOpaque(false);</b>
+<b class="fc">&nbsp;        layout = new MigLayout(&quot;fill, wrap, inset 0&quot;, &quot;[fill]&quot;, &quot;[fill,40!][fill, 100%][shrink 0,::30%]&quot;);</b>
+<b class="fc">&nbsp;        header = createHeader();</b>
+<b class="fc">&nbsp;        body = createBody();</b>
+<b class="fc">&nbsp;        bottom = createBottom();</b>
+<b class="fc">&nbsp;        layeredPane = createLayeredPane();</b>
+<b class="fc">&nbsp;        scrollBody = createScroll();</b>
+<b class="fc">&nbsp;        scrollBody.setViewportView(body);</b>
+<b class="fc">&nbsp;        scrollBody.setVerticalScrollBar(new ScrollBar());</b>
+<b class="fc">&nbsp;        scrollBody.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);</b>
+<b class="fc">&nbsp;        scrollBody.getViewport().setOpaque(false);</b>
+<b class="fc">&nbsp;        scrollBody.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {</b>
+&nbsp;            private int oldValues;
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void adjustmentValueChanged(AdjustmentEvent e) {
+<b class="fc">&nbsp;                int value = scrollBody.getVerticalScrollBar().getValue();</b>
+<b class="fc">&nbsp;                int extent = scrollBody.getVerticalScrollBar().getModel().getExtent();</b>
+<b class="fc">&nbsp;                if ((value + extent) &gt;= scrollBody.getVerticalScrollBar().getMaximum() - 300) {</b>
+<b class="fc">&nbsp;                    animationFloatingButton.hide();</b>
+<b class="nc">&nbsp;                } else if (oldValues &lt;= e.getValue()) {</b>
+<b class="nc">&nbsp;                    if (!animationScroll.isRunning()) {</b>
+<b class="nc">&nbsp;                        animationFloatingButton.show();</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        floatingButton = createFloatingButton();</b>
+<b class="fc">&nbsp;        layeredPane.setLayer(floatingButton, JLayeredPane.POPUP_LAYER);</b>
+<b class="fc">&nbsp;        layeredPane.add(floatingButton, &quot;pos 100%-50 100%,h 40,w 40&quot;);</b>
+<b class="fc">&nbsp;        layeredPane.add(scrollBody);</b>
+<b class="fc">&nbsp;        setLayout(layout);</b>
+<b class="fc">&nbsp;        add(header);</b>
+<b class="fc">&nbsp;        add(layeredPane);</b>
+<b class="fc">&nbsp;        add(bottom);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void initAnimator() {
+<b class="fc">&nbsp;        animationScroll = new AnimationScroll(body);</b>
+<b class="fc">&nbsp;        animationFloatingButton = new AnimationFloatingButton(layoutLayered, floatingButton);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private JPanel createHeader() {
+<b class="fc">&nbsp;        RoundPanel panel = new RoundPanel();</b>
+<b class="fc">&nbsp;        panel.setLayout(new MigLayout(&quot;fill, inset 2&quot;));</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(0, 0, 0, 20));</b>
+<b class="fc">&nbsp;        labelTitle = new JLabel();</b>
+<b class="fc">&nbsp;        labelTitle.setFont(labelTitle.getFont().deriveFont(14f));</b>
+<b class="fc">&nbsp;        labelTitle.setBorder(new EmptyBorder(2, 10, 2, 2));</b>
+<b class="fc">&nbsp;        labelTitle.setForeground(new Color(240, 240, 240));</b>
+<b class="fc">&nbsp;        panel.add(labelTitle);</b>
+<b class="fc">&nbsp;        return panel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private JPanel createBody() {
+<b class="fc">&nbsp;        RoundPanel panel = new RoundPanel();</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(0, 0, 0, 0));</b>
+<b class="fc">&nbsp;        panel.setLayout(new MigLayout(&quot;wrap,fillx&quot;));</b>
+<b class="fc">&nbsp;        return panel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private JPanel createBottom() {
+<b class="fc">&nbsp;        RoundPanel panel = new RoundPanel();</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(0, 0, 0, 20));</b>
+<b class="fc">&nbsp;        panel.setLayout(new MigLayout(&quot;fill, inset 2&quot;, &quot;[fill,34!]2[fill]2[fill,34!]&quot;, &quot;[bottom]&quot;));</b>
+<b class="fc">&nbsp;        GoogleMaterialIcon iconFile = new GoogleMaterialIcon(GoogleMaterialDesignIcon.ATTACH_FILE, GradientType.VERTICAL, new Color(210, 210, 210), new Color(255, 255, 255), 20);</b>
+<b class="fc">&nbsp;        GoogleMaterialIcon iconSend = new GoogleMaterialIcon(GoogleMaterialDesignIcon.SEND, GradientType.VERTICAL, new Color(0, 133, 237), new Color(90, 182, 255), 20);</b>
+<b class="fc">&nbsp;        GoogleMaterialIcon iconEmot = new GoogleMaterialIcon(GoogleMaterialDesignIcon.INSERT_EMOTICON, GradientType.VERTICAL, new Color(210, 210, 210), new Color(255, 255, 255), 20);</b>
+<b class="fc">&nbsp;        Button cmdFile = new Button();</b>
+<b class="fc">&nbsp;        Button cmdSend = new Button();</b>
+<b class="fc">&nbsp;        cmdFile.setFocusable(false);</b>
+<b class="fc">&nbsp;        cmdSend.setFocusable(false);</b>
+<b class="fc">&nbsp;        cmdFile.setIcon(iconFile.toIcon());</b>
+<b class="fc">&nbsp;        cmdSend.setIcon(iconSend.toIcon());</b>
+<b class="fc">&nbsp;        textMessage = new TextField();</b>
+<b class="fc">&nbsp;        textMessage.setHint(&quot;Type a question&quot;);</b>
+<b class="fc">&nbsp;        textMessage.addKeyListener(new KeyAdapter() {</b>
+&nbsp;            @Override
+&nbsp;            public void keyPressed(KeyEvent e) {
+<b class="nc">&nbsp;                revalidate();</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void keyTyped(KeyEvent ke) {
+<b class="nc">&nbsp;                runEventKeyTyped(ke);</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        cmdSend.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                runEventMousePressedSendButton(e);</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        cmdFile.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                runEventMousePressedFileButton(e);</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        JScrollPane scroll = createScroll();</b>
+<b class="fc">&nbsp;        scroll.setViewportView(textMessage);</b>
+<b class="fc">&nbsp;        scroll.getViewport().setOpaque(false);</b>
+<b class="fc">&nbsp;        scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));</b>
+<b class="fc">&nbsp;        scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));</b>
+<b class="fc">&nbsp;        panel.add(cmdFile, &quot;height 34!&quot;);</b>
+<b class="fc">&nbsp;        panel.add(scroll);</b>
+<b class="fc">&nbsp;        panel.add(cmdSend, &quot;height 34!&quot;);</b>
+<b class="fc">&nbsp;        return panel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private JLayeredPane createLayeredPane() {
+<b class="fc">&nbsp;        JLayeredPane layer = new JLayeredPane();</b>
+<b class="fc">&nbsp;        layoutLayered = new MigLayout(&quot;fill,inset 0&quot;, &quot;[fill]&quot;, &quot;[fill]&quot;);</b>
+<b class="fc">&nbsp;        layer.setLayout(layoutLayered);</b>
+<b class="fc">&nbsp;        return layer;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Button createFloatingButton() {
+<b class="fc">&nbsp;        Button button = new Button();</b>
+<b class="fc">&nbsp;        button.setBorder(null);</b>
+<b class="fc">&nbsp;        FontAwesomeIcon icon = new FontAwesomeIcon(FontAwesome.ANGLE_DOWN, GradientType.VERTICAL, new Color(79, 79, 79, 240), new Color(248, 248, 248, 240), 35);</b>
+<b class="fc">&nbsp;        button.setIcon(icon.toIcon());</b>
+<b class="fc">&nbsp;        button.setRound(40);</b>
+<b class="fc">&nbsp;        button.setBackground(new Color(100, 100, 100, 100));</b>
+<b class="fc">&nbsp;        button.setPaintBackground(true);</b>
+<b class="fc">&nbsp;        button.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                animationScroll.scrollVertical(scrollBody, scrollBody.getVerticalScrollBar().getMaximum());</b>
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        return button;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private JScrollPane createScroll() {
+<b class="fc">&nbsp;        JScrollPane scroll = new JScrollPane();</b>
+<b class="fc">&nbsp;        scroll.setBorder(null);</b>
+<b class="fc">&nbsp;        scroll.setViewportBorder(null);</b>
+<b class="fc">&nbsp;        return scroll;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addChatBox(ModelMessage message, ChatBox.BoxType type) {
+<b class="nc">&nbsp;        int values = scrollBody.getVerticalScrollBar().getValue();</b>
+<b class="nc">&nbsp;        if (type == ChatBox.BoxType.LEFT) {</b>
+<b class="nc">&nbsp;            body.add(new ChatBox(type, message), &quot;width ::80%&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            body.add(new ChatBox(type, message), &quot;al right,width ::80%&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        SwingUtilities.invokeLater(new Runnable() {</b>
+&nbsp;            @Override
+&nbsp;            public void run() {
+<b class="nc">&nbsp;                body.revalidate();</b>
+<b class="nc">&nbsp;                scrollBody.getVerticalScrollBar().setValue(values);</b>
+<b class="nc">&nbsp;                bottom.revalidate();</b>
+&nbsp;            }
+&nbsp;        });
+<b class="nc">&nbsp;        body.repaint();</b>
+<b class="nc">&nbsp;        body.revalidate();</b>
+<b class="nc">&nbsp;        scrollBody.revalidate();</b>
+<b class="nc">&nbsp;        scrollToBottom();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void clearChatBox() {
+<b class="nc">&nbsp;        body.removeAll();</b>
+<b class="nc">&nbsp;        body.repaint();</b>
+<b class="nc">&nbsp;        body.revalidate();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void scrollToBottom() {
+<b class="nc">&nbsp;        animationScroll.scrollVertical(scrollBody, scrollBody.getVerticalScrollBar().getMaximum());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void runEventMousePressedSendButton(ActionEvent evt) {
+<b class="nc">&nbsp;        for (ChatEvent event : events) {</b>
+<b class="nc">&nbsp;            event.mousePressedSendButton(evt);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void runEventMousePressedFileButton(ActionEvent evt) {
+<b class="nc">&nbsp;        for (ChatEvent event : events) {</b>
+<b class="nc">&nbsp;            event.mousePressedFileButton(evt);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void runEventKeyTyped(KeyEvent evt) {
+<b class="nc">&nbsp;        for (ChatEvent event : events) {</b>
+<b class="nc">&nbsp;            event.keyTyped(evt);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getText() {
+<b class="nc">&nbsp;        return textMessage.getText();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setTitle(String title) {
+<b class="fc">&nbsp;        labelTitle.setText(title);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getTitle() {
+<b class="nc">&nbsp;        return labelTitle.getText();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setText(String text) {
+<b class="nc">&nbsp;        textMessage.setText(text);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void textGrabFocus() {
+<b class="nc">&nbsp;        textMessage.grabFocus();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void clearTextAndGrabFocus() {
+<b class="nc">&nbsp;        textMessage.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        textMessage.grabFocus();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private MigLayout layout;
+&nbsp;    private MigLayout layoutLayered;
+&nbsp;    private JLayeredPane layeredPane;
+&nbsp;    private JPanel header;
+&nbsp;    private JPanel body;
+&nbsp;    private JPanel bottom;
+&nbsp;    private TextField textMessage;
+&nbsp;    private JScrollPane scrollBody;
+&nbsp;    private Button floatingButton;
+&nbsp;    private JLabel labelTitle;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

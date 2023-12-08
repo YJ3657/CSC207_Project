@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > HomeView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeView (main.java.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomeView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.1%
+  </span>
+  <span class="absValue">
+    (64/68)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">HomeView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">HomeView$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">HomeView$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">HomeView$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    76.9%
+  </span>
+  <span class="absValue">
+    (10/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86.4%
+  </span>
+  <span class="absValue">
+    (70/81)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view;
+&nbsp;
+&nbsp;import main.java.app.Constants;
+&nbsp;import main.java.data_access.ChatGptDAO;
+&nbsp;import main.java.entity.Notes;
+&nbsp;import main.java.entity.Reminder;
+&nbsp;import main.java.interface_adapter.instructions.InstructionsController;
+&nbsp;import main.java.interface_adapter.logout.LogoutController;
+&nbsp;import main.java.interface_adapter.home.HomeState;
+&nbsp;import main.java.interface_adapter.home.HomeViewModel;
+&nbsp;import main.java.interface_adapter.notes.NotesState;
+&nbsp;import main.java.interface_adapter.notes.OpenNotesController;
+&nbsp;import main.java.interface_adapter.reminder.ReminderController;
+&nbsp;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import javax.swing.event.ListSelectionEvent;
+&nbsp;import javax.swing.event.ListSelectionListener;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.awt.event.KeyEvent;
+&nbsp;import java.awt.event.KeyListener;
+&nbsp;import java.beans.PropertyChangeEvent;
+&nbsp;import java.beans.PropertyChangeListener;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+<b class="fc">&nbsp;public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {</b>
+<b class="fc">&nbsp;    public final String viewName = &quot;home&quot;;</b>
+&nbsp;    private final JButton notes;
+&nbsp;    private final OpenNotesController openNotesController;
+&nbsp;    private final LogoutController logoutController;
+&nbsp;    private final InstructionsController instructionsController;
+&nbsp;    private final ReminderController reminderController;
+&nbsp;    private HomeViewModel homeViewModel;
+&nbsp;    private final JButton reminder;
+&nbsp;    private final JButton instructions;
+&nbsp;    private final JButton logout;
+&nbsp;    private final JButton chatbotButton;
+&nbsp;
+&nbsp;    public HomeView(HomeViewModel homeViewModel, OpenNotesController openNotesController, LogoutController
+<b class="fc">&nbsp;            logoutController, InstructionsController instructionsController, ReminderController reminderController) throws InterruptedException {</b>
+<b class="fc">&nbsp;        this.openNotesController = openNotesController;</b>
+<b class="fc">&nbsp;        this.homeViewModel = homeViewModel;</b>
+<b class="fc">&nbsp;        this.logoutController = logoutController;</b>
+<b class="fc">&nbsp;        this.instructionsController = instructionsController;</b>
+<b class="fc">&nbsp;        this.reminderController = reminderController;</b>
+<b class="fc">&nbsp;        homeViewModel.addPropertyChangeListener(this);</b>
+&nbsp;
+&nbsp;//        JLabel title = new JLabel(HomeViewModel.TITLE_LABEL);
+&nbsp;//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+<b class="fc">&nbsp;        ImageIcon imageIcon = new ImageIcon(&quot;Code snippets/resources/jlabel.png&quot;);</b>
+<b class="fc">&nbsp;        JLabel logo = new JLabel(imageIcon);</b>
+<b class="fc">&nbsp;        JPanel buttons = new JPanel();</b>
+<b class="fc">&nbsp;        notes = new JButton(HomeViewModel.NOTES_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(notes);</b>
+<b class="fc">&nbsp;        reminder = new JButton(HomeViewModel.REMINDERS_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(reminder);</b>
+<b class="fc">&nbsp;        instructions = new JButton(HomeViewModel.INSTRUCTIONS_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(instructions);</b>
+<b class="fc">&nbsp;        logout = new JButton(HomeViewModel.LOGOUT_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(logout);</b>
+&nbsp;
+<b class="fc">&nbsp;        ImageIcon chatbotIcon = new ImageIcon(&quot;chatbot.png&quot;);</b>
+<b class="fc">&nbsp;        Image image = chatbotIcon.getImage();</b>
+<b class="fc">&nbsp;        Image newImg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way</b>
+<b class="fc">&nbsp;        ImageIcon newChatbotIcon = new ImageIcon(newImg);</b>
+<b class="fc">&nbsp;        chatbotButton = new JButton(newChatbotIcon);</b>
+<b class="fc">&nbsp;        chatbotButton.setMargin(new Insets(1,1,1,1));</b>
+<b class="fc">&nbsp;        buttons.add(chatbotButton);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.add(logo);</b>
+<b class="fc">&nbsp;        this.add(buttons);</b>
+<b class="fc">&nbsp;        this.add(getReminderPanel());</b>
+&nbsp;//        this.add(title);
+&nbsp;
+<b class="fc">&nbsp;        notes.addActionListener(this);</b>
+&nbsp;
+<b class="fc">&nbsp;        chatbotButton.addActionListener( new ActionListener() {</b>
+&nbsp;              @Override public void actionPerformed(ActionEvent e) {
+<b class="fc">&nbsp;                  if (e.getSource().equals(chatbotButton)) {</b>
+<b class="fc">&nbsp;                      new ChatbotView(new ChatGptDAO()).setVisible(true);</b>
+&nbsp;                  }
+&nbsp;              }
+&nbsp;          }
+&nbsp;        );
+&nbsp;
+<b class="fc">&nbsp;        logout.addActionListener( new ActionListener() {</b>
+&nbsp;            @Override public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;            if (e.getSource().equals(logout)) {</b>
+<b class="nc">&nbsp;                logoutController.execute();</b>
+&nbsp;            }
+&nbsp;            }
+&nbsp;        }
+&nbsp;        );
+<b class="fc">&nbsp;        instructions.addActionListener( new ActionListener() {</b>
+&nbsp;          @Override public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;              if (e.getSource().equals(instructions)) {</b>
+<b class="nc">&nbsp;                  instructionsController.execute();</b>
+&nbsp;              }
+&nbsp;          }
+&nbsp;        }
+&nbsp;        );
+<b class="fc">&nbsp;        reminder.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                if (e.getSource().equals(reminder)) {</b>
+<b class="nc">&nbsp;                    HomeState homeViewState = homeViewModel.getState();</b>
+<b class="nc">&nbsp;                    reminderController.execute(homeViewState.getUsername());</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void actionPerformed(ActionEvent e) {
+<b class="fc">&nbsp;        if (e.getSource().equals(notes)) {</b>
+<b class="fc">&nbsp;            HomeState currentstate = homeViewModel.getState();</b>
+<b class="fc">&nbsp;            openNotesController.execute();</b>
+&nbsp;        }
+&nbsp;//        if (e.getSource().equals(notes)) {
+&nbsp;//            HomeState currentstate = homeViewModel.getState();
+&nbsp;//            openNotesController.execute(currentstate.getUsername());
+&nbsp;//        } else if (e.getSource().equals(practice)){
+&nbsp;//
+&nbsp;//        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private synchronized JPanel getReminderPanel() throws InterruptedException {
+<b class="fc">&nbsp;        System.out.println(&quot;executed&quot;);</b>
+<b class="fc">&nbsp;        String[] reminderList = new String[0];</b>
+<b class="fc">&nbsp;        JPanel reminderPanel = new JPanel(new BorderLayout());</b>
+<b class="fc">&nbsp;        while(Constants.CURRENT_USER == null) Thread.sleep(1000);;</b>
+&nbsp;
+<b class="fc">&nbsp;            Map&lt;String, Reminder&gt; reminders = this.reminderController.execute(Constants.CURRENT_USER);</b>
+<b class="fc">&nbsp;            reminderList = new String[reminders.keySet().size()];</b>
+<b class="fc">&nbsp;            int idx = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;            for (String courseid : reminders.keySet()) {</b>
+<b class="fc">&nbsp;                if (courseid.equals(&quot;NONE&quot;)) continue;</b>
+<b class="fc">&nbsp;                StringBuilder message = new StringBuilder(courseid + &quot; : &quot;);</b>
+<b class="fc">&nbsp;                if (reminders.get(courseid).getReviewMaterials().isEmpty()) {</b>
+<b class="nc">&nbsp;                    message.append(&quot;You don&#39;t have anything to review yet!&quot;);</b>
+<b class="nc">&nbsp;                    reminderList[idx] = message.toString();</b>
+<b class="nc">&nbsp;                    idx += 1;</b>
+<b class="nc">&nbsp;                    continue;</b>
+&nbsp;                }
+<b class="fc">&nbsp;                for (int chapter : reminders.get(courseid).getReviewMaterials().keySet()) {</b>
+<b class="fc">&nbsp;                    message.append(&quot;(chap&quot;).append(chapter).append(&quot; &quot;).append(reminders.get(courseid).getReviewMaterials().get(chapter)).append(&quot;)&quot;);</b>
+<b class="fc">&nbsp;                }</b>
+<b class="fc">&nbsp;                reminderList[idx] = message.toString();</b>
+<b class="fc">&nbsp;                idx += 1;</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;        JList&lt;String&gt; homeList = new JList&lt;&gt;(reminderList);</b>
+<b class="fc">&nbsp;        homeList.setFixedCellHeight(80);</b>
+<b class="fc">&nbsp;        homeList.setBorder(BorderFactory.createCompoundBorder(</b>
+<b class="fc">&nbsp;                BorderFactory.createTitledBorder(&quot;What to Review&quot;),</b>
+<b class="fc">&nbsp;                BorderFactory.createEmptyBorder(10, 10, 10, 10)));</b>
+<b class="fc">&nbsp;        reminderPanel.add(new JScrollPane(homeList), BorderLayout.CENTER);</b>
+<b class="fc">&nbsp;        reminderPanel.setPreferredSize(new Dimension(800, 400));</b>
+<b class="fc">&nbsp;        return reminderPanel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void propertyChange(PropertyChangeEvent evt) {
+&nbsp;
+<b class="fc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

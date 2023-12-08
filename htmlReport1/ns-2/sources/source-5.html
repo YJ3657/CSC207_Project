@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Main</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.app</a>
+</div>
+
+<h1>Coverage Summary for Class: Main (main.java.app)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Main</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (34/35)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Main$App</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.8%
+  </span>
+  <span class="absValue">
+    (44/45)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.app;
+&nbsp;
+&nbsp;import main.java.data_access.*;
+&nbsp;import main.java.entity.*;
+&nbsp;import main.java.interface_adapter.ViewManagerModel;
+&nbsp;import main.java.interface_adapter.home.HomeViewModel;
+&nbsp;import main.java.interface_adapter.instructions.InstructionsViewModel;
+&nbsp;import main.java.interface_adapter.login.LoginViewModel;
+&nbsp;import main.java.interface_adapter.notes.NotesViewModel;
+&nbsp;import main.java.interface_adapter.quiz.QuizViewModel;
+&nbsp;import main.java.interface_adapter.reminder.ReminderViewModel;
+&nbsp;import main.java.interface_adapter.signup.SignupViewModel;
+&nbsp;import main.java.view.HomeView;
+&nbsp;import main.java.view.LoginView;
+&nbsp;import main.java.view.NotesView;
+&nbsp;import main.java.view.ViewManager;
+&nbsp;import main.java.view.*;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;
+<b class="nc">&nbsp;public class Main {</b>
+&nbsp;    public static class App extends JFrame {
+<b class="fc">&nbsp;        public App() {</b>
+<b class="fc">&nbsp;            setTitle(&quot;Meta Learning App&quot;);</b>
+<b class="fc">&nbsp;            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);</b>
+<b class="fc">&nbsp;            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();</b>
+<b class="fc">&nbsp;            int width = (int) (screenSize.width * 0.75);  // 3/4 of screen width</b>
+<b class="fc">&nbsp;            int height = (int) (screenSize.height * 0.75); // 3/4 of screen height</b>
+&nbsp;
+&nbsp;            // Set frame size
+<b class="fc">&nbsp;            setSize(width, height);</b>
+<b class="fc">&nbsp;            Constants.FRAME_WIDTH = width;</b>
+<b class="fc">&nbsp;            Constants.FRAME_HEIGHT = height;</b>
+&nbsp;
+&nbsp;            // Center the frame
+<b class="fc">&nbsp;            setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void main(String[] args) throws InterruptedException {
+&nbsp;        // Build the main program window, the main panel containing the
+&nbsp;        // various cards, and the layout, and stitch them together.
+&nbsp;
+&nbsp;        // The main application window.
+<b class="fc">&nbsp;        App application = new App();</b>
+&nbsp;
+<b class="fc">&nbsp;        CardLayout cardLayout = new CardLayout();</b>
+&nbsp;
+&nbsp;        // The various View objects. Only one view is visible at a time.
+<b class="fc">&nbsp;        JPanel views = new JPanel(cardLayout);</b>
+<b class="fc">&nbsp;        application.add(views);</b>
+&nbsp;
+&nbsp;        //TODO: Are we instantiating new ViewManager below? What&#39;s happening?
+&nbsp;
+&nbsp;        /*TODO: Answer below is copied from https://github.com/paulgries/UserLoginCleanArchitecture/blob/main/src/Main.java
+&nbsp;        The observer watching for changes in the userViewModel. It will
+&nbsp;         react to changes in application state by changing which view
+&nbsp;         is showing. This is an anonymous object because we don&#39;t need to
+&nbsp;         refer to it later.
+&nbsp;        */
+&nbsp;
+&nbsp;        // This keeps track of and manages which view is currently showing.
+<b class="fc">&nbsp;        ViewManagerModel viewManagerModel = new ViewManagerModel();</b>
+<b class="fc">&nbsp;        new ViewManager(views, cardLayout, viewManagerModel);</b>
+&nbsp;
+&nbsp;        // The data for the views, such as username and password, are in the ViewModels.
+&nbsp;        // This information will be changed by a presenter object that is reporting the
+&nbsp;        // results from the use case. The ViewModels are observable, and will
+&nbsp;        // be observed by the Views.
+<b class="fc">&nbsp;        NotesViewModel notesViewModel = new NotesViewModel();</b>
+<b class="fc">&nbsp;        HomeViewModel homeViewModel = new HomeViewModel();</b>
+<b class="fc">&nbsp;        LoginViewModel loginViewModel = new LoginViewModel();</b>
+<b class="fc">&nbsp;        SignupViewModel signupViewModel = new SignupViewModel();</b>
+<b class="fc">&nbsp;        QuizViewModel quizViewModel = new QuizViewModel();</b>
+<b class="fc">&nbsp;        InstructionsViewModel instructionsViewModel = new InstructionsViewModel();</b>
+<b class="fc">&nbsp;        ReminderViewModel reminderViewModel = new ReminderViewModel();</b>
+&nbsp;
+<b class="fc">&nbsp;        DBDataAccessObject dbDataAccessObject = new DBDataAccessObject(new DefaultUserFactory(), new NotesFactory(), new CourseFactory(), new StudentFactory(), new QuestionFactory(), new DefinitionFactory(), new ReminderFactory());</b>
+<b class="fc">&nbsp;        FileInstructionsDataAccessObject fileInstructionsDataAccessObject = new FileInstructionsDataAccessObject(&quot;./instructions.txt&quot;);</b>
+<b class="fc">&nbsp;        ChatGptDAO chatGptDAO = new ChatGptDAO();</b>
+&nbsp;
+&nbsp;       // dbDataAccessObject.clear();
+&nbsp;
+<b class="fc">&nbsp;        NotesView notesView = NotesUseCaseFactory.create(viewManagerModel,</b>
+&nbsp;                notesViewModel,
+&nbsp;                quizViewModel,
+&nbsp;                dbDataAccessObject,
+&nbsp;                dbDataAccessObject,
+&nbsp;                dbDataAccessObject,
+&nbsp;                dbDataAccessObject, dbDataAccessObject, chatGptDAO
+&nbsp;                );
+&nbsp;
+<b class="fc">&nbsp;        views.add(notesView, notesView.viewName);</b>
+&nbsp;
+<b class="fc">&nbsp;        UserFactory userFactory = new DefaultUserFactory();</b>
+&nbsp;
+<b class="fc">&nbsp;        InstructionsView instructionsView = InstructionsUseCaseFactory.create(viewManagerModel,instructionsViewModel);</b>
+<b class="fc">&nbsp;        views.add(instructionsView, instructionsView.viewName);</b>
+&nbsp;
+<b class="fc">&nbsp;        ReminderView reminderView = ReminderUseCaseFactory.create(viewManagerModel, reminderViewModel);</b>
+<b class="fc">&nbsp;        views.add(reminderView, reminderView.viewName);</b>
+&nbsp;
+<b class="fc">&nbsp;        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homeViewModel,</b>
+&nbsp;                dbDataAccessObject, dbDataAccessObject, signupViewModel, userFactory);
+<b class="fc">&nbsp;        views.add(loginView, loginView.viewName);</b>
+&nbsp;
+<b class="fc">&nbsp;        QuizView quizView = new QuizView(quizViewModel, viewManagerModel);</b>
+<b class="fc">&nbsp;        views.add(quizView, quizView.viewName);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        viewManagerModel.setActiveView(loginView.viewName);  //set to loginView</b>
+<b class="fc">&nbsp;        viewManagerModel.firePropertyChanged();</b>
+&nbsp;
+<b class="fc">&nbsp;        application.setVisible(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        HomeView homeView = HomeUseCaseFactory.create(viewManagerModel, homeViewModel, notesViewModel, dbDataAccessObject, loginViewModel,  instructionsViewModel, fileInstructionsDataAccessObject,</b>
+&nbsp;                dbDataAccessObject, reminderViewModel, dbDataAccessObject);
+<b class="fc">&nbsp;        views.add(homeView, homeView.viewName);</b>
+<b class="fc">&nbsp;        viewManagerModel.setActiveView(homeView.viewName);</b>
+<b class="fc">&nbsp;        viewManagerModel.firePropertyChanged();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

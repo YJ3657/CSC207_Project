@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ChatGptDAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.data_access</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatGptDAO (main.java.data_access)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChatGptDAO</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.3%
+  </span>
+  <span class="absValue">
+    (24/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.data_access;
+&nbsp;
+&nbsp;import main.java.use_case.chatbot.ChatbotDataAccessInterface;
+&nbsp;import okhttp3.*;
+&nbsp;import java.io.BufferedReader;
+&nbsp;import java.io.IOException;
+&nbsp;import java.io.InputStreamReader;
+&nbsp;import java.io.OutputStreamWriter;
+&nbsp;import java.net.HttpURLConnection;
+&nbsp;import java.net.URL;
+&nbsp;public class ChatGptDAO implements ChatGPTDataAccessInterface, ChatbotDataAccessInterface {
+<b class="fc">&nbsp;    private final String API_URL = &quot;https://api.openai.com/v1/chat/completions&quot;;</b>
+<b class="fc">&nbsp;    private final String model = &quot;gpt-3.5-turbo&quot;;</b>
+<b class="fc">&nbsp;    private final String apiKey = System.getenv(&quot;KEY&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;    public ChatGptDAO(){</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String execute(String prompt){
+<b class="fc">&nbsp;        OkHttpClient client = new OkHttpClient();</b>
+&nbsp;        try{
+&nbsp;            //HTTP Post request
+<b class="fc">&nbsp;            URL obj = new URL(API_URL);</b>
+<b class="fc">&nbsp;            HttpURLConnection con = (HttpURLConnection) obj.openConnection();</b>
+<b class="fc">&nbsp;            con.setRequestMethod(&quot;POST&quot;);</b>
+<b class="fc">&nbsp;            con.setRequestProperty(&quot;Authorization&quot;, &quot;Bearer &quot; + apiKey);</b>
+<b class="fc">&nbsp;            con.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+&nbsp;            //building request body
+<b class="fc">&nbsp;            String body = &quot;{\&quot;model\&quot;: \&quot;&quot; + model + &quot;\&quot;, \&quot;messages\&quot;: [{\&quot;role\&quot;: \&quot;user\&quot;, \&quot;content\&quot;: \&quot;&quot; + prompt + &quot;\&quot;}]}&quot;;</b>
+<b class="fc">&nbsp;            con.setDoOutput(true);</b>
+<b class="fc">&nbsp;            OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());</b>
+<b class="fc">&nbsp;            writer.write(body);</b>
+<b class="fc">&nbsp;            writer.flush();</b>
+<b class="fc">&nbsp;            writer.close();</b>
+&nbsp;
+&nbsp;            //Getting response
+<b class="fc">&nbsp;            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));</b>
+&nbsp;            String inputLine;
+<b class="fc">&nbsp;            StringBuffer response = new StringBuffer();</b>
+<b class="fc">&nbsp;            while ((inputLine = in.readLine()) != null) {</b>
+<b class="fc">&nbsp;                response.append(inputLine);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            in.close();</b>
+&nbsp;
+<b class="fc">&nbsp;            int start = response.indexOf(&quot;content&quot;)+11; // Where the content starts</b>
+<b class="fc">&nbsp;            int end = response.indexOf(&quot;\&quot;&quot;, start); // Where the content ends</b>
+<b class="fc">&nbsp;            return response.substring(start, end);</b>
+<b class="nc">&nbsp;        }catch(IOException e){</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>
