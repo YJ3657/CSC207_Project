@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class QuizView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -20,6 +22,10 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final JPanel quizPanel;
 
+    private LocalDateTime startTime;
+
+    private LocalDateTime finishTime;
+
     public QuizView(QuizViewModel quizViewModel,
                      ViewManagerModel viewManagerModel) {
         super(new BorderLayout());
@@ -27,6 +33,7 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
         this.viewManagerModel = viewManagerModel;
         this.quizViewModel.addPropertyChangeListener(this);
         this.quizPanel = new JPanel();
+        this.startTime = java.time.LocalDateTime.now();
 
         JScrollPane quizScrollPane = new JScrollPane();
         quizPanel.setLayout(new BoxLayout(quizPanel, BoxLayout.Y_AXIS));
@@ -51,6 +58,19 @@ public class QuizView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(results)) {
+                    finishTime = java.time.LocalDateTime.now();
+                    String result = "Good Job!";
+                    int qLen = quizViewModel.getState().getQuestions().size();
+                    if (startTime.until(finishTime, ChronoUnit.SECONDS) <= (30L * qLen)){
+                        result = result + " You're almost TOO good!";
+                    } else if (startTime.until(finishTime, ChronoUnit.SECONDS) > (30L * qLen) && startTime.until(finishTime, ChronoUnit.SECONDS) <= (60L * qLen)){
+                        result = result + " You've finished with excellent time!";
+                    } else if (startTime.until(finishTime, ChronoUnit.SECONDS) > (60L * qLen) && startTime.until(finishTime, ChronoUnit.SECONDS) <= (300L * qLen)){
+                        result = result + " You've did well, but there's room for improvement";
+                    } else if (startTime.until(finishTime, ChronoUnit.SECONDS) > (300L * qLen)){
+                        result = result + " However, we've got some work to do.";
+                    }
+                    JOptionPane.showMessageDialog(null, result, "Test Result!", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
