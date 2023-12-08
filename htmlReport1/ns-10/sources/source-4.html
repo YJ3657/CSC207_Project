@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SignupViewModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.interface_adapter.signup</a>
+</div>
+
+<h1>Coverage Summary for Class: SignupViewModel (main.java.interface_adapter.signup)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SignupViewModel</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.interface_adapter.signup;
+&nbsp;
+&nbsp;import main.java.interface_adapter.ViewModel;
+&nbsp;
+&nbsp;import java.beans.PropertyChangeListener;
+&nbsp;import java.beans.PropertyChangeSupport;
+&nbsp;
+&nbsp;public class SignupViewModel extends ViewModel {
+&nbsp;
+&nbsp;    public static final String CLEAR_BUTTON_LABEL = &quot;Clear&quot;;
+&nbsp;    public static final String TITLE_LABEL = &quot;Sign Up View&quot;;
+&nbsp;    public static final String USERNAME_LABEL = &quot;Choose username&quot;;
+&nbsp;    public static final String PASSWORD_LABEL = &quot;Choose password&quot;;
+&nbsp;    public static final String REPEAT_PASSWORD_LABEL = &quot;Enter password again&quot;;
+&nbsp;
+&nbsp;    public static final String SIGNUP_BUTTON_LABEL = &quot;Sign up&quot;;
+&nbsp;    public static final String CANCEL_BUTTON_LABEL = &quot;Cancel&quot;;
+&nbsp;
+<b class="fc">&nbsp;    private SignupState state = new SignupState();</b>
+&nbsp;
+&nbsp;    public SignupViewModel() {
+<b class="fc">&nbsp;        super(&quot;sign up&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setState(SignupState state) {
+<b class="fc">&nbsp;        this.state = state;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private final PropertyChangeSupport support = new PropertyChangeSupport(this);</b>
+&nbsp;
+&nbsp;    // This is what the Signup Presenter will call to let the ViewModel know
+&nbsp;    // to alert the View
+&nbsp;    public void firePropertyChanged() {
+<b class="fc">&nbsp;        support.firePropertyChange(&quot;state&quot;, null, this.state);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addPropertyChangeListener(PropertyChangeListener listener) {
+<b class="nc">&nbsp;        support.addPropertyChangeListener(listener);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public SignupState getState() {
+<b class="fc">&nbsp;        return state;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

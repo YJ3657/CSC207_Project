@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > LoginUseCaseFactory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.app</a>
+</div>
+
+<h1>Coverage Summary for Class: LoginUseCaseFactory (main.java.app)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginUseCaseFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;    package main.java.app;
+&nbsp;
+&nbsp;    import main.java.entity.UserFactory;
+&nbsp;    import main.java.interface_adapter.ViewManagerModel;
+&nbsp;    import main.java.interface_adapter.home.HomeViewModel;
+&nbsp;    import main.java.interface_adapter.login.LoginController;
+&nbsp;    import main.java.interface_adapter.login.LoginPresenter;
+&nbsp;    import main.java.interface_adapter.login.LoginViewModel;
+&nbsp;    import main.java.interface_adapter.signup.SignupController;
+&nbsp;    import main.java.interface_adapter.signup.SignupPresenter;
+&nbsp;    import main.java.interface_adapter.signup.SignupViewModel;
+&nbsp;    import main.java.use_case.login.LoginInputBoundary;
+&nbsp;    import main.java.use_case.login.LoginInteractor;
+&nbsp;    import main.java.use_case.login.LoginOutputBoundary;
+&nbsp;    import main.java.use_case.login.LoginUserDataAccessInterface;
+&nbsp;    import main.java.use_case.signup.SignupInteractor;
+&nbsp;    import main.java.use_case.signup.SignupOutputBoundary;
+&nbsp;    import main.java.use_case.signup.SignupUserDataAccessInterface;
+&nbsp;    import main.java.view.LoginView;
+&nbsp;
+&nbsp;    import javax.swing.*;
+&nbsp;    import java.io.IOException;
+&nbsp;
+&nbsp;    public class LoginUseCaseFactory {
+&nbsp;
+&nbsp;        //Don&#39;t want to instantiate
+&nbsp;        private LoginUseCaseFactory(){};
+&nbsp;        public static LoginView create(
+&nbsp;                ViewManagerModel viewManagerModel,
+&nbsp;                LoginViewModel loginViewModel,
+&nbsp;                HomeViewModel homeViewModel,
+&nbsp;                LoginUserDataAccessInterface userDataAccessObject,
+&nbsp;                SignupUserDataAccessInterface signupUserDataAccessInterface,
+&nbsp;                SignupViewModel signupViewModel,
+&nbsp;                UserFactory userFactory) {
+&nbsp;
+&nbsp;            try {
+<b class="fc">&nbsp;                LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, homeViewModel, userDataAccessObject);</b>
+<b class="fc">&nbsp;                SignupController signupController = createSignupUseCase(viewManagerModel, signupViewModel, homeViewModel,</b>
+&nbsp;                        signupUserDataAccessInterface,userFactory);
+<b class="fc">&nbsp;                return new LoginView(loginViewModel, loginController, signupController, signupViewModel);</b>
+<b class="nc">&nbsp;            } catch (IOException e) {</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, &quot;Could not open database.&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        private static LoginController createLoginUseCase(
+&nbsp;                ViewManagerModel viewManagerModel,
+&nbsp;                LoginViewModel loginViewModel,
+&nbsp;                HomeViewModel homeViewModel,
+&nbsp;                LoginUserDataAccessInterface userDataAccessObject) throws IOException {
+&nbsp;
+&nbsp;            // Notice how we pass this method&#39;s parameters to the Presenter.
+<b class="fc">&nbsp;            LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, homeViewModel, loginViewModel);</b>
+&nbsp;
+&nbsp;//            UserFactory userFactory = new UserFactory();  // no idea what this is for in CACoding
+&nbsp;
+<b class="fc">&nbsp;            LoginInputBoundary loginInteractor = new LoginInteractor(</b>
+&nbsp;                    userDataAccessObject, loginOutputBoundary);
+&nbsp;
+<b class="fc">&nbsp;            return new LoginController(loginInteractor);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        private static SignupController createSignupUseCase(
+&nbsp;                ViewManagerModel viewManagerModel,
+&nbsp;                SignupViewModel signupViewModel,
+&nbsp;                HomeViewModel homeViewModel,
+&nbsp;                SignupUserDataAccessInterface userDataAccessObject, UserFactory userFactory) throws IOException {
+&nbsp;
+&nbsp;            // Notice how we pass this method&#39;s parameters to the Presenter.
+<b class="fc">&nbsp;            SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, homeViewModel);</b>
+&nbsp;
+&nbsp;//            UserFactory userFactory = new UserFactory();  // no idea what this is for in CACoding
+&nbsp;
+<b class="fc">&nbsp;            SignupInteractor signupInteractor = new SignupInteractor(</b>
+&nbsp;                    userDataAccessObject, signupOutputBoundary, userFactory);
+&nbsp;
+<b class="fc">&nbsp;            return new SignupController(signupInteractor);</b>
+&nbsp;        }
+&nbsp;    }
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

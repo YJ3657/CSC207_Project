@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AutoWrapText</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view.ChatBot.swing</a>
+</div>
+
+<h1>Coverage Summary for Class: AutoWrapText (main.java.view.ChatBot.swing)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AutoWrapText</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AutoWrapText$1</td>
+  </tr>
+  <tr>
+    <td class="name">AutoWrapText$WarpColumnFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64.3%
+  </span>
+  <span class="absValue">
+    (9/14)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AutoWrapText$WarpLabelView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (4/6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    68.2%
+  </span>
+  <span class="absValue">
+    (15/22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view.ChatBot.swing;
+&nbsp;
+&nbsp;import javax.swing.text.AbstractDocument;
+&nbsp;import javax.swing.text.BoxView;
+&nbsp;import javax.swing.text.ComponentView;
+&nbsp;import javax.swing.text.Element;
+&nbsp;import javax.swing.text.IconView;
+&nbsp;import javax.swing.text.LabelView;
+&nbsp;import javax.swing.text.ParagraphView;
+&nbsp;import javax.swing.text.StyleConstants;
+&nbsp;import javax.swing.text.StyledEditorKit;
+&nbsp;import javax.swing.text.View;
+&nbsp;import javax.swing.text.ViewFactory;
+&nbsp;
+<b class="fc">&nbsp;public class AutoWrapText extends StyledEditorKit {</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ViewFactory getViewFactory() {
+<b class="fc">&nbsp;        return new WarpColumnFactory();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private class WarpColumnFactory implements ViewFactory {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public View create(Element elmnt) {
+<b class="fc">&nbsp;            String kind = elmnt.getName();</b>
+<b class="fc">&nbsp;            if (kind != null) {</b>
+<b class="fc">&nbsp;                if (kind.equals(AbstractDocument.ContentElementName)) {</b>
+<b class="fc">&nbsp;                    return new WarpLabelView(elmnt);</b>
+<b class="fc">&nbsp;                } else if (kind.equals(AbstractDocument.ParagraphElementName)) {</b>
+<b class="fc">&nbsp;                    return new ParagraphView(elmnt);</b>
+<b class="fc">&nbsp;                } else if (kind.equals(AbstractDocument.SectionElementName)) {</b>
+<b class="fc">&nbsp;                    return new BoxView(elmnt, View.Y_AXIS);</b>
+<b class="nc">&nbsp;                } else if (kind.equals(StyleConstants.ComponentElementName)) {</b>
+<b class="nc">&nbsp;                    return new ComponentView(elmnt);</b>
+<b class="nc">&nbsp;                } else if (kind.equals(StyleConstants.IconElementName)) {</b>
+<b class="nc">&nbsp;                    return new IconView(elmnt);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            return new LabelView(elmnt);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private class WarpLabelView extends LabelView {
+&nbsp;
+<b class="fc">&nbsp;        public WarpLabelView(Element elem) {</b>
+<b class="fc">&nbsp;            super(elem);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public float getMinimumSpan(int axis) {
+<b class="fc">&nbsp;            switch (axis) {</b>
+&nbsp;                case View.X_AXIS:
+<b class="fc">&nbsp;                    return 0;</b>
+&nbsp;                case View.Y_AXIS:
+<b class="nc">&nbsp;                    return super.getMinimumSpan(axis);</b>
+&nbsp;                default:
+<b class="nc">&nbsp;                    throw new IllegalArgumentException(&quot;Invalid Axis:&quot; + axis);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package main.java;
 
+import main.java.app.Constants;
 import main.java.app.Main;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ public class newUserTest {
 
     @Test
     void run(){
+        Constants.CURRENT_USER = null;
+        Constants.CURRENT_USER_OBJ = null;
         String[] args = new String[0];
         try {
             Main.main(args);

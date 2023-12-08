@@ -1,0 +1,478 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > LoginView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view</a>
+</div>
+
+<h1>Coverage Summary for Class: LoginView (main.java.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginView</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98%
+  </span>
+  <span class="absValue">
+    (50/51)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LoginView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginView$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.2%
+  </span>
+  <span class="absValue">
+    (15/17)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginView$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginView$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginView$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginView$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LoginView$7</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    96.6%
+  </span>
+  <span class="absValue">
+    (28/29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (101/104)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view;
+&nbsp;
+&nbsp;import main.java.interface_adapter.login.LoginController;
+&nbsp;import main.java.interface_adapter.login.LoginState;
+&nbsp;import main.java.interface_adapter.login.LoginViewModel;
+&nbsp;import main.java.interface_adapter.signup.SignupController;
+&nbsp;import main.java.interface_adapter.signup.SignupState;
+&nbsp;import main.java.interface_adapter.signup.SignupViewModel;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.awt.event.KeyEvent;
+&nbsp;import java.awt.event.KeyListener;
+&nbsp;import java.beans.PropertyChangeEvent;
+&nbsp;import java.beans.PropertyChangeListener;
+&nbsp;
+<b class="fc">&nbsp;public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {</b>
+<b class="fc">&nbsp;    public final String viewName = &quot;log in&quot;;</b>
+&nbsp;    private final LoginViewModel loginViewModel;
+&nbsp;
+&nbsp;    private final SignupViewModel signupViewModel;
+&nbsp;
+<b class="fc">&nbsp;    final JTextField usernameInputField = new JTextField(15);</b>
+<b class="fc">&nbsp;    private final JLabel usernameErrorField = new JLabel();</b>
+&nbsp;
+<b class="fc">&nbsp;    final JPasswordField passwordInputField = new JPasswordField(15);</b>
+<b class="fc">&nbsp;    private final JLabel passwordErrorField = new JLabel();</b>
+&nbsp;
+<b class="fc">&nbsp;    final JTextField signUpusernameInputField = new JTextField(15);</b>
+&nbsp;
+<b class="fc">&nbsp;    final JPasswordField signUppasswordInputField = new JPasswordField(15);</b>
+&nbsp;
+<b class="fc">&nbsp;    final JPasswordField signUprepasswordInputField = new JPasswordField(15);</b>
+&nbsp;
+&nbsp;    final JButton logIn;
+&nbsp;    final JButton cancel;
+&nbsp;    final JButton signUp;
+&nbsp;    private final LoginController loginController;
+&nbsp;
+&nbsp;    private final SignupController signupController;
+&nbsp;
+&nbsp;    public LoginView(LoginViewModel loginViewModel, LoginController controller, SignupController signupController,
+<b class="fc">&nbsp;                     SignupViewModel signupViewModel) {</b>
+&nbsp;
+<b class="fc">&nbsp;        this.loginController = controller;</b>
+<b class="fc">&nbsp;        this.loginViewModel = loginViewModel;</b>
+<b class="fc">&nbsp;        this.loginViewModel.addPropertyChangeListener(this);</b>
+<b class="fc">&nbsp;        this.signupController = signupController;</b>
+<b class="fc">&nbsp;        this.signupViewModel = signupViewModel;</b>
+&nbsp;
+<b class="fc">&nbsp;        JLabel title = new JLabel(&quot;Login Screen&quot;);</b>
+<b class="fc">&nbsp;        title.setAlignmentX(Component.CENTER_ALIGNMENT);</b>
+&nbsp;
+<b class="fc">&nbsp;        JLabel usernameLabel = new JLabel(&quot;Username&quot;);</b>
+<b class="fc">&nbsp;        JTextField usernameTextField = usernameInputField;</b>
+&nbsp;
+<b class="fc">&nbsp;        JLabel passwordLabel = new JLabel(&quot;Password&quot;);</b>
+<b class="fc">&nbsp;        final JTextField[] passwordTextField = {passwordInputField};</b>
+&nbsp;
+<b class="fc">&nbsp;        JPanel buttons = new JPanel();</b>
+<b class="fc">&nbsp;        logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(logIn);</b>
+<b class="fc">&nbsp;        cancel = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(cancel);</b>
+<b class="fc">&nbsp;        signUp = new JButton(loginViewModel.SIGNUP_BUTTON_LABEL);</b>
+<b class="fc">&nbsp;        buttons.add(signUp);</b>
+&nbsp;
+<b class="fc">&nbsp;        logIn.addActionListener(  // This creates an anonymous subclass of ActionListener and instantiates it.</b>
+<b class="fc">&nbsp;                new ActionListener() {</b>
+&nbsp;                    public void actionPerformed(ActionEvent evt) {
+<b class="fc">&nbsp;                        if (evt.getSource().equals(logIn)) {</b>
+<b class="fc">&nbsp;                            LoginState currentState = loginViewModel.getState();</b>
+<b class="fc">&nbsp;                            loginController.execute(</b>
+<b class="fc">&nbsp;                                    currentState.getUsername(),</b>
+<b class="fc">&nbsp;                                    currentState.getPassword()</b>
+&nbsp;                            );
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
+&nbsp;        );
+&nbsp;
+<b class="fc">&nbsp;        cancel.addActionListener(this);</b>
+&nbsp;
+<b class="fc">&nbsp;        signUp.addActionListener(</b>
+<b class="fc">&nbsp;                new ActionListener() {</b>
+&nbsp;                    @Override
+&nbsp;                    public void actionPerformed(ActionEvent e) {
+<b class="fc">&nbsp;                        JPanel signupPanel = new JPanel();</b>
+<b class="fc">&nbsp;                        signupPanel.add(new JLabel(&quot;Username&quot;));</b>
+<b class="fc">&nbsp;                        signupPanel.add(signUpusernameInputField);</b>
+<b class="fc">&nbsp;                        signupPanel.add(new JLabel(&quot;Password&quot;));</b>
+<b class="fc">&nbsp;                        signupPanel.add(signUppasswordInputField);</b>
+<b class="fc">&nbsp;                        signupPanel.add(new JLabel(&quot;Retype Password&quot;));</b>
+<b class="fc">&nbsp;                        signupPanel.add(signUprepasswordInputField);</b>
+<b class="fc">&nbsp;                        if (e.getSource().equals(signUp)){</b>
+<b class="fc">&nbsp;                            int result = JOptionPane.showConfirmDialog(null, signupPanel, &quot;Signup&quot;,</b>
+&nbsp;                                    JOptionPane.OK_CANCEL_OPTION);
+<b class="fc">&nbsp;                            SignupState currentState = signupViewModel.getState();</b>
+<b class="fc">&nbsp;                            if (result == JOptionPane.OK_OPTION){</b>
+<b class="fc">&nbsp;                                signupController.execute(currentState.getUsername(), currentState.getPassword(), currentState.getRepeatPassword());</b>
+&nbsp;                                try {
+<b class="fc">&nbsp;                                    Thread.sleep(2000);</b>
+<b class="nc">&nbsp;                                } catch (InterruptedException ex) {</b>
+<b class="nc">&nbsp;                                    throw new RuntimeException(ex);</b>
+<b class="fc">&nbsp;                                }</b>
+&nbsp;                            }
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
+&nbsp;        );
+&nbsp;
+<b class="fc">&nbsp;        usernameInputField.addKeyListener(new KeyListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void keyTyped(KeyEvent e) {
+<b class="fc">&nbsp;                LoginState currentState = loginViewModel.getState();</b>
+<b class="fc">&nbsp;                currentState.setUsername(usernameInputField.getText() + e.getKeyChar());</b>
+<b class="fc">&nbsp;                loginViewModel.setState(currentState);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void keyPressed(KeyEvent e) {
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void keyReleased(KeyEvent e) {
+<b class="fc">&nbsp;            }</b>
+&nbsp;        });
+<b class="fc">&nbsp;        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));</b>
+&nbsp;
+<b class="fc">&nbsp;        passwordInputField.addKeyListener(</b>
+<b class="fc">&nbsp;                new KeyListener() {</b>
+&nbsp;                    @Override
+&nbsp;                    public void keyTyped(KeyEvent e) {
+<b class="fc">&nbsp;                        LoginState currentState = loginViewModel.getState();</b>
+<b class="fc">&nbsp;                        currentState.setPassword(passwordInputField.getText() + e.getKeyChar());</b>
+<b class="fc">&nbsp;                        loginViewModel.setState(currentState);</b>
+&nbsp;                    }
+&nbsp;
+&nbsp;                    @Override
+&nbsp;                    public void keyPressed(KeyEvent e) {
+<b class="fc">&nbsp;                    }</b>
+&nbsp;
+&nbsp;                    @Override
+&nbsp;                    public void keyReleased(KeyEvent e) {
+<b class="fc">&nbsp;                    }</b>
+&nbsp;                });
+&nbsp;
+<b class="fc">&nbsp;        signUpusernameInputField.addKeyListener(new KeyListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void keyTyped(KeyEvent e) {
+<b class="fc">&nbsp;                SignupState currentState = signupViewModel.getState();</b>
+<b class="fc">&nbsp;                currentState.setUsername(signUpusernameInputField.getText() + e.getKeyChar());</b>
+<b class="fc">&nbsp;                signupViewModel.setState(currentState);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void keyPressed(KeyEvent e) {
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void keyReleased(KeyEvent e) {
+<b class="fc">&nbsp;            }</b>
+&nbsp;        });
+<b class="fc">&nbsp;        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));</b>
+&nbsp;
+<b class="fc">&nbsp;        signUppasswordInputField.addKeyListener(</b>
+<b class="fc">&nbsp;                new KeyListener() {</b>
+&nbsp;                    @Override
+&nbsp;                    public void keyTyped(KeyEvent e) {
+<b class="fc">&nbsp;                        SignupState currentState = signupViewModel.getState();</b>
+<b class="fc">&nbsp;                        currentState.setPassword(signUppasswordInputField.getText() + e.getKeyChar());</b>
+<b class="fc">&nbsp;                        signupViewModel.setState(currentState);</b>
+&nbsp;                    }
+&nbsp;
+&nbsp;                    @Override
+&nbsp;                    public void keyPressed(KeyEvent e) {
+<b class="fc">&nbsp;                    }</b>
+&nbsp;
+&nbsp;                    @Override
+&nbsp;                    public void keyReleased(KeyEvent e) {
+<b class="fc">&nbsp;                    }</b>
+&nbsp;                });
+<b class="fc">&nbsp;        signUprepasswordInputField.addKeyListener(</b>
+<b class="fc">&nbsp;                new KeyListener() {</b>
+&nbsp;                    @Override
+&nbsp;                    public void keyTyped(KeyEvent e) {
+<b class="fc">&nbsp;                        SignupState currentState = signupViewModel.getState();</b>
+<b class="fc">&nbsp;                        currentState.setRepeatPassword(signUprepasswordInputField.getText() + e.getKeyChar());</b>
+<b class="fc">&nbsp;                        signupViewModel.setState(currentState);</b>
+&nbsp;                    }
+&nbsp;
+&nbsp;                    @Override
+&nbsp;                    public void keyPressed(KeyEvent e) {
+<b class="fc">&nbsp;                    }</b>
+&nbsp;
+&nbsp;                    @Override
+&nbsp;                    public void keyReleased(KeyEvent e) {
+<b class="fc">&nbsp;                    }</b>
+&nbsp;                });
+&nbsp;
+<b class="fc">&nbsp;        this.add(title);</b>
+<b class="fc">&nbsp;        this.add(usernameLabel);</b>
+<b class="fc">&nbsp;        this.add(usernameTextField);</b>
+<b class="fc">&nbsp;        this.add(usernameErrorField);</b>
+<b class="fc">&nbsp;        this.add(passwordLabel);</b>
+<b class="fc">&nbsp;        this.add(passwordTextField[0]);</b>
+<b class="fc">&nbsp;        this.add(passwordErrorField);</b>
+<b class="fc">&nbsp;        this.add(buttons);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * React to a button click that results in evt.
+&nbsp;     */
+&nbsp;    public void actionPerformed(ActionEvent evt) {
+<b class="nc">&nbsp;        System.out.println(&quot;Click &quot; + evt.getActionCommand());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void propertyChange(PropertyChangeEvent evt) {
+<b class="fc">&nbsp;        LoginState state = (LoginState) evt.getNewValue();</b>
+<b class="fc">&nbsp;        setFields(state);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setFields(LoginState state) {
+<b class="fc">&nbsp;        usernameInputField.setText(state.getUsername());</b>
+<b class="fc">&nbsp;        passwordInputField.setText(state.getPassword());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

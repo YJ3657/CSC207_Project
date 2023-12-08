@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > NotesState</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.interface_adapter.notes</a>
+</div>
+
+<h1>Coverage Summary for Class: NotesState (main.java.interface_adapter.notes)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NotesState</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    44.4%
+  </span>
+  <span class="absValue">
+    (8/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    30.8%
+  </span>
+  <span class="absValue">
+    (12/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.interface_adapter.notes;
+&nbsp;
+&nbsp;import main.java.entity.Notes;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public class NotesState {
+&nbsp;    private String notesTitle;
+<b class="fc">&nbsp;    private String notesContent = &quot;&quot;;</b>
+&nbsp;    private String chapterNo;
+<b class="fc">&nbsp;    private Map&lt;String, List&lt;Notes&gt;&gt; allNotes = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;    private ArrayList&lt;String&gt; courses = new ArrayList&lt;&gt;();</b>
+&nbsp;    private String selectedcourse;
+&nbsp;
+<b class="fc">&nbsp;    private String courseError = null;</b>
+&nbsp;
+<b class="fc">&nbsp;    private String notesError = null;</b>
+&nbsp;
+<b class="nc">&nbsp;    public NotesState(NotesState copy) {</b>
+<b class="nc">&nbsp;        notesTitle = copy.notesTitle;</b>
+<b class="nc">&nbsp;        notesContent = copy.notesContent;</b>
+<b class="nc">&nbsp;        courses = copy.courses;</b>
+<b class="nc">&nbsp;        courseError = copy.courseError;</b>
+<b class="nc">&nbsp;        notesError = copy.notesError;</b>
+<b class="nc">&nbsp;        selectedcourse = copy.selectedcourse;</b>
+<b class="nc">&nbsp;        allNotes = copy.allNotes;</b>
+<b class="nc">&nbsp;        chapterNo = copy.chapterNo;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public NotesState() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNotesTitle(String notesTitle) {
+<b class="nc">&nbsp;        this.notesTitle = notesTitle;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNotesTitle() {
+<b class="nc">&nbsp;        return notesTitle;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNotesContent(String notesContent) {
+<b class="nc">&nbsp;        this.notesContent = notesContent;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNotesContent() {
+<b class="nc">&nbsp;        return notesContent;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, List&lt;Notes&gt;&gt; getAllNotes() {
+<b class="fc">&nbsp;        return allNotes;</b>
+&nbsp;    }
+&nbsp;    public Map&lt;String, List&lt;String&gt;&gt; getAllTopics() {
+<b class="nc">&nbsp;        Map&lt;String, List&lt;String&gt;&gt; result = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (String course : allNotes.keySet()){</b>
+<b class="nc">&nbsp;            List&lt;String&gt; titles = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            for (Notes note : allNotes.get(course)){</b>
+<b class="nc">&nbsp;                titles.add(note.getTitle());</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            result.put(course, titles);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    public void setAllNotes(Map&lt;String, List&lt;Notes&gt;&gt; allNotes){this.allNotes = allNotes;}</b>
+&nbsp;
+&nbsp;    public void setCourses(ArrayList&lt;String&gt; courses) {
+<b class="fc">&nbsp;        this.courses = courses;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;String&gt; getCourses() {
+<b class="fc">&nbsp;        return courses;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addCourse(String course) {
+<b class="fc">&nbsp;        this.courses.add(course);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCourseError(String error) {
+<b class="nc">&nbsp;        this.courseError = error;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNotesError(String error) {
+<b class="nc">&nbsp;        this.notesError = error;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public String getSelectedCourse(){return selectedcourse;}</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setSelectedcourse(String course){this.selectedcourse = course;}</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getChapterNo(){return this.chapterNo;}</b>
+&nbsp;
+<b class="nc">&nbsp;    public void setChapterNo(String chapterNo){this.chapterNo = chapterNo;}</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > NotesViewModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.interface_adapter.notes</a>
+</div>
+
+<h1>Coverage Summary for Class: NotesViewModel (main.java.interface_adapter.notes)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NotesViewModel</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.interface_adapter.notes;
+&nbsp;
+&nbsp;import main.java.app.Constants;
+&nbsp;import main.java.interface_adapter.ViewModel;
+&nbsp;
+&nbsp;import java.beans.PropertyChangeListener;
+&nbsp;import java.beans.PropertyChangeSupport;
+&nbsp;
+&nbsp;public class NotesViewModel extends ViewModel {
+<b class="fc">&nbsp;    public final String TITLE_LABEL = &quot;Notes View&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;    public final String BACK_BUTTON_LABEL = &quot;Back&quot;;</b>
+<b class="fc">&nbsp;    private NotesState state = new NotesState();</b>
+&nbsp;
+&nbsp;    public NotesViewModel() {
+<b class="fc">&nbsp;        super(Constants.NOTES_VIEWNAME);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setState(NotesState state) {
+<b class="fc">&nbsp;        this.state = state;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public NotesState getState() {
+<b class="fc">&nbsp;        return state;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private final PropertyChangeSupport support = new PropertyChangeSupport(this);</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void firePropertyChanged() {
+<b class="fc">&nbsp;        support.firePropertyChange(Constants.STATE_PROPNAME, null, this.state);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void firePropertyChanged(String propertyName) {
+<b class="fc">&nbsp;        support.firePropertyChange(propertyName, null, this.state);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void addPropertyChangeListener(PropertyChangeListener listener) {
+<b class="fc">&nbsp;        support.addPropertyChangeListener(listener);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DefQuesDataAccessInterface</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.use_case.add_Question_Definition</a>
+</div>
+
+<h1>Coverage Summary for Class: DefQuesDataAccessInterface (main.java.use_case.add_Question_Definition)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">DefQuesDataAccessInterface</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.use_case.add_Question_Definition;
+&nbsp;
+&nbsp;import java.util.Set;
+&nbsp;
+&nbsp;public interface DefQuesDataAccessInterface {
+&nbsp;
+&nbsp;    Set&lt;String&gt; getDefinitionTerms(int chapterNumber, String courseId);
+&nbsp;
+&nbsp;    void saveDefinition(String term, String definition, int chapterNumber, String courseId);
+&nbsp;
+&nbsp;    String getDefinitionOnly(String term, String courseId);
+&nbsp;
+&nbsp;    Set&lt;String&gt; getQuestionQuestions(int chapterNumber, String courseId);
+&nbsp;
+&nbsp;    void saveQuestion(String question, String answer, int chapterNumber, String courseId);
+&nbsp;
+&nbsp;    String getAnswerOnly(String question, String courseId);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

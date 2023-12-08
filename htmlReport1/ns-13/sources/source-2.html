@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AddCourseInteractor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.use_case.courses.add_course</a>
+</div>
+
+<h1>Coverage Summary for Class: AddCourseInteractor (main.java.use_case.courses.add_course)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddCourseInteractor</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.use_case.courses.add_course;
+&nbsp;
+&nbsp;import main.java.app.Constants;
+&nbsp;import main.java.entity.Course;
+&nbsp;import main.java.entity.CourseFactory;
+&nbsp;import main.java.entity.Student;
+&nbsp;import main.java.entity.StudentFactory;
+&nbsp;import main.java.use_case.courses.AddCourseDataAccessInterface;
+&nbsp;import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
+&nbsp;
+&nbsp;//import java.lang.constant.Constable;
+&nbsp;import java.time.LocalDate;
+&nbsp;
+&nbsp;public class AddCourseInteractor implements AddCourseInputBoundary{
+&nbsp;
+&nbsp;    final FindUserCourseDataAccessInterface addUserCourseDAO;
+&nbsp;    final AddCourseDataAccessInterface addCourseDAO;
+&nbsp;    final AddCourseOutputBoundary addCoursePresenter;
+&nbsp;    private final CourseFactory courseFactory;
+&nbsp;
+&nbsp;    private final StudentFactory studentFactory;
+&nbsp;
+&nbsp;    public AddCourseInteractor(FindUserCourseDataAccessInterface addUserCourseDAO, AddCourseDataAccessInterface addCourseDAO, AddCourseOutputBoundary addCoursePresenter,
+<b class="fc">&nbsp;                               CourseFactory courseFactory, StudentFactory studentFactory) {</b>
+<b class="fc">&nbsp;        this.addUserCourseDAO = addUserCourseDAO;</b>
+<b class="fc">&nbsp;        this.addCourseDAO = addCourseDAO;</b>
+<b class="fc">&nbsp;        this.addCoursePresenter = addCoursePresenter;</b>
+<b class="fc">&nbsp;        this.courseFactory = courseFactory;</b>
+<b class="fc">&nbsp;        this.studentFactory = studentFactory;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void execute(AddCourseInputData addCourseInputData) {
+<b class="fc">&nbsp;        String courseID = addCourseInputData.getCourseID();</b>
+<b class="fc">&nbsp;        if (addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).contains(courseID)) {</b>
+<b class="fc">&nbsp;            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            LocalDate now = LocalDate.now();</b>
+<b class="fc">&nbsp;            Course course = courseFactory.create(courseID);</b>
+<b class="fc">&nbsp;            Student studentToAdd = studentFactory.create(Constants.CURRENT_USER, now.toString());</b>
+<b class="fc">&nbsp;            course.addStudent(studentToAdd);</b>
+<b class="fc">&nbsp;            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString(), studentToAdd);</b>
+<b class="fc">&nbsp;            addUserCourseDAO.addCourse(courseID);</b>
+<b class="fc">&nbsp;            addCourseDAO.save(course);</b>
+<b class="fc">&nbsp;            addCoursePresenter.prepareSuccessView(addCourseOutputData);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;//        if ((addUserCourseDAO.getUserCourses(Constants.CURRENT_USER) == null || !(addUserCourseDAO.getUserCourses(Constants.CURRENT_USER).containsKey(courseID)))) {
+&nbsp;//            LocalDateTime now = LocalDateTime.now();
+&nbsp;//            AddCourseOutputData addCourseOutputData = new AddCourseOutputData(courseID, now.toString());
+&nbsp;//            Course course = courseFactory.create(courseID);
+&nbsp;//            course.addStudent(Constants.CURRENT_USER);
+&nbsp;//            addCourseDAO.saveCourse(course);
+&nbsp;//            addCoursePresenter.prepareSuccessView(addCourseOutputData);
+&nbsp;//
+&nbsp;//        } else {
+&nbsp;//            addCoursePresenter.prepareFailView(Constants.ADD_COURSE_ERROR);
+&nbsp;//        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

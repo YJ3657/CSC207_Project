@@ -1,0 +1,366 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > QuizView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view</a>
+</div>
+
+<h1>Coverage Summary for Class: QuizView (main.java.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">QuizView</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (3/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.7%
+  </span>
+  <span class="absValue">
+    (54/57)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">QuizView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">QuizView$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">QuizView$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    54.5%
+  </span>
+  <span class="absValue">
+    (6/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80.3%
+  </span>
+  <span class="absValue">
+    (57/71)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view;
+&nbsp;
+&nbsp;import main.java.app.Constants;
+&nbsp;import main.java.interface_adapter.ViewManagerModel;
+&nbsp;import main.java.interface_adapter.quiz.QuizState;
+&nbsp;import main.java.interface_adapter.quiz.QuizViewModel;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.beans.PropertyChangeEvent;
+&nbsp;import java.beans.PropertyChangeListener;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public class QuizView extends JPanel implements ActionListener, PropertyChangeListener {
+<b class="fc">&nbsp;    public final String viewName = &quot;Quiz&quot;;</b>
+&nbsp;    private final QuizViewModel quizViewModel;
+&nbsp;    private final ViewManagerModel viewManagerModel;
+&nbsp;
+&nbsp;    private final JPanel quizPanel;
+&nbsp;
+&nbsp;    public QuizView(QuizViewModel quizViewModel,
+&nbsp;                     ViewManagerModel viewManagerModel) {
+<b class="fc">&nbsp;        super(new BorderLayout());</b>
+<b class="fc">&nbsp;        this.quizViewModel = quizViewModel;</b>
+<b class="fc">&nbsp;        this.viewManagerModel = viewManagerModel;</b>
+<b class="fc">&nbsp;        this.quizViewModel.addPropertyChangeListener(this);</b>
+<b class="fc">&nbsp;        this.quizPanel = new JPanel();</b>
+&nbsp;
+<b class="fc">&nbsp;        JScrollPane quizScrollPane = new JScrollPane();</b>
+<b class="fc">&nbsp;        quizPanel.setLayout(new BoxLayout(quizPanel, BoxLayout.Y_AXIS));</b>
+<b class="fc">&nbsp;        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));</b>
+&nbsp;
+<b class="fc">&nbsp;        JLabel title = new JLabel(Constants.QUIZ_VIEWNAME);</b>
+&nbsp;
+<b class="fc">&nbsp;        JButton back = new JButton(quizViewModel.BACK_BUTTON_LABEL);</b>
+&nbsp;
+<b class="fc">&nbsp;        JButton results = new JButton(&quot;Results&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        back.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                if (e.getSource().equals(back)) {</b>
+<b class="nc">&nbsp;                    viewManagerModel.setActiveView(Constants.NOTES_VIEWNAME);</b>
+<b class="nc">&nbsp;                    viewManagerModel.firePropertyChanged();</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        results.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                if (e.getSource().equals(results)) {</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        buttonPanel.add(title);</b>
+<b class="fc">&nbsp;        buttonPanel.add(back);</b>
+<b class="fc">&nbsp;        buttonPanel.add(results);</b>
+<b class="fc">&nbsp;        this.add(buttonPanel, BorderLayout.NORTH);</b>
+<b class="fc">&nbsp;        quizScrollPane.setViewportView(quizPanel);</b>
+<b class="fc">&nbsp;        this.add(quizScrollPane, BorderLayout.CENTER);</b>
+&nbsp;
+&nbsp;        // Testing:
+&nbsp;//        ArrayList&lt;String&gt; questions = new ArrayList&lt;&gt;();
+&nbsp;//        questions.add(&quot;1. What is the definition of Limit:&quot;);
+&nbsp;//        questions.add(&quot;2. What is the definition of Continuty:&quot;);
+&nbsp;//        ArrayList&lt;String&gt; answers = new ArrayList&lt;&gt;();
+&nbsp;//        answers.add(&quot;The definition of limit is this&quot;);
+&nbsp;//        answers.add(&quot;The deifnition of Continuity is that&quot;);
+&nbsp;//        setUpQuiz(questions, answers);
+&nbsp;    }
+&nbsp;
+&nbsp;    public JPanel addQuestion(String question, String answer) {
+<b class="fc">&nbsp;        JPanel questionComponent = new JPanel(new BorderLayout());</b>
+<b class="fc">&nbsp;        JLabel questionArea = new JLabel(question);</b>
+&nbsp;
+<b class="fc">&nbsp;        int height = Constants.FRAME_HEIGHT / 4;</b>
+<b class="fc">&nbsp;        int width = Constants.FRAME_WIDTH / 3;</b>
+&nbsp;
+<b class="fc">&nbsp;        Dimension preferredSize = new Dimension(width, height);</b>
+<b class="fc">&nbsp;        questionComponent.setPreferredSize(preferredSize);</b>
+<b class="fc">&nbsp;        questionComponent.setMinimumSize(preferredSize);</b>
+<b class="fc">&nbsp;        questionComponent.setMaximumSize(preferredSize);</b>
+&nbsp;//        questionArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+&nbsp;
+<b class="fc">&nbsp;        JPanel answerPanel = new JPanel();</b>
+<b class="fc">&nbsp;        answerPanel.setLayout(new BoxLayout(answerPanel, BoxLayout.Y_AXIS));</b>
+&nbsp;
+<b class="fc">&nbsp;        JTextArea answerArea = new JTextArea();</b>
+<b class="fc">&nbsp;        JScrollPane answerScrollPane = new JScrollPane(answerArea);</b>
+<b class="fc">&nbsp;        JTextArea solutionArea = new JTextArea(answer);</b>
+<b class="fc">&nbsp;        solutionArea.setEditable(false);</b>
+&nbsp;
+<b class="fc">&nbsp;        JScrollPane solutionScrollPane = new JScrollPane(solutionArea);</b>
+<b class="fc">&nbsp;        solutionScrollPane.setVisible(false);</b>
+<b class="fc">&nbsp;        Dimension solutionDim = new Dimension((int) width, (int) height / 3);</b>
+<b class="fc">&nbsp;        solutionScrollPane.setMinimumSize(solutionDim);</b>
+<b class="fc">&nbsp;        solutionScrollPane.setPreferredSize(solutionDim);</b>
+<b class="fc">&nbsp;        answerPanel.add(answerScrollPane);</b>
+<b class="fc">&nbsp;        answerPanel.add(solutionScrollPane);</b>
+&nbsp;
+<b class="fc">&nbsp;        JButton showAnswerBtn = new JButton(&quot;Show Answer&quot;);</b>
+&nbsp;//        answerPanel.add(showAnswerBtn);
+&nbsp;
+<b class="fc">&nbsp;        showAnswerBtn.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;                boolean isVisible = solutionScrollPane.isVisible();</b>
+<b class="nc">&nbsp;                solutionScrollPane.setVisible(!isVisible);</b>
+<b class="nc">&nbsp;                if (isVisible) {</b>
+<b class="nc">&nbsp;                    showAnswerBtn.setText(&quot;Show Answer&quot;);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    showAnswerBtn.setText(&quot;Hide Answer&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                questionComponent.revalidate();</b>
+<b class="nc">&nbsp;                questionComponent.repaint();</b>
+&nbsp;            }
+&nbsp;
+&nbsp;        });
+&nbsp;
+<b class="fc">&nbsp;        questionComponent.add(questionArea, BorderLayout.NORTH);</b>
+<b class="fc">&nbsp;        questionComponent.add(answerPanel, BorderLayout.CENTER);</b>
+<b class="fc">&nbsp;        questionComponent.add(showAnswerBtn, BorderLayout.SOUTH);</b>
+<b class="fc">&nbsp;        return questionComponent;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUpQuiz(ArrayList&lt;String&gt; questions, ArrayList&lt;String&gt; answers) {
+<b class="fc">&nbsp;        quizPanel.removeAll();</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; questions.size(); i++) {</b>
+<b class="fc">&nbsp;            String question = questions.get(i);</b>
+<b class="fc">&nbsp;            String answer = answers.get(i);</b>
+<b class="fc">&nbsp;            quizPanel.add(addQuestion(question, answer));</b>
+<b class="fc">&nbsp;            quizPanel.revalidate();</b>
+<b class="fc">&nbsp;            quizPanel.repaint();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void actionPerformed(ActionEvent e) {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;//
+&nbsp;//
+&nbsp;//    // TODO: Do property changes below
+&nbsp;    @Override
+&nbsp;    public void propertyChange(PropertyChangeEvent evt) {
+<b class="nc">&nbsp;        QuizState state = (QuizState) evt.getNewValue();</b>
+<b class="nc">&nbsp;        setUpQuiz(state.getQuestions(), state.getAnswers());</b>
+&nbsp;
+&nbsp;
+&nbsp;//        NotesState state = (NotesState) evt.getNewValue();
+&nbsp;//        if (evt.getPropertyName().equals(Constants.STATE_PROPNAME)) {
+&nbsp;//            setNotesDisplay(state);
+&nbsp;//        } else if (evt.getPropertyName().equals(Constants.COURSES_PROPNAME)) {
+&nbsp;//            setCoursesDisplay(state);
+&nbsp;//        } else if (evt.getPropertyName().equals(Constants.ADD_COURSE_ERROR)) {
+&nbsp;//            JOptionPane.showMessageDialog(this, Constants.ADD_COURSE_ERROR);
+&nbsp;//        }
+&nbsp;    }
+&nbsp;//
+&nbsp;//    private void setCoursesDisplay(NotesState state) {
+&nbsp;//        this.coursesDisplay.removeAll();
+&nbsp;//        for (String course : state.getCourses()) {
+&nbsp;//            coursesDisplay.addTab(course, getTab());
+&nbsp;//        }
+&nbsp;//        this.coursesDisplay.revalidate();
+&nbsp;//        this.coursesDisplay.repaint();
+&nbsp;//    }
+&nbsp;//
+&nbsp;//    private JPanel getTab() {
+&nbsp;//        JPanel tabPanel = new JPanel(new BorderLayout());
+&nbsp;//        JEditorPane notePad = new JTextPane();
+&nbsp;//        JScrollPane textArea = new JScrollPane(notePad);
+&nbsp;////        tabPanel.add(notePad);
+&nbsp;//
+&nbsp;//        JScrollPane noteTopics = new JScrollPane();
+&nbsp;//
+&nbsp;//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, noteTopics, textArea);
+&nbsp;//
+&nbsp;//        splitPane.setDividerLocation(Constants.NOTE_TOPICS_SIZE); // This sets the divider at 1/6th of the width of the split pane
+&nbsp;//        splitPane.setResizeWeight(Constants.NOTE_TOPICS_SIZE);
+&nbsp;//
+&nbsp;//        tabPanel.add(splitPane, BorderLayout.CENTER);
+&nbsp;//        return tabPanel;
+&nbsp;//    }
+&nbsp;//
+&nbsp;//    private void setNotesDisplay(NotesState state) {
+&nbsp;//        Map&lt;String, Course&gt; notes = state.getNotes();
+&nbsp;//        Set&lt;String&gt; courses = notes.keySet();
+&nbsp;//        this.coursesDisplay.removeAll();
+&nbsp;//        for (String course : courses) {
+&nbsp;//            coursesDisplay.addTab(course, getTab());
+&nbsp;//        }
+&nbsp;//    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

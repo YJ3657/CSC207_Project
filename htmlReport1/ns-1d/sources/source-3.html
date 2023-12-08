@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > InstructionsView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view</a>
+</div>
+
+<h1>Coverage Summary for Class: InstructionsView (main.java.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InstructionsView</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.5%
+  </span>
+  <span class="absValue">
+    (23/26)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">InstructionsView$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (2/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (24/30)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view;
+&nbsp;
+&nbsp;import main.java.app.Constants;
+&nbsp;import main.java.interface_adapter.ViewManagerModel;
+&nbsp;import main.java.interface_adapter.instructions.InstructionsController;
+&nbsp;import main.java.interface_adapter.instructions.InstructionsState;
+&nbsp;import main.java.interface_adapter.instructions.InstructionsViewModel;
+&nbsp;import main.java.interface_adapter.notes.NotesState;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.beans.PropertyChangeEvent;
+&nbsp;import java.beans.PropertyChangeListener;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public class InstructionsView extends JPanel implements ActionListener, PropertyChangeListener {
+<b class="fc">&nbsp;    public final String viewName = &quot;instructions&quot;;</b>
+&nbsp;    private final InstructionsViewModel instructionsViewModel;
+&nbsp;    private final ViewManagerModel viewManagerModel;
+&nbsp;    private final JTextArea instructionsContent;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public InstructionsView(InstructionsViewModel instructionsViewModel, ViewManagerModel viewManagerModel) {</b>
+<b class="fc">&nbsp;        this.instructionsViewModel = instructionsViewModel;</b>
+<b class="fc">&nbsp;        this.viewManagerModel = viewManagerModel;</b>
+<b class="fc">&nbsp;        instructionsViewModel.addPropertyChangeListener(this);</b>
+<b class="fc">&nbsp;        JPanel tfPanel = new JPanel();</b>
+<b class="fc">&nbsp;        tfPanel.setBorder(BorderFactory.createTitledBorder(&quot;Instructions &quot;));</b>
+<b class="fc">&nbsp;        JButton back = new JButton(instructionsViewModel.BACK_BUTTON_LABEL);</b>
+<b class="fc">&nbsp;        tfPanel.add(back);</b>
+<b class="fc">&nbsp;        back.addActionListener(new ActionListener() {</b>
+&nbsp;            @Override public void actionPerformed(ActionEvent e)
+&nbsp;            {
+<b class="nc">&nbsp;                if (e.getSource().equals(back)) {</b>
+<b class="nc">&nbsp;                viewManagerModel.setActiveView(Constants.HOME_VIEWNAME);</b>
+<b class="nc">&nbsp;                viewManagerModel.firePropertyChanged();</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+<b class="fc">&nbsp;        instructionsContent = new JTextArea();</b>
+<b class="fc">&nbsp;        instructionsContent.setFont(new Font(&quot;Serif&quot;, Font.ITALIC, 20));</b>
+<b class="fc">&nbsp;        instructionsContent.setLineWrap(true);</b>
+<b class="fc">&nbsp;        instructionsContent.setWrapStyleWord(true);</b>
+<b class="fc">&nbsp;        instructionsContent.setBackground(new Color(0, 0, 0));</b>
+<b class="fc">&nbsp;        instructionsContent.setEnabled(false);</b>
+<b class="fc">&nbsp;        JScrollPane tAreaScrollPane = new JScrollPane(instructionsContent);</b>
+<b class="fc">&nbsp;        tAreaScrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</b>
+<b class="fc">&nbsp;        tAreaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);</b>
+<b class="fc">&nbsp;        this.setLayout(new BorderLayout(5, 5));</b>
+<b class="fc">&nbsp;        this.add(tfPanel, BorderLayout.NORTH);</b>
+<b class="fc">&nbsp;        this.add(tAreaScrollPane, BorderLayout.CENTER);</b>
+<b class="fc">&nbsp;        setVisible(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void actionPerformed(ActionEvent e) {
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void propertyChange(PropertyChangeEvent evt) {
+<b class="nc">&nbsp;        InstructionsState state = (InstructionsState) evt.getNewValue();</b>
+<b class="nc">&nbsp;        instructionsContent.setText(state.getInstructions());</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>
