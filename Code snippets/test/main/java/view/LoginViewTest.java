@@ -57,4 +57,9 @@ public class LoginViewTest {
         assert loginView.usernameInputField.getText().equals(Constants.TEST_USERNAME);
         assert loginView.passwordInputField.getText().equals(Constants.TEST_USER_PW);
     }
-}
+
+    @Test
+    void loginSuccessful(){
+
+
+    }}

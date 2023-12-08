@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SubtractReminder</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.use_case.reminder</a>
+</div>
+
+<h1>Coverage Summary for Class: SubtractReminder (main.java.use_case.reminder)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SubtractReminder</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72.2%
+  </span>
+  <span class="absValue">
+    (26/36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.use_case.reminder;
+&nbsp;
+&nbsp;import main.java.data_access.DBDataAccessObject;
+&nbsp;import main.java.entity.Course;
+&nbsp;import main.java.entity.Reminder;
+&nbsp;import main.java.entity.ReminderFactory;
+&nbsp;import main.java.entity.Student;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+<b class="fc">&nbsp;public class SubtractReminder implements ReminderAlgorithm {</b>
+&nbsp;    @Override
+&nbsp;    public void getReminders(DBDataAccessObject dataAccessObject, String userid) {
+<b class="fc">&nbsp;        List&lt;String&gt; userCourses = dataAccessObject.getUserCourses(userid);</b>
+<b class="fc">&nbsp;        Map&lt;String, Integer&gt; courseDays = new HashMap&lt;String, Integer&gt;();</b>
+<b class="fc">&nbsp;        LocalDate today = LocalDate.now();</b>
+<b class="fc">&nbsp;        for(String courseid : userCourses) {</b>
+<b class="fc">&nbsp;            if(courseid.equals(&quot;NONE&quot;)) continue;</b>
+<b class="fc">&nbsp;            List&lt;Student&gt; students = dataAccessObject.getStudents(courseid);</b>
+<b class="fc">&nbsp;            for(Student student : students) {</b>
+<b class="fc">&nbsp;                if(!student.getStudentid().equals(userid)) {</b>
+<b class="nc">&nbsp;                    continue;</b>
+&nbsp;                }
+&nbsp;                try {
+<b class="fc">&nbsp;                    LocalDate date = LocalDate.parse(student.getTimeEnrolled());</b>
+<b class="fc">&nbsp;                    courseDays.put(courseid, today.getDayOfYear() - date.getDayOfYear() + 1);</b>
+<b class="fc">&nbsp;                    break;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                catch(Exception e) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Please provide proper date in string&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        for(String courseid : courseDays.keySet()) {</b>
+<b class="fc">&nbsp;            Reminder courseReminder = new ReminderFactory().create(courseid, new HashMap&lt;Integer, String&gt;());</b>
+<b class="fc">&nbsp;            dataAccessObject.getCourseReminders().put(courseid, courseReminder);</b>
+<b class="fc">&nbsp;            Course course = dataAccessObject.getCourse(courseid);</b>
+<b class="fc">&nbsp;            Map&lt;Integer, String&gt; contents = course.getContents();</b>
+<b class="fc">&nbsp;            System.out.println(courseid + courseDays.get(courseid));</b>
+<b class="fc">&nbsp;            if(courseDays.get(courseid) &gt; 1) {</b>
+<b class="fc">&nbsp;                String content = course.getContents().get(courseDays.get(courseid) - 1);</b>
+<b class="fc">&nbsp;                dataAccessObject.getCourseReminders().get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 1, content);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if(courseDays.get(courseid) &gt; 3) {</b>
+<b class="nc">&nbsp;                String content = course.getContents().get(courseDays.get(courseid) - 3);</b>
+<b class="nc">&nbsp;                dataAccessObject.getCourseReminders().get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 3, content);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            if(courseDays.get(courseid) &gt; 6) {</b>
+<b class="nc">&nbsp;                String content = course.getContents().get(courseDays.get(courseid) - 6);</b>
+<b class="nc">&nbsp;                dataAccessObject.getCourseReminders().get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 6, content);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if(courseDays.get(courseid) &gt; 13) {</b>
+<b class="nc">&nbsp;                String content = course.getContents().get(courseDays.get(courseid) -13);</b>
+<b class="nc">&nbsp;                dataAccessObject.getCourseReminders().get(courseid).getReviewMaterials().put(courseDays.get(courseid) - 13, content);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+&nbsp;        return;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

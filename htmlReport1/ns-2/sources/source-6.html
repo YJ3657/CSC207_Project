@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > NotesUseCaseFactory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.app</a>
+</div>
+
+<h1>Coverage Summary for Class: NotesUseCaseFactory (main.java.app)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NotesUseCaseFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.app;
+&nbsp;
+&nbsp;import main.java.data_access.ChatGPTDataAccessInterface;
+&nbsp;import main.java.entity.CourseFactory;
+&nbsp;import main.java.entity.NotesFactory;
+&nbsp;import main.java.entity.StudentFactory;
+&nbsp;import main.java.interface_adapter.ViewManagerModel;
+&nbsp;import main.java.interface_adapter.add_Question_Definition.DefQuesController;
+&nbsp;import main.java.interface_adapter.add_Question_Definition.DefQuesPresenter;
+&nbsp;import main.java.interface_adapter.add_course.AddCourseController;
+&nbsp;import main.java.interface_adapter.add_course.AddCoursePresenter;
+&nbsp;import main.java.interface_adapter.notes.*;
+&nbsp;import main.java.interface_adapter.quiz.QuizController;
+&nbsp;import main.java.interface_adapter.quiz.QuizPresenter;
+&nbsp;import main.java.interface_adapter.quiz.QuizViewModel;
+&nbsp;import main.java.use_case.add_Question_Definition.DefQuesDataAccessInterface;
+&nbsp;import main.java.use_case.add_Question_Definition.DefQuesInputBoundary;
+&nbsp;import main.java.use_case.add_Question_Definition.DefQuesInteractor;
+&nbsp;import main.java.use_case.courses.AddCourseDataAccessInterface;
+&nbsp;import main.java.use_case.find_user_courses.FindUserCourseDataAccessInterface;
+&nbsp;import main.java.use_case.notes.*;
+&nbsp;import main.java.use_case.courses.add_course.AddCourseInputBoundary;
+&nbsp;import main.java.use_case.courses.add_course.AddCourseInteractor;
+&nbsp;import main.java.use_case.courses.add_course.AddCourseOutputBoundary;
+&nbsp;import main.java.use_case.notes.create_notes.CreateNotesInputBoundary;
+&nbsp;import main.java.use_case.notes.create_notes.CreateNotesInteractor;
+&nbsp;import main.java.use_case.notes.create_notes.CreateNotesOutputBoundary;
+&nbsp;import main.java.use_case.notes.delete_notes.DeleteNotesInputBoundary;
+&nbsp;import main.java.use_case.notes.delete_notes.DeleteNotesInteractor;
+&nbsp;import main.java.use_case.quiz.QuizDataAccessInterface;
+&nbsp;import main.java.use_case.quiz.QuizInputBoundary;
+&nbsp;import main.java.use_case.quiz.QuizInteractor;
+&nbsp;import main.java.view.NotesView;
+&nbsp;
+&nbsp;public class NotesUseCaseFactory {
+&nbsp;    private NotesUseCaseFactory() {}
+&nbsp;
+&nbsp;    public static NotesView create(ViewManagerModel viewManagerModel,
+&nbsp;                                   NotesViewModel notesViewModel,
+&nbsp;                                   QuizViewModel quizViewModel,
+&nbsp;                                   FindUserCourseDataAccessInterface addUserCourseDAO,
+&nbsp;                                   AddCourseDataAccessInterface addCourseDAO,
+&nbsp;                                   NotesDataAccessInterface notesDataAccessInterface,
+&nbsp;                                   QuizDataAccessInterface quizDAO, DefQuesDataAccessInterface definitionDAO, ChatGPTDataAccessInterface chatGPTDAO) {
+<b class="fc">&nbsp;        AddCourseController addCourseController = createAddCourseUseCase(viewManagerModel, notesViewModel, addUserCourseDAO, addCourseDAO);</b>
+<b class="fc">&nbsp;        CreateNotesController createNotesController = createCreateNotesUseCase(viewManagerModel, notesViewModel,</b>
+&nbsp;                notesDataAccessInterface);
+<b class="fc">&nbsp;        QuizController quizController = createQuizUseCase(viewManagerModel, quizViewModel, quizDAO, chatGPTDAO);</b>
+<b class="fc">&nbsp;        DefQuesController defQuesController = createDefinitionUseCase(notesViewModel, definitionDAO);</b>
+<b class="fc">&nbsp;        DeleteNotesController deleteNotesController = createDeleteNotesUseCase(notesDataAccessInterface);</b>
+<b class="fc">&nbsp;        return new NotesView(notesViewModel, viewManagerModel, addCourseController, createNotesController, quizController, defQuesController,</b>
+&nbsp;                deleteNotesController);
+&nbsp;    }
+&nbsp;
+&nbsp;     public static AddCourseController createAddCourseUseCase(ViewManagerModel viewManagerModel,
+&nbsp;                                                              NotesViewModel notesViewModel,
+&nbsp;                                                              FindUserCourseDataAccessInterface addUserCourseDAO,
+&nbsp;                                                              AddCourseDataAccessInterface addCourseDAO) {
+<b class="fc">&nbsp;         AddCourseOutputBoundary addCoursePresenter = new AddCoursePresenter(viewManagerModel, notesViewModel);</b>
+<b class="fc">&nbsp;         CourseFactory courseFactory = new CourseFactory();</b>
+<b class="fc">&nbsp;         StudentFactory studentFactory = new StudentFactory();</b>
+<b class="fc">&nbsp;         AddCourseInputBoundary addCourseInteractor = new AddCourseInteractor(addUserCourseDAO, addCourseDAO, addCoursePresenter, courseFactory, studentFactory);</b>
+<b class="fc">&nbsp;         return new AddCourseController(addCourseInteractor);</b>
+&nbsp;
+&nbsp;     }
+&nbsp;
+&nbsp;    public static CreateNotesController createCreateNotesUseCase(ViewManagerModel viewManagerModel,
+&nbsp;                                                                 NotesViewModel notesViewModel,
+&nbsp;                                                                 NotesDataAccessInterface notesDataAccessInterface) {
+<b class="fc">&nbsp;        CreateNotesOutputBoundary createNotesPresenter = new CreateNotesPresenter(viewManagerModel, notesViewModel);</b>
+<b class="fc">&nbsp;        NotesFactory notesFactory = new NotesFactory();</b>
+<b class="fc">&nbsp;        CreateNotesInputBoundary createNotesInteractor = new CreateNotesInteractor(notesDataAccessInterface,</b>
+&nbsp;                createNotesPresenter, notesFactory);
+<b class="fc">&nbsp;        return new CreateNotesController(createNotesInteractor);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static DeleteNotesController createDeleteNotesUseCase(NotesDataAccessInterface notesDataAccessInterface) {
+<b class="fc">&nbsp;        DeleteNotesInputBoundary deleteNotesInteractor = new DeleteNotesInteractor(notesDataAccessInterface);</b>
+<b class="fc">&nbsp;        return new DeleteNotesController(deleteNotesInteractor);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static QuizController createQuizUseCase(ViewManagerModel viewManagerModel,
+&nbsp;                                                   QuizViewModel quizViewModel,
+&nbsp;                                                   QuizDataAccessInterface quizDAO, ChatGPTDataAccessInterface chatGptDAO) {
+&nbsp;//        QuizViewModel quizViewModel = new QuizViewModel();
+<b class="fc">&nbsp;        QuizPresenter quizPresenter = new QuizPresenter(viewManagerModel, quizViewModel);</b>
+<b class="fc">&nbsp;        QuizInputBoundary quizInteractor = new QuizInteractor(quizDAO, quizPresenter, chatGptDAO);</b>
+<b class="fc">&nbsp;        return new QuizController(quizInteractor);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static DefQuesController createDefinitionUseCase(NotesViewModel notesViewModel, DefQuesDataAccessInterface definitionDataAccessObject){
+<b class="fc">&nbsp;        DefQuesPresenter defQuesPresenter = new DefQuesPresenter(notesViewModel);</b>
+<b class="fc">&nbsp;        DefQuesInputBoundary definitionInteractor = new DefQuesInteractor(definitionDataAccessObject, defQuesPresenter);</b>
+<b class="fc">&nbsp;        return new DefQuesController(definitionInteractor);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>

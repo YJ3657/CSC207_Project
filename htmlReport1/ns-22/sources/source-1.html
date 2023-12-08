@@ -1,0 +1,206 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ModernScrollBarUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main.java.view.ChatBot.swing.scroll</a>
+</div>
+
+<h1>Coverage Summary for Class: ModernScrollBarUI (main.java.view.ChatBot.swing.scroll)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ModernScrollBarUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (5/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    27.8%
+  </span>
+  <span class="absValue">
+    (5/18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ModernScrollBarUI$1</td>
+  </tr>
+  <tr>
+    <td class="name">ModernScrollBarUI$InvisibleScrollBarButton</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    77.8%
+  </span>
+  <span class="absValue">
+    (7/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    48%
+  </span>
+  <span class="absValue">
+    (12/25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main.java.view.ChatBot.swing.scroll;
+&nbsp;
+&nbsp;import java.awt.Color;
+&nbsp;import java.awt.Dimension;
+&nbsp;import java.awt.Graphics;
+&nbsp;import java.awt.Graphics2D;
+&nbsp;import java.awt.Rectangle;
+&nbsp;import javax.swing.BorderFactory;
+&nbsp;import javax.swing.JButton;
+&nbsp;import javax.swing.JComponent;
+&nbsp;import javax.swing.JScrollBar;
+&nbsp;import javax.swing.plaf.basic.BasicScrollBarUI;
+&nbsp;
+&nbsp;public class ModernScrollBarUI extends BasicScrollBarUI {
+&nbsp;
+&nbsp;    private static final int SCROLL_BAR_ALPHA_ROLLOVER = 100;
+&nbsp;    private static final int SCROLL_BAR_ALPHA = 50;
+&nbsp;    private static final int THUMB_SIZE = 8;
+<b class="fc">&nbsp;    private static final Color THUMB_COLOR = Color.BLACK;</b>
+&nbsp;
+<b class="fc">&nbsp;    public ModernScrollBarUI() {</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected JButton createDecreaseButton(int orientation) {
+<b class="fc">&nbsp;        return new InvisibleScrollBarButton();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected JButton createIncreaseButton(int orientation) {
+<b class="fc">&nbsp;        return new InvisibleScrollBarButton();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected Dimension getMinimumThumbSize() {
+<b class="fc">&nbsp;        return new Dimension(0, 75);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
+<b class="nc">&nbsp;        int alpha = isThumbRollover() ? SCROLL_BAR_ALPHA_ROLLOVER : SCROLL_BAR_ALPHA;</b>
+<b class="nc">&nbsp;        int orientation = scrollbar.getOrientation();</b>
+<b class="nc">&nbsp;        int x = thumbBounds.x;</b>
+<b class="nc">&nbsp;        int y = thumbBounds.y;</b>
+&nbsp;
+<b class="nc">&nbsp;        int width = orientation == JScrollBar.VERTICAL ? THUMB_SIZE : thumbBounds.width;</b>
+<b class="nc">&nbsp;        width = Math.max(width, THUMB_SIZE);</b>
+&nbsp;
+<b class="nc">&nbsp;        int height = orientation == JScrollBar.VERTICAL ? thumbBounds.height : THUMB_SIZE;</b>
+<b class="nc">&nbsp;        height = Math.max(height, THUMB_SIZE);</b>
+&nbsp;
+<b class="nc">&nbsp;        Graphics2D graphics2D = (Graphics2D) g.create();</b>
+<b class="nc">&nbsp;        graphics2D.setColor(new Color(THUMB_COLOR.getRed(), THUMB_COLOR.getGreen(), THUMB_COLOR.getBlue(), alpha));</b>
+<b class="nc">&nbsp;        graphics2D.fillRect(x, y, width, height);</b>
+<b class="nc">&nbsp;        graphics2D.dispose();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private static class InvisibleScrollBarButton extends JButton {</b>
+&nbsp;
+<b class="fc">&nbsp;        private InvisibleScrollBarButton() {</b>
+<b class="fc">&nbsp;            setOpaque(false);</b>
+<b class="fc">&nbsp;            setFocusable(false);</b>
+<b class="fc">&nbsp;            setFocusPainted(false);</b>
+<b class="fc">&nbsp;            setBorderPainted(false);</b>
+<b class="fc">&nbsp;            setBorder(BorderFactory.createEmptyBorder());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 18:42</div>
+</div>
+</body>
+</html>
