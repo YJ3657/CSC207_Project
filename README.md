@@ -28,5 +28,6 @@ generating random tests based on the questions and definitions that the user has
 ![alt text](Code%20snippets/src/img/jlabel.png)
 
 ## Requirements to Run ##
-1. The 4 JAR's in Dependencies Folder
-2. Up to date apiKey in ChatGptDAO.java
+1. The 4 JAR's in Code snippets/Dependencies Folder
+2. [MySQL Installer](https://dev.mysql.com/downloads/installer/) and [Workbench](https://dev.mysql.com/downloads/workbench/) installed
+3. Up to date apiKey in ChatGptDAO.java
